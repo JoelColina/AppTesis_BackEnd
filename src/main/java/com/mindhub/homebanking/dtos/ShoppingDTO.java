@@ -1,17 +1,12 @@
-package com.mindhub.homebanking.models;
+package com.mindhub.homebanking.dtos;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import com.mindhub.homebanking.models.AddressType;
+import com.mindhub.homebanking.models.Shopping;
 import java.util.Date;
 
-@Entity
-public class Shopping {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    private long id;
+public class ShoppingDTO {
 
+    private long id;
     private String comercio;
     private String producto;
     private Number numeroCompra;
@@ -22,29 +17,26 @@ public class Shopping {
     private Number numcuotas;
     private Number valorTotal;
     private String tipoTarjeta;
-    private String tipoRetiro;
+    private AddressType type;
     private String fechaEntrega;
     private String direccionEntrega;
     private String retiradoPor;
 
-    public Shopping(String comercio, String producto, Number numeroCompra, Number sku, Date fechaCompra, Number cantidad, Number valor, Number numcuotas, Number valorTotal, String tipoTarjeta, String tipoRetiro, String fechaEntrega, String direccionEntrega, String retiradoPor) {
-        this.comercio = comercio;
-        this.producto = producto;
-        this.numeroCompra = numeroCompra;
-        this.sku = sku;
-        this.fechaCompra = fechaCompra;
-        this.cantidad = cantidad;
-        this.valor = valor;
-        this.numcuotas = numcuotas;
-        this.valorTotal = valorTotal;
-        this.tipoTarjeta = tipoTarjeta;
-        this.tipoRetiro = tipoRetiro;
-        this.fechaEntrega = fechaEntrega;
-        this.direccionEntrega = direccionEntrega;
-        this.retiradoPor = retiradoPor;
-    }
-
-    public Shopping() {
+    public ShoppingDTO(Shopping shopping) {
+        this.comercio = shopping.getComercio();
+        this.producto = shopping.getProducto();
+        this.numeroCompra = shopping.getNumeroCompra();
+        this.sku = shopping.getSku();
+        this.fechaCompra = shopping.getFechaCompra();
+        this.cantidad = shopping.getCantidad();
+        this.valor = shopping.getValor();
+        this.numcuotas = shopping.getNumcuotas();
+        this.valorTotal = shopping.getValorTotal();
+        this.tipoTarjeta = shopping.getTipoTarjeta();
+        this.type = shopping.getType();
+        this.fechaEntrega = shopping.getFechaEntrega();
+        this.direccionEntrega = shopping.getDireccionEntrega();
+        this.retiradoPor = shopping.getRetiradoPor();
     }
 
     public long getId() {
@@ -135,12 +127,12 @@ public class Shopping {
         this.tipoTarjeta = tipoTarjeta;
     }
 
-    public String getTipoRetiro() {
-        return tipoRetiro;
+    public AddressType getType() {
+        return type;
     }
 
-    public void setTipoRetiro(String tipoRetiro) {
-        this.tipoRetiro = tipoRetiro;
+    public void setType(AddressType type) {
+        this.type = type;
     }
 
     public String getFechaEntrega() {
@@ -165,25 +157,5 @@ public class Shopping {
 
     public void setRetiradoPor(String retiradoPor) {
         this.retiradoPor = retiradoPor;
-    }
-
-    @Override
-    public String toString() {
-        return "Shopping{" +
-                "comercio='" + comercio + '\'' +
-                ", producto='" + producto + '\'' +
-                ", numeroCompra=" + numeroCompra +
-                ", sku=" + sku +
-                ", fechaCompra=" + fechaCompra +
-                ", cantidad=" + cantidad +
-                ", valor=" + valor +
-                ", numcuotas=" + numcuotas +
-                ", valorTotal=" + valorTotal +
-                ", tipoTarjeta='" + tipoTarjeta + '\'' +
-                ", tipoRetiro='" + tipoRetiro + '\'' +
-                ", fechaEntrega='" + fechaEntrega + '\'' +
-                ", direccionEntrega='" + direccionEntrega + '\'' +
-                ", retiradoPor='" + retiradoPor + '\'' +
-                '}';
     }
 }
