@@ -65,11 +65,11 @@ public class LoanServiceImpl implements LoanService {
         }
 
         //se verifica si prestamo existe
-        for (Loan loant:client.getLoans()){//(int i = 0; i < client.getAccounts().size(); i++) {
-            if(loant.getId() == loanApplicationDTO.getLoanId()) {
-                return new ResponseEntity<>("Prestamo ya existe.", HttpStatus.FORBIDDEN);
-            }
-        }
+//        for (Loan loant:client.getLoans()){//(int i = 0; i < client.getAccounts().size(); i++) {
+//            if(loant.getId() == loanApplicationDTO.getLoanId()) {
+//                return new ResponseEntity<>("Prestamo ya existe.", HttpStatus.FORBIDDEN);
+//            }
+//        }
 
         //se verifica que el monto solicitado no exceda el monto maximo
 
@@ -96,15 +96,15 @@ public class LoanServiceImpl implements LoanService {
         }
 
         //se verifica que la cuenta de destino pertenezca al cliente autenticado
-        for (Account account1:client.getAccounts()){//(int i = 0; i < client.getAccounts().size(); i++) {
-            if(account1.getNumber().equals(loanApplicationDTO.getToAccountNumber())) {
-                accExit = "0";
-                break;
-            }
-        }
-        if (accExit.equals("1")){
-            return new ResponseEntity<>("Cuenta Destino no pertenece a cliente.", HttpStatus.FORBIDDEN);
-        }
+//        for (Account account1:client.getAccounts()){//(int i = 0; i < client.getAccounts().size(); i++) {
+//            if(account1.getNumber().equals(loanApplicationDTO.getToAccountNumber())) {
+//                accExit = "0";
+//                break;
+//            }
+//        }
+//        if (accExit.equals("1")){
+//            return new ResponseEntity<>("Cuenta Destino no pertenece a cliente.", HttpStatus.FORBIDDEN);
+//        }
 
        // double amountTotal = loanApplicationDTO.getAmount() + ( loanApplicationDTO.getAmount() * 0.2);
 

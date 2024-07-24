@@ -17,46 +17,43 @@ public class Client {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private String nombres;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String rut;
-    private Date   fechaNacimiento;
-    private Number numeroTelefono;
+    private String names;
+    private String lastName;
+    private String motherLastName;
+    private String ruth;
+    private Date   birthDate;
+    private Number telephoneNumber;
     private String email;
-    private Number cupoTotal;
-    private Number deudaCta;
-    private Number cupoDisponible;
+    private Number totalLimit;
+    private Number debtAccount;
+    private Number availableSpace;
 
-        @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<Account> accounts = new HashSet<>();
-
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<ClientLoan> clientLoans = new HashSet<>();
-
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<Card> cards = new HashSet<>();
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    Set<Account> accounts = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    Set<ClientLoan> clientLoans = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    Set<Card> cards = new HashSet<>();
 
     private String password;
 
-    public Client(String nombres, String apellidoPaterno, String apellidoMaterno, String rut, Date fechaNacimiento, Number numeroTelefono, String email, Number cupoTotal, Number deudaCta, Number cupoDisponible, String password) {
-        this.nombres = nombres;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.rut = rut;
-        this.fechaNacimiento = fechaNacimiento;
-        this.numeroTelefono = numeroTelefono;
-        this.cupoTotal = cupoTotal;
-        this.deudaCta = deudaCta;
-        this.cupoDisponible = cupoDisponible;
+    public Client(String names, String lastName, String motherLastName, String ruth, Date birthDate, Number telephoneNumber, String email, Number totalLimit, Number debtAccount, Number availableSpace, String password) {
+        this.names = names;
+        this.lastName = lastName;
+        this.motherLastName = motherLastName;
+        this.ruth = ruth;
+        this.birthDate = birthDate;
+        this.telephoneNumber = telephoneNumber;
         this.email = email;
-   //     this.accounts = accounts;
+        this.totalLimit = totalLimit;
+        this.debtAccount = debtAccount;
+        this.availableSpace = availableSpace;
         this.password = password;
-
-
     }
 
-    public Client(){
+    public Client() {
     }
 
     public long getId() {
@@ -67,76 +64,52 @@ public class Client {
         this.id = id;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNames() {
+        return names;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNames(String names) {
+        this.names = names;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
+    public String getMotherLastName() {
+        return motherLastName;
     }
 
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+    public void setMotherLastName(String motherLastName) {
+        this.motherLastName = motherLastName;
     }
 
-    public String getRut() {
-        return rut;
+    public String getRuth() {
+        return ruth;
     }
 
-    public void setRut(String rut) {
-        this.rut = rut;
+    public void setRuth(String ruth) {
+        this.ruth = ruth;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public Number getNumeroTelefono() {
-        return numeroTelefono;
+    public Number getTelephoneNumber() {
+        return telephoneNumber;
     }
 
-    public void setNumeroTelefono(Number numeroTelefono) {
-        this.numeroTelefono = numeroTelefono;
-    }
-
-    public Number getCupoTotal() {
-        return cupoTotal;
-    }
-
-    public void setCupoTotal(Number cupoTotal) {
-        this.cupoTotal = cupoTotal;
-    }
-
-    public Number getDeudaCta() {
-        return deudaCta;
-    }
-
-    public void setDeudaCta(Number deudaCta) {
-        this.deudaCta = deudaCta;
-    }
-
-    public Number getCupoDisponible() {
-        return cupoDisponible;
-    }
-
-    public void setCupoDisponible(Number cupoDisponible) {
-        this.cupoDisponible = cupoDisponible;
+    public void setTelephoneNumber(Number telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getEmail() {
@@ -147,35 +120,28 @@ public class Client {
         this.email = email;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
+    public Number getTotalLimit() {
+        return totalLimit;
     }
 
-    public void addAccounts(Account account) {
-        account.setClient(this);
-        this.accounts.add(account);
+    public void setTotalLimit(Number totalLimit) {
+        this.totalLimit = totalLimit;
     }
 
-    @JsonIgnore
-    public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
+    public Number getDebtAccount() {
+        return debtAccount;
     }
 
-    public void addClientLoans(ClientLoan clientLoan){
-        clientLoan.setClient(this);
-        clientLoans.add(clientLoan);
+    public void setDebtAccount(Number debtAccount) {
+        this.debtAccount = debtAccount;
     }
 
-    public List<Loan> getLoans(){
-        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
+    public Number getAvailableSpace() {
+        return availableSpace;
     }
 
-    public Set<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
+    public void setAvailableSpace(Number availableSpace) {
+        this.availableSpace = availableSpace;
     }
 
     public String getPassword() {
@@ -186,19 +152,51 @@ public class Client {
         this.password = password;
     }
 
+    //    public Set<Account> getAccounts() {
+//        return accounts;
+//    }
+//
+//    public void addAccounts(Account account) {
+//        account.setClient(this);
+//        this.accounts.add(account);
+//    }
+//
+//    @JsonIgnore
+//    public Set<ClientLoan> getClientLoans() {
+//        return clientLoans;
+//    }
+//
+//    public void addClientLoans(ClientLoan clientLoan){
+//        clientLoan.setClient(this);
+//        clientLoans.add(clientLoan);
+//    }
+//
+//    public List<Loan> getLoans(){
+//        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
+//    }
+//
+//    public Set<Card> getCards() {
+//        return cards;
+//    }
+//
+//    public void setCards(Set<Card> cards) {
+//        this.cards = cards;
+//    }
+
     @Override
     public String toString() {
         return "Client{" +
-                "nombres='" + nombres + '\'' +
-                ", apellidoPaterno='" + apellidoPaterno + '\'' +
-                ", apellidoMaterno='" + apellidoMaterno + '\'' +
-                ", rut='" + rut + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", numeroTelefono=" + numeroTelefono +
+                "names='" + names + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", motherLastName='" + motherLastName + '\'' +
+                ", ruth='" + ruth + '\'' +
+                ", birthDate=" + birthDate +
+                ", telephoneNumber=" + telephoneNumber +
                 ", email='" + email + '\'' +
-                ", cupoTotal=" + cupoTotal +
-                ", deudaCta=" + deudaCta +
-                ", cupoDisponible=" + cupoDisponible +
+                ", totalLimit=" + totalLimit +
+                ", debtAccount=" + debtAccount +
+                ", availableSpace=" + availableSpace +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

@@ -4,13 +4,14 @@ public class CommuneDTO {
     private long id;
 
     private int idRegion;
-    private String comuna;
+    private String communes;
 
-    public CommuneDTO(Commune commune) {
-        this.id = commune.getId();
-        this.idRegion = commune.getIdRegion();
-        this.comuna = commune.getComuna();
+    public CommuneDTO(long id, int idRegion, String communes) {
+        this.id = id;
+        this.idRegion = idRegion;
+        this.communes = communes;
     }
+
 
     public long getId() {
         return id;
@@ -28,11 +29,11 @@ public class CommuneDTO {
         this.idRegion = idRegion;
     }
 
-    public String getComuna() {
-        return comuna;
+    public String getCommunes() {
+        return communes;
     }
 
-    public void setComuna(String comuna) {
-        this.comuna = comuna;
+    public void setCommunes(String communes) {
+        this.communes = communes;
     }
 }

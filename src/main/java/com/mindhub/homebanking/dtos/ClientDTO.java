@@ -3,49 +3,46 @@ package com.mindhub.homebanking.dtos;
 import com.mindhub.homebanking.models.Client;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ClientDTO {
 
-    private Long id;
-    private String nombres;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String rut;
-    private Date fechaNacimiento;
-    private Number numeroTelefono;
+    private long id;
+
+    private String names;
+    private String lastName;
+    private String motherLastName;
+    private String ruth;
+    private Date   birthDate;
+    private Number telephoneNumber;
     private String email;
-    private Number cupoTotal;
-    private Number deudaCta;
-    private Number cupoDisponible;
+    private Number totalLimit;
+    private Number debtAccount;
+    private Number availableSpace;
 
-    Set<AccountDTO> accounts;
-    Set<ClientLoanDTO> loans;
-    Set<CardDTO> cards;
-
+//    Set<AccountDTO> accounts;
+//    Set<ClientLoanDTO> loans;
+//    Set<CardDTO> cards;
     private String password;
-
 
     public ClientDTO(Client client) {
 
-        this.nombres = client.getNombres();
-        this.apellidoPaterno = client.getApellidoPaterno();
-        this.apellidoMaterno = client.getApellidoMaterno();
-        this.rut = client.getRut();
-        this.fechaNacimiento = client.getFechaNacimiento();
-        this.numeroTelefono = client.getNumeroTelefono();
+        this.names = client.getNames();
+        this.lastName = client.getLastName();
+        this.motherLastName = client.getMotherLastName();
+        this.ruth = client.getRuth();
+        this.birthDate = client.getBirthDate();
+        this.telephoneNumber = client.getTelephoneNumber();
         this.email = client.getEmail();
-        this.cupoTotal = client.getCupoTotal();
-        this.deudaCta = client.getDeudaCta();
-        this.cupoDisponible = client.getCupoDisponible();
+        this.totalLimit = client.getTotalLimit();
+        this.debtAccount = client.getDebtAccount();
+        this.availableSpace = client.getAvailableSpace();
 
         this.password = client.getPassword();
 
-        this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());
-        this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toSet());
-        this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
+//        this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());
+//        this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toSet());
+//        this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -56,77 +53,101 @@ public class ClientDTO {
         this.id = id;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNames() {
+        return names;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNames(String names) {
+        this.names = names;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
+    public String getMotherLastName() {
+        return motherLastName;
     }
 
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+    public void setMotherLastName(String motherLastName) {
+        this.motherLastName = motherLastName;
     }
 
-    public String getRut() {
-        return rut;
+    public String getRuth() {
+        return ruth;
     }
 
-    public void setRut(String rut) {
-        this.rut = rut;
+    public void setRuth(String ruth) {
+        this.ruth = ruth;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public Number getNumeroTelefono() {
-        return numeroTelefono;
+    public Number getTelephoneNumber() {
+        return telephoneNumber;
     }
 
-    public void setNumeroTelefono(Number numeroTelefono) {
-        this.numeroTelefono = numeroTelefono;
+    public void setTelephoneNumber(Number telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
-    public Number getCupoTotal() {
-        return cupoTotal;
+    public Number getTotalLimit() {
+        return totalLimit;
     }
 
-    public void setCupoTotal(Number cupoTotal) {
-        this.cupoTotal = cupoTotal;
+    public void setTotalLimit(Number totalLimit) {
+        this.totalLimit = totalLimit;
     }
 
-    public Number getDeudaCta() {
-        return deudaCta;
+    public Number getDebtAccount() {
+        return debtAccount;
     }
 
-    public void setDeudaCta(Number deudaCta) {
-        this.deudaCta = deudaCta;
+    public void setDebtAccount(Number debtAccount) {
+        this.debtAccount = debtAccount;
     }
 
-    public Number getCupoDisponible() {
-        return cupoDisponible;
+    public Number getAvailableSpace() {
+        return availableSpace;
     }
 
-    public void setCupoDisponible(Number cupoDisponible) {
-        this.cupoDisponible = cupoDisponible;
+    public void setAvailableSpace(Number availableSpace) {
+        this.availableSpace = availableSpace;
     }
+
+//    public Set<AccountDTO> getAccounts() {
+//        return accounts;
+//    }
+//
+//    public void setAccounts(Set<AccountDTO> accounts) {
+//        this.accounts = accounts;
+//    }
+//
+//    public Set<ClientLoanDTO> getLoans() {
+//        return loans;
+//    }
+//
+//    public void setLoans(Set<ClientLoanDTO> loans) {
+//        this.loans = loans;
+//    }
+//
+//    public Set<CardDTO> getCards() {
+//        return cards;
+//    }
+//
+//    public void setCards(Set<CardDTO> cards) {
+//        this.cards = cards;
+//    }
 
     public String getEmail() {
         return email;
@@ -136,30 +157,30 @@ public class ClientDTO {
         this.email = email;
     }
 
-    public Set<AccountDTO> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(Set<AccountDTO> accounts) {
-        this.accounts = accounts;
-    }
-
-    public Set<ClientLoanDTO> getLoans() {
-        return loans;
-    }
-
-    public void setLoans(Set<ClientLoanDTO> loans)
-    {
-        this.loans = loans;
-    }
-
-    public Set<CardDTO> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<CardDTO> cards) {
-        this.cards = cards;
-    }
+//    public Set<AccountDTO> getAccounts() {
+//        return accounts;
+//    }
+//
+//    public void setAccounts(Set<AccountDTO> accounts) {
+//        this.accounts = accounts;
+//    }
+//
+//    public Set<ClientLoanDTO> getLoans() {
+//        return loans;
+//    }
+//
+//    public void setLoans(Set<ClientLoanDTO> loans)
+//    {
+//        this.loans = loans;
+//    }
+//
+//    public Set<CardDTO> getCards() {
+//        return cards;
+//    }
+//
+//    public void setCards(Set<CardDTO> cards) {
+//        this.cards = cards;
+//    }
 
     public String getPassword() {
         return password;

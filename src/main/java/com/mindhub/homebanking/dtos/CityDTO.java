@@ -8,14 +8,20 @@ public class CityDTO {
     private List<Integer> region;
     private List<Integer> communes;
 
-    public CityDTO(City city) {
-
-        this.id       = city.getId();
-        this.name     = city.getName();
-        this.region   = city.getRegion();
-        this.communes = city.communes();
-
+    public CityDTO(String name, List<Integer> region, List<Integer> communes) {
+        this.name = name;
+        this.region = region;
+        this.communes = communes;
     }
+
+//    public CityDTO(City city) {
+//
+//        this.id       = city.getId();
+//        this.name     = city.getName();
+//        this.region   = city.getRegion();
+//        this.communes = city.communes();
+//
+//    }
 
     public long getId() {
         return id;
@@ -39,5 +45,13 @@ public class CityDTO {
 
     public void setRegion(List<Integer> region) {
         this.region = region;
+    }
+
+    public List<Integer> getCommunes() {
+        return communes;
+    }
+
+    public void setCommunes(List<Integer> communes) {
+        this.communes = communes;
     }
 }

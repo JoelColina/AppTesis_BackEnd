@@ -60,9 +60,9 @@ public class CardController {
 
         Client client= clientRepository.findByEmail(authentication.getName());
 
-        if (client.getCards().size() == 3){
-            return new ResponseEntity<>("Ya cuenta con un maximo de 3 tarjetaas.", HttpStatus.FORBIDDEN);
-        }
+//        if (client.getCards().size() == 3){
+//            return new ResponseEntity<>("Ya cuenta con un maximo de 3 tarjetaas.", HttpStatus.FORBIDDEN);
+//        }
 
         int newCvv;
         newCvv = numberCardRandom.getNumberCvv();
@@ -80,7 +80,7 @@ public class CardController {
         SimpleDateFormat format = new SimpleDateFormat("MM/yy");
         Date thruDate = format.parse(fechaString);
 
-        cardRepository.save(new Card( CardType.valueOf(cardType.toUpperCase()),  newCard, newCvv,createDate, thruDate,  CardColor.valueOf(cardColor.toUpperCase()), client));
+//        cardRepository.save(new Card( CardType.valueOf(cardType.toUpperCase()),  newCard, newCvv,createDate, thruDate,  CardColor.valueOf(cardColor.toUpperCase()), client));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

@@ -73,12 +73,12 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         //se valida que la cuenta origen sea del cliente logeado
-        for (Account account1:client.getAccounts()){//(int i = 0; i < client.getAccounts().size(); i++) {
-            if(account1.getNumber().equals(fromAccount)) {
-                accExit = "1";
-                break;
-            }
-        }
+//        for (Account account1:client.getAccounts()){//(int i = 0; i < client.getAccounts().size(); i++) {
+//            if(account1.getNumber().equals(fromAccount)) {
+//                accExit = "1";
+//                break;
+//            }
+//        }
 
         if (accExit.equals("0")){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);

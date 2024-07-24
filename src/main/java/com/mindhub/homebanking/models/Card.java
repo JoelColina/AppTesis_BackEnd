@@ -14,26 +14,34 @@ public class Card {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
+    private long idClient;
     private CardType type;
     private String number;
     private int cvv;
-    private LocalDate fecValida;
+    private LocalDate validDate;
     private Date thruDate;
     private String cardHolder;
     private CardColor color;
+    private Number totalLimit;
+    private Number quotaUsed;
+    private Number balanceQuota;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    public Card(CardType type, String numCard, int codSeguridad, LocalDate fecValida, Date fecTemino, CardColor color,  Client client) {
+    public Card(long idClient, CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, Client client) {
+        this.idClient = idClient;
         this.type = type;
-        this.number = numCard;
-        this.cvv = codSeguridad;
-        this.fecValida = fecValida;
-        this.thruDate = fecTemino;
-//        this.cardHolder = client.getFirstName() + " " + client.getLastName();
+        this.number = number;
+        this.cvv = cvv;
+        this.validDate = validDate;
+        this.thruDate = thruDate;
+        this.cardHolder = cardHolder;
         this.color = color;
+        this.totalLimit = totalLimit;
+        this.quotaUsed = quotaUsed;
+        this.balanceQuota = balanceQuota;
         this.client = client;
     }
 
@@ -46,6 +54,14 @@ public class Card {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(long idClient) {
+        this.idClient = idClient;
     }
 
     public CardType getType() {
@@ -72,12 +88,12 @@ public class Card {
         this.cvv = cvv;
     }
 
-    public LocalDate getFecValida() {
-        return fecValida;
+    public LocalDate getValidDate() {
+        return validDate;
     }
 
-    public void setFecValida(LocalDate fecValida) {
-        this.fecValida = fecValida;
+    public void setValidDate(LocalDate validDate) {
+        this.validDate = validDate;
     }
 
     public Date getThruDate() {
@@ -104,6 +120,30 @@ public class Card {
         this.color = color;
     }
 
+    public Number getTotalLimit() {
+        return totalLimit;
+    }
+
+    public void setTotalLimit(Number totalLimit) {
+        this.totalLimit = totalLimit;
+    }
+
+    public Number getQuotaUsed() {
+        return quotaUsed;
+    }
+
+    public void setQuotaUsed(Number quotaUsed) {
+        this.quotaUsed = quotaUsed;
+    }
+
+    public Number getBalanceQuota() {
+        return balanceQuota;
+    }
+
+    public void setBalanceQuota(Number balanceQuota) {
+        this.balanceQuota = balanceQuota;
+    }
+
     public Client getClient() {
         return client;
     }
@@ -111,6 +151,4 @@ public class Card {
     public void setClient(Client client) {
         this.client = client;
     }
-
-
 }

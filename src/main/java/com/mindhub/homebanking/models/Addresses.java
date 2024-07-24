@@ -14,22 +14,24 @@ public class Addresses {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private Number idCliente;
-    private String direccion;
-    private Number numero;
-    private String ciudad;
-    private String comuna;
-    private Number codigoPostal;
+    private long idClient;
+    private String address;
+    private Number number;
+    private String city;
+    private String commune;
+    private Number postalCode;
     private AddressType type;
-    private boolean habilitado;
+    private boolean enabled;
 
-
-    public Addresses(String direccion, Number numero, String ciudad, String comuna, Number codigoPostal) {
-        this.direccion = direccion;
-        this.numero = numero;
-        this.ciudad = ciudad;
-        this.comuna = comuna;
-        this.codigoPostal = codigoPostal;
+    public Addresses(long idClient, String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
+        this.idClient = idClient;
+        this.address = address;
+        this.number = number;
+        this.city = city;
+        this.commune = commune;
+        this.postalCode = postalCode;
+        this.type = type;
+        this.enabled = enabled;
     }
 
     public Addresses() {
@@ -43,54 +45,81 @@ public class Addresses {
         this.id = id;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public long getIdClient() {
+        return idClient;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setIdClient(long idClient) {
+        this.idClient = idClient;
     }
 
-    public Number getNumero() {
-        return numero;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNumero(Number numero) {
-        this.numero = numero;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public Number getNumber() {
+        return number;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setNumber(Number number) {
+        this.number = number;
     }
 
-    public String getComuna() {
-        return comuna;
+    public String getCity() {
+        return city;
     }
 
-    public void setComuna(String comuna) {
-        this.comuna = comuna;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Number getCodigoPostal() {
-        return codigoPostal;
+    public String getCommune() {
+        return commune;
     }
 
-    public void setCodigoPostal(Number codigoPostal) {
-        this.codigoPostal = codigoPostal;
+    public void setCommune(String commune) {
+        this.commune = commune;
+    }
+
+    public Number getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(Number postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public AddressType getType() {
+        return type;
+    }
+
+    public void setType(AddressType type) {
+        this.type = type;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
     public String toString() {
         return "Addresses{" +
-                "direccion='" + direccion + '\'' +
-                ", numero=" + numero +
-                ", ciudad='" + ciudad + '\'' +
-                ", comuna='" + comuna + '\'' +
-                ", codigoPostal=" + codigoPostal +
+                "idClient=" + idClient +
+                ", address='" + address + '\'' +
+                ", number=" + number +
+                ", city='" + city + '\'' +
+                ", commune='" + commune + '\'' +
+                ", postalCode=" + postalCode +
+                ", type=" + type +
+                ", enabled=" + enabled +
                 '}';
     }
 }

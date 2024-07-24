@@ -55,9 +55,9 @@ public class AccountController {
 
         Client client= clientRepository.findByEmail(authentication.getName());
 
-       if (client.getAccounts().size() == 3){
-           return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
-       }
+//       if (client.getAccounts().size() == 3){
+//           return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+//       }
 
         String newAccount;
         newAccount = NumberAccountRandom.getRandomNumber();
@@ -66,10 +66,10 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-   @RequestMapping(path = "/clients/current/accounts")
-   public List<AccountDTO> getCurrentAccounts(Authentication authentication){
-         Client client = clientRepository.findByEmail(authentication.getName());
-         return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
-   }
+//   @RequestMapping(path = "/clients/current/accounts")
+//   public List<AccountDTO> getCurrentAccounts(Authentication authentication){
+//         Client client = clientRepository.findByEmail(authentication.getName());
+//         return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
+//   }
 
 }
