@@ -4,7 +4,6 @@ import com.mindhub.homebanking.dtos.AddressesDTO;
 import com.mindhub.homebanking.service.AddressesService;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class AddressesServiceImpl implements AddressesService {
 

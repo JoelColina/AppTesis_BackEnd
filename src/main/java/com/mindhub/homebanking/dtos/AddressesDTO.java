@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.dtos;
 
 import com.mindhub.homebanking.models.AddressType;
+import com.mindhub.homebanking.models.Addresses;
 
 public class AddressesDTO {
 
@@ -14,15 +15,16 @@ public class AddressesDTO {
     private AddressType type;
     private boolean enabled;
 
-    public AddressesDTO(long idClient, String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
-        this.idClient = idClient;
-        this.address = address;
-        this.number = number;
-        this.city = city;
-        this.commune = commune;
-        this.postalCode = postalCode;
-        this.type = type;
-        this.enabled = enabled;
+//    public AddressesDTO(long idClient, String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
+     public AddressesDTO(Addresses addresses){
+        this.idClient = addresses.getIdClient();
+        this.address = addresses.getAddress();
+        this.number = addresses.getNumber();
+        this.city = addresses.getCity();
+        this.commune = addresses.getCommune();
+        this.postalCode = addresses.getPostalCode();
+        this.type = addresses.getType();
+        this.enabled = addresses.isEnabled();
     }
 
     public long getId() {

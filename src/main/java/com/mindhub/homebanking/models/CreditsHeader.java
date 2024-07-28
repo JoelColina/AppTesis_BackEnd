@@ -2,10 +2,7 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class CreditsHeader {
@@ -13,6 +10,10 @@ public class CreditsHeader {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     private long idClient;
     private Number requestedAmount;
@@ -57,6 +58,14 @@ public class CreditsHeader {
 
     public void setQuotaNumber(Number quotaNumber) {
         this.quotaNumber = quotaNumber;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     @Override

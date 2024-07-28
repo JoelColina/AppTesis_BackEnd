@@ -14,15 +14,6 @@ public class CityDTO {
         this.communes = communes;
     }
 
-//    public CityDTO(City city) {
-//
-//        this.id       = city.getId();
-//        this.name     = city.getName();
-//        this.region   = city.getRegion();
-//        this.communes = city.communes();
-//
-//    }
-
     public long getId() {
         return id;
     }
