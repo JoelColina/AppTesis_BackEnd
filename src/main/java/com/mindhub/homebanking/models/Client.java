@@ -25,17 +25,17 @@ public class Client {
     private Number debtAccount;
     private Number availableSpace;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<Addresses> addresses = new HashSet<>();
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    Set<Addresses> addresses = new HashSet<>();
 //
 //    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
 //    Set<ClientLoan> clientLoans = new HashSet<>();
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<Card> cards = new HashSet<>();
-
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<CreditsHeader> creditsHeaders = new HashSet<>();
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    Set<Card> cards = new HashSet<>();
+//
+//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+//    Set<CreditsHeader> creditsHeaders = new HashSet<>();
 
     private String password;
 
@@ -152,13 +152,13 @@ public class Client {
         this.password = password;
     }
 
-    public Set<Addresses> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(Set<Addresses> addresses) {
-        this.addresses = addresses;
-    }
+//    public Set<Addresses> getAddresses() {
+//        return addresses;
+//    }
+//
+//    public void setAddresses(Set<Addresses> addresses) {
+//        this.addresses = addresses;
+//    }
 
     //    @JsonIgnore
 //    public Set<ClientLoan> getClientLoans() {
@@ -174,21 +174,21 @@ public class Client {
 //        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
 //    }
 
-    public Set<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
-    }
-
-    public Set<CreditsHeader> getCreditsHeaders() {
-        return creditsHeaders;
-    }
-
-    public void setCreditsHeaders(Set<CreditsHeader> creditsHeaders) {
-        this.creditsHeaders = creditsHeaders;
-    }
+//    public Set<Card> getCards() {
+//        return cards;
+//    }
+//
+//    public void setCards(Set<Card> cards) {
+//        this.cards = cards;
+//    }
+//
+//    public Set<CreditsHeader> getCreditsHeaders() {
+//        return creditsHeaders;
+//    }
+//
+//    public void setCreditsHeaders(Set<CreditsHeader> creditsHeaders) {
+//        this.creditsHeaders = creditsHeaders;
+//    }
 
     @Override
     public String toString() {

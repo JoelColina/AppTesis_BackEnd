@@ -19,12 +19,12 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
-    private Client client;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "client_id")
+//    private Client client;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-    private Set<Transaction> transactions = new HashSet<>();
+//    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+//    private Set<Transaction> transactions = new HashSet<>();
 
     public Account() {
     }
@@ -33,7 +33,7 @@ public class Account {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
-        this.client = client;
+//        this.client = client;
     }
     public long getId() {
         return id;
@@ -67,21 +67,21 @@ public class Account {
         return balance;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
+//
+//    public Set<Transaction> getTransactions() {
+//        return transactions;
+//    }
+//
+//    public void setTransactions(Set<Transaction> transactions) {
+//        this.transactions = transactions;
+//    }
 
     @Override
     public String toString() {
@@ -89,8 +89,8 @@ public class Account {
                 "number='" + number + '\'' +
                 ", creationDate=" + creationDate +
                 ", balance=" + balance +
-                ", client=" + client +
-                ", transactions=" + transactions +
+//                ", client=" + client +
+//                ", transactions=" + transactions +
                 '}';
     }
 }

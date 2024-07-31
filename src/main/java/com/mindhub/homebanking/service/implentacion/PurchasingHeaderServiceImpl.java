@@ -15,11 +15,11 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
     @Override
     public Set<PurchasingHeaderDTO> finAll() {
-        return this.purchasingHeaderRepository.findAll().stream().map(PurchasingHeaderDTO::new).collect(Collectors.toSet());
+        return Set.of();
     }
 
     @Override
     public PurchasingHeaderDTO finById(Long id) {
-        return this.purchasingHeaderRepository.findById(id).map(PurchasingHeaderDTO::new).orElse(null);
+        return null;
     }
 }

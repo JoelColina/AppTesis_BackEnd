@@ -14,22 +14,22 @@ import java.util.Set;
 @RequestMapping("/api")
 public class AddressesController {
 
-    private final AddressesService addressesService;
+//    private final AddressesService addressesService;
 
     @Autowired
     private AddressesRepository addressesRepository;
 
-    public AddressesController(AddressesService addressesService) {
-        this.addressesService = addressesService;
-    }
+//    public AddressesController(AddressesService addressesService) {
+//        this.addressesService = addressesService;
+//    }
 
-    @RequestMapping("/address")
-    public Set<AddressesDTO> getcard(){
-        return this.addressesService.finAll();
-    }
+//    @RequestMapping("/address")
+//    public Set<AddressesDTO> getcard(){
+//        return this.addressesService.finAll();
+//    }
 
-    @RequestMapping("/address/{id}")
-    public AddressesDTO getcard(@PathVariable long id){
-        return this.addressesService.finById(id);
-    }
+//    @RequestMapping("/address/{id}")
+//    public AddressesDTO getcard(@PathVariable long id){
+//        return this.addressesService.finById(id);
+//    }
 }

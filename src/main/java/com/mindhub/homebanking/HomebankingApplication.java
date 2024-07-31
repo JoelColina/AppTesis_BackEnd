@@ -33,20 +33,22 @@ public class HomebankingApplication {
 	public Utils utils;
 
 //	@Bean
-//	public CommandLineRunner iniData(ClientRepository clientRepository, AccountRepository accountRepository,
-//									 TransactionRepository transactionRepository, LoanRepository loanRepository,
-//									 ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
+//	public CommandLineRunner iniData(ClientRepository clientRepository
+////							, AccountRepository accountRepository,
+////									 TransactionRepository transactionRepository, LoanRepository loanRepository,
+////									 ClientLoanRepository clientLoanRepository, CardRepository cardRepository
+//	){
 //		return (
 //				args -> {
 //
-//					  Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", this.passwordEncoder.encode("11111111"));
+//					  Client client1 = new Client("Joel", "Colina", "Vargas", "melba@mindhub.com", this.passwordEncoder.encode("11111111"));
 //					  Client client2 = new Client("Jose", "Salazar", "jonasalazarp@gmail.com",this.passwordEncoder.encode("22222222"));
 //				 	  Client client3 = new Client("Danitza", "Alvarado", "danitza.alvaradobernales@gmail.com",this.passwordEncoder.encode("33333333"));
-//
+
 //				    clientRepository.save(client1);
 //					clientRepository.save(client2);
 //					clientRepository.save(client3);
-//
+
 //					  LocalDate fetchHow = LocalDate.now().plusDays(1);
 //					  Account account1 = new Account("VIN001", fetchHow, 5000,  client1);
 //					  Account account2 = new Account("VIN002", fetchHow, 15000,  client1);

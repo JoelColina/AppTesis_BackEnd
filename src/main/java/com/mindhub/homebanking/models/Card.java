@@ -26,9 +26,9 @@ public class Card {
     private Number quotaUsed;
     private Number balanceQuota;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
-    private Client client;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "client_id")
+//    private Client client;
 
     public Card(long idClient, CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, Client client) {
         this.idClient = idClient;
@@ -42,7 +42,7 @@ public class Card {
         this.totalLimit = totalLimit;
         this.quotaUsed = quotaUsed;
         this.balanceQuota = balanceQuota;
-        this.client = client;
+//        this.client = client;
     }
 
     public Card() {
@@ -144,11 +144,11 @@ public class Card {
         this.balanceQuota = balanceQuota;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
 }

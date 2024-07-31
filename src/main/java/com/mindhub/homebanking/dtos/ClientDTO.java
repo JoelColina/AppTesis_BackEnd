@@ -3,7 +3,6 @@ package com.mindhub.homebanking.dtos;
 import com.mindhub.homebanking.models.Client;
 
 import java.util.Date;
-import java.util.Set;
 
 public class ClientDTO {
 
@@ -156,31 +155,6 @@ public class ClientDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
-//    public Set<AccountDTO> getAccounts() {
-//        return accounts;
-//    }
-//
-//    public void setAccounts(Set<AccountDTO> accounts) {
-//        this.accounts = accounts;
-//    }
-//
-//    public Set<ClientLoanDTO> getLoans() {
-//        return loans;
-//    }
-//
-//    public void setLoans(Set<ClientLoanDTO> loans)
-//    {
-//        this.loans = loans;
-//    }
-//
-//    public Set<CardDTO> getCards() {
-//        return cards;
-//    }
-//
-//    public void setCards(Set<CardDTO> cards) {
-//        this.cards = cards;
-//    }
 
     public String getPassword() {
         return password;

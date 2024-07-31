@@ -14,20 +14,20 @@ import java.util.Set;
 @RequestMapping("/api")
 public class PurchasingDetailController {
 
-    private final PurchasingDetailService purchasingdetailservice;
+//    private final PurchasingDetailService purchasingdetailservice;
 
-    public PurchasingDetailController(PurchasingDetailService purchasingdetailService) {
-        this.purchasingdetailservice = purchasingdetailService;
-    }
+//    public PurchasingDetailController(PurchasingDetailService purchasingdetailService) {
+//        this.purchasingdetailservice = purchasingdetailService;
+//    }
 
-    @RequestMapping("/shopping")
-    public Set<PurchasingDetailDTO> getcard(){
-        return this.purchasingdetailservice.finAll();
-    }
-
-    @RequestMapping("/shopping/{id}")
-    public PurchasingDetailDTO getcard(@PathVariable long id){
-        return this.purchasingdetailservice.finById(id);
-    }
+//    @RequestMapping("/shopping")
+//    public Set<PurchasingDetailDTO> getcard(){
+//        return this.purchasingdetailservice.finAll();
+//    }
+//
+//    @RequestMapping("/shopping/{id}")
+//    public PurchasingDetailDTO getcard(@PathVariable long id){
+//        return this.purchasingdetailservice.finById(id);
+//    }
 
 }

@@ -11,9 +11,9 @@ public class CreditsHeader {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
-    private Client client;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "client_id")
+//    private Client client;
 
     private long idClient;
     private Number requestedAmount;
@@ -60,13 +60,13 @@ public class CreditsHeader {
         this.quotaNumber = quotaNumber;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
 
     @Override
     public String toString() {

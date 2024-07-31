@@ -19,7 +19,7 @@ public class LoanDTO {
         this.maxAmount = loan.getMaxAmount();
         this.payments  = loan.getPayments();
 
-        this.clientLoans = loan.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toList());
+//        this.clientLoans = loan.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toList());
     }
 
     public long getId() {
