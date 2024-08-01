@@ -14,22 +14,22 @@ import java.util.Set;
 @RequestMapping("/api")
 public class PurchasingHeaderController {
 
-//    private final PurchasingHeaderService purchasingHeaderService;
-//
-//    @Autowired
-//    private PurchasingHeaderRepository shoppingRepository;
-//
-//    public PurchasingHeaderController(PurchasingHeaderService shoppingService) {
-//        this.purchasingHeaderService = shoppingService;
-//    }
-//
-//    @RequestMapping("/shopping")
-//    public Set<PurchasingHeaderDTO> getcard(){
-//        return this.purchasingHeaderService.finAll();
-//    }
-//
-//    @RequestMapping("/shopping/{id}")
-//    public PurchasingHeaderDTO getcard(@PathVariable long id){
-//        return this.purchasingHeaderService.finById(id);
-//    }
+    private final PurchasingHeaderService purchasingHeaderService;
+
+    @Autowired
+    private PurchasingHeaderRepository shoppingRepository;
+
+    public PurchasingHeaderController(PurchasingHeaderService shoppingService) {
+        this.purchasingHeaderService = shoppingService;
+    }
+
+    @RequestMapping("/purchasingheaders")
+    public Set<PurchasingHeaderDTO> getcard(){
+        return this.purchasingHeaderService.finAll();
+    }
+
+    @RequestMapping("/purchasingheaders/{id}")
+    public PurchasingHeaderDTO getcard(@PathVariable long id){
+        return this.purchasingHeaderService.finById(id);
+    }
 }

@@ -9,9 +9,12 @@ import com.mindhub.homebanking.service.PurchasingDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
+@RestController
+@RequestMapping("/api")
 public class CreditsHeaderController {
 
     private final CreditsHeaderService creditsheaderservice;
@@ -23,12 +26,12 @@ public class CreditsHeaderController {
         this.creditsheaderservice = creditsheaderservice;
     }
 
-    @RequestMapping("/shopping")
+    @RequestMapping("/creditsheaders")
     public Set<CreditsHeaderDTO> getcard(){
         return this.creditsheaderservice.finAll();
     }
 
-    @RequestMapping("/shopping/{id}")
+    @RequestMapping("/creditsheaders/{id}")
     public CreditsHeaderDTO getcard(@PathVariable long id){
         return this.creditsheaderservice.finById(id);
     }

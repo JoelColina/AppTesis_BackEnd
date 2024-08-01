@@ -2,6 +2,9 @@ package com.mindhub.homebanking.dtos;
 
 import com.mindhub.homebanking.models.AddressType;
 import com.mindhub.homebanking.models.PurchasingHeader;
+import com.mindhub.homebanking.repositories.PurchasingHeaderRepository;
+import com.mindhub.homebanking.service.implentacion.CardServiceImpl;
+
 import java.util.Date;
 
 public class PurchasingHeaderDTO {
@@ -25,7 +28,6 @@ public class PurchasingHeaderDTO {
     private String retiredBy;
 
     public PurchasingHeaderDTO(PurchasingHeader purchasingHeader) {
-
         this.idClient = purchasingHeader.getIdClient();
         this.trade = purchasingHeader.getTrade();
         this.product = purchasingHeader.getProduct();

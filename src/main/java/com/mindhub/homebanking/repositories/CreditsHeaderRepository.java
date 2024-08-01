@@ -1,7 +1,9 @@
 package com.mindhub.homebanking.repositories;
 
-import com.mindhub.homebanking.models.PurchasingHeader;
+import com.mindhub.homebanking.models.CreditsHeader;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-public interface CreditsHeaderRepository extends JpaRepository<PurchasingHeader, Long> {
+@RepositoryRestResource
+public interface CreditsHeaderRepository extends JpaRepository<CreditsHeader, Long> {
 }

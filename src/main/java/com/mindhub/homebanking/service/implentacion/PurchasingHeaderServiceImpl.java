@@ -4,10 +4,12 @@ import com.mindhub.homebanking.dtos.PurchasingHeaderDTO;
 import com.mindhub.homebanking.repositories.PurchasingHeaderRepository;
 import com.mindhub.homebanking.service.PurchasingHeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
     @Autowired

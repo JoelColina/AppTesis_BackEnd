@@ -14,15 +14,13 @@ public class PurchasingDetail {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private long idClient;
     private long idPurchase;
     private String product;
     private Number amount;
     private Number worth;
     private Number tax;
 
-    public PurchasingDetail(long idClient, long idPurchase, String product, Number amount, Number worth, Number tax) {
-        this.idClient = idClient;
+    public PurchasingDetail( long idPurchase, String product, Number amount, Number worth, Number tax) {
         this.idPurchase = idPurchase;
         this.product = product;
         this.amount = amount;
@@ -39,14 +37,6 @@ public class PurchasingDetail {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
     }
 
     public long getIdPurchase() {
@@ -92,7 +82,6 @@ public class PurchasingDetail {
     @Override
     public String toString() {
         return "PurchasingDetail{" +
-                "idClient=" + idClient +
                 ", idPurchase=" + idPurchase +
                 ", product='" + product + '\'' +
                 ", amount=" + amount +

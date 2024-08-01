@@ -4,9 +4,11 @@ import com.mindhub.homebanking.dtos.PurchasingDetailDTO;
 import com.mindhub.homebanking.repositories.PurchasingDetailRepository;
 import com.mindhub.homebanking.service.PurchasingDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class PurchasingDetailServiceImpl implements PurchasingDetailService {
 
     @Autowired

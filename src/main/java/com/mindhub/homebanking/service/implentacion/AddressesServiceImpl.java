@@ -2,9 +2,11 @@ package com.mindhub.homebanking.service.implentacion;
 
 import com.mindhub.homebanking.dtos.AddressesDTO;
 import com.mindhub.homebanking.service.AddressesService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class AddressesServiceImpl implements AddressesService {
 
     @Override

@@ -15,8 +15,7 @@ public class AddressesDTO {
     private AddressType type;
     private boolean enabled;
 
-//    public AddressesDTO(long idClient, String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
-     public AddressesDTO(Addresses addresses){
+    public AddressesDTO(Addresses addresses){
         this.idClient = addresses.getIdClient();
         this.address = addresses.getAddress();
         this.number = addresses.getNumber();
