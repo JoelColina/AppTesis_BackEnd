@@ -2,10 +2,7 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,13 +12,15 @@ public class CreditDetail {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private long idCredit;
-    private Date dateExpiration;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "credit_id")
+    private CreditsHeader creditsHeader;
+
+     private Date dateExpiration;
     private String quotaStatus;
     private Date payDay;
 
-    public CreditDetail(long idCredit, Date dateExpiration, String quotaStatus, Date payDay) {
-        this.idCredit = idCredit;
+    public CreditDetail(Date dateExpiration, String quotaStatus, Date payDay) {
         this.dateExpiration = dateExpiration;
         this.quotaStatus = quotaStatus;
         this.payDay = payDay;
@@ -38,13 +37,6 @@ public class CreditDetail {
         this.id = id;
     }
 
-    public long getIdCredit() {
-        return idCredit;
-    }
-
-    public void setIdCredit(long idCredit) {
-        this.idCredit = idCredit;
-    }
 
     public Date getDateExpiration() {
         return dateExpiration;
@@ -70,10 +62,17 @@ public class CreditDetail {
         this.payDay = payDay;
     }
 
+    public CreditsHeader getCreditsHeader() {
+        return creditsHeader;
+    }
+
+    public void setCreditsHeader(CreditsHeader creditsHeader) {
+        this.creditsHeader = creditsHeader;
+    }
+
     @Override
     public String toString() {
         return "CreditDetail{" +
-                "idCredit=" + idCredit +
                 ", dateExpiration=" + dateExpiration +
                 ", quotaStatus='" + quotaStatus + '\'' +
                 ", payDay=" + payDay +

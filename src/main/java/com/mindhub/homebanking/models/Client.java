@@ -5,7 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Client {
@@ -25,17 +27,20 @@ public class Client {
     private Number debtAccount;
     private Number availableSpace;
 
-//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-//    Set<Addresses> addresses = new HashSet<>();
-//
-//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-//    Set<ClientLoan> clientLoans = new HashSet<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<Addresses> addresses = new HashSet<>();
 
-//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-//    Set<Card> cards = new HashSet<>();
-//
-//    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-//    Set<CreditsHeader> creditsHeaders = new HashSet<>();
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<CreditsHeader> creditsHeaders = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<PurchasingHeader> purchasingHeaders = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<ClientLoan> clientLoans = new HashSet<>();
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<Card> cards = new HashSet<>();
 
     private String password;
 
@@ -152,43 +157,52 @@ public class Client {
         this.password = password;
     }
 
-//    public Set<Addresses> getAddresses() {
-//        return addresses;
-//    }
-//
-//    public void setAddresses(Set<Addresses> addresses) {
-//        this.addresses = addresses;
-//    }
+    public Set<Addresses> getAddresses() {
+        return addresses;
+    }
 
-    //    @JsonIgnore
+    public void setAddresses(Set<Addresses> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Set<CreditsHeader> getCreditsHeaders() {
+        return creditsHeaders;
+    }
+
+    public void setCreditsHeaders(Set<CreditsHeader> creditsHeaders) {
+        this.creditsHeaders = creditsHeaders;
+    }
+
+    public Set<PurchasingHeader> getPurchasingHeaders() {
+        return purchasingHeaders;
+    }
+
+    public void setPurchasingHeaders(Set<PurchasingHeader> purchasingHeaders) {
+        this.purchasingHeaders = purchasingHeaders;
+    }
+
+//    @JsonIgnore
 //    public Set<ClientLoan> getClientLoans() {
 //        return clientLoans;
 //    }
-//
-//    public void addClientLoans(ClientLoan clientLoan){
-//        clientLoan.setClient(this);
-//        clientLoans.add(clientLoan);
-//    }
-//
-//    public List<Loan> getLoans(){
-//        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
-//    }
 
-//    public Set<Card> getCards() {
-//        return cards;
-//    }
-//
-//    public void setCards(Set<Card> cards) {
-//        this.cards = cards;
-//    }
-//
-//    public Set<CreditsHeader> getCreditsHeaders() {
-//        return creditsHeaders;
-//    }
-//
-//    public void setCreditsHeaders(Set<CreditsHeader> creditsHeaders) {
-//        this.creditsHeaders = creditsHeaders;
-//    }
+    public void addClientLoans(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        clientLoans.add(clientLoan);
+    }
+
+    public List<Loan> getLoans(){
+        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
 
     @Override
     public String toString() {

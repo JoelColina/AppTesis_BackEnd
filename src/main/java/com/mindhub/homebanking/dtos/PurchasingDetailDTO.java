@@ -5,14 +5,12 @@ import com.mindhub.homebanking.models.PurchasingDetail;
 public class PurchasingDetailDTO {
 
     private long id;
-    private long idPurchase;
     private String product;
     private Number amount;
     private Number worth;
     private Number tax;
 
     public PurchasingDetailDTO(PurchasingDetail purchasingdetail) {
-        this.idPurchase = purchasingdetail.getIdPurchase();
         this.product = purchasingdetail.getProduct();
         this.amount = purchasingdetail.getAmount();
         this.worth = purchasingdetail.getWorth();
@@ -25,14 +23,6 @@ public class PurchasingDetailDTO {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdPurchase() {
-        return idPurchase;
-    }
-
-    public void setIdPurchase(long idPurchase) {
-        this.idPurchase = idPurchase;
     }
 
     public String getProduct() {

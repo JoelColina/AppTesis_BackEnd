@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class CardDTO {
     private long id;
-    private long idClient;
+//    private long idClient;
     private CardType type;
     private String number;
     private int cvv;
@@ -22,7 +22,7 @@ public class CardDTO {
     private Number balanceQuota;
 
     public CardDTO(Card card) {
-        this.idClient = card.getIdClient();
+//        this.idClient = card.getIdClient();
         this.type = card.getType();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
@@ -43,13 +43,13 @@ public class CardDTO {
         this.id = id;
     }
 
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
-    }
+//    public long getIdClient() {
+//        return idClient;
+//    }
+//
+//    public void setIdClient(long idClient) {
+//        this.idClient = idClient;
+//    }
 
     public CardType getType() {
         return type;

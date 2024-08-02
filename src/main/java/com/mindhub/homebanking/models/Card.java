@@ -13,8 +13,8 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-
-    private long idClient;
+//
+//    private long idClient;
     private CardType type;
     private String number;
     private int cvv;
@@ -26,12 +26,12 @@ public class Card {
     private Number quotaUsed;
     private Number balanceQuota;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "client_id")
-//    private Client client;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    public Card(long idClient, CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, Client client) {
-        this.idClient = idClient;
+    public Card(CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, Client client) {
+//        this.idClient = idClient;
         this.type = type;
         this.number = number;
         this.cvv = cvv;
@@ -56,13 +56,13 @@ public class Card {
         this.id = id;
     }
 
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
-    }
+//    public long getIdClient() {
+//        return idClient;
+//    }
+//
+//    public void setIdClient(long idClient) {
+//        this.idClient = idClient;
+//    }
 
     public CardType getType() {
         return type;
@@ -144,11 +144,11 @@ public class Card {
         this.balanceQuota = balanceQuota;
     }
 
-//    public Client getClient() {
-//        return client;
-//    }
-//
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

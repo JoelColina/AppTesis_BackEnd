@@ -23,8 +23,8 @@ public class Loan {
     @Column(name="payment")
     protected List<Integer> payments = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
-//    Set<ClientLoan> clientLoans = new HashSet<>();
+    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
+    Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Loan() {
     }
@@ -67,18 +67,18 @@ public class Loan {
         this.payments = payments;
     }
 
-//    public Set<ClientLoan> getClientLoans() {
-//        return clientLoans;
-//    }
-//
-//    public void addClientLoans(ClientLoan clientLoan) {
-//       clientLoan.setLoan(this);
-//       clientLoans.add(clientLoan);
-//    }
-//
-//    public List<Client> getClients(){
-//        return clientLoans.stream().map(ClientLoan::getClient).collect(Collectors.toList());
-//    }
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void addClientLoans(ClientLoan clientLoan) {
+       clientLoan.setLoan(this);
+       clientLoans.add(clientLoan);
+    }
+
+    public List<Client> getClients(){
+        return clientLoans.stream().map(ClientLoan::getClient).collect(Collectors.toList());
+    }
 
     @Override
     public String toString() {

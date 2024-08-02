@@ -6,7 +6,6 @@ import com.mindhub.homebanking.models.Addresses;
 public class AddressesDTO {
 
     private long id;
-    private long idClient;
     private String address;
     private Number number;
     private String city;
@@ -16,7 +15,6 @@ public class AddressesDTO {
     private boolean enabled;
 
     public AddressesDTO(Addresses addresses){
-        this.idClient = addresses.getIdClient();
         this.address = addresses.getAddress();
         this.number = addresses.getNumber();
         this.city = addresses.getCity();
@@ -32,14 +30,6 @@ public class AddressesDTO {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
     }
 
     public String getAddress() {

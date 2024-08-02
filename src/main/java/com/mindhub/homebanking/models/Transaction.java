@@ -18,9 +18,9 @@ public class Transaction {
     private String description;
     private LocalDate date;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "account_id")
-//    private Account account;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public Transaction(TransactionType type, double amount, String description, LocalDate creationDate,Account account) {
         this.type = type;
@@ -73,13 +73,13 @@ public class Transaction {
         this.date = date;
     }
 
-//    public Account getAccount() {
-//        return account;
-//    }
-//
-//    public void setAccount(Account account) {
-//        this.account = account;
-//    }
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     @Override
     public String toString() {

@@ -8,6 +8,6 @@ public interface CityService {
 
     List<CityDTO> findAll();
 
-    CityDTO findById(long id);
+    CityDTO findById(Long id);
 
 }

@@ -11,7 +11,6 @@ public class PurchasingHeaderDTO {
 
     private long id;
 
-    private long idClient;
     private String trade;
     private String product;
     private Number numberBuy;
@@ -28,7 +27,6 @@ public class PurchasingHeaderDTO {
     private String retiredBy;
 
     public PurchasingHeaderDTO(PurchasingHeader purchasingHeader) {
-        this.idClient = purchasingHeader.getIdClient();
         this.trade = purchasingHeader.getTrade();
         this.product = purchasingHeader.getProduct();
         this.numberBuy = purchasingHeader.getNumberBuy();
@@ -51,14 +49,6 @@ public class PurchasingHeaderDTO {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
     }
 
     public String getTrade() {

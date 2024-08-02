@@ -5,12 +5,10 @@ import com.mindhub.homebanking.models.CreditsHeader;
 public class CreditsHeaderDTO {
     private long id;
 
-    private long idClient;
     private Number requestedAmount;
     private Number quotaNumber;
 
     public CreditsHeaderDTO(CreditsHeader creditsheader) {
-        this.idClient = creditsheader.getIdClient();
         this.requestedAmount = creditsheader.getRequestedAmount();
         this.quotaNumber = creditsheader.getQuotaNumber();
     }
@@ -21,14 +19,6 @@ public class CreditsHeaderDTO {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
     }
 
     public Number getRequestedAmount() {

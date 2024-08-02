@@ -3,6 +3,8 @@ package com.mindhub.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class CreditsHeader {
@@ -11,16 +13,17 @@ public class CreditsHeader {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "client_id")
-//    private Client client;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    private long idClient;
+    @OneToMany(mappedBy = "creditsHeader", fetch = FetchType.EAGER)
+    Set<CreditDetail> creditDetails = new HashSet<>();
+
     private Number requestedAmount;
     private Number quotaNumber;
 
-    public CreditsHeader(long idClient, Number requestedAmount, Number quotaNumber) {
-        this.idClient = idClient;
+    public CreditsHeader(Number requestedAmount, Number quotaNumber) {
         this.requestedAmount = requestedAmount;
         this.quotaNumber = quotaNumber;
     }
@@ -34,14 +37,6 @@ public class CreditsHeader {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
     }
 
     public Number getRequestedAmount() {
@@ -60,18 +55,25 @@ public class CreditsHeader {
         this.quotaNumber = quotaNumber;
     }
 
-//    public Client getClient() {
-//        return client;
-//    }
-//
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Set<CreditDetail> getCreditDetails() {
+        return creditDetails;
+    }
+
+    public void setCreditDetails(Set<CreditDetail> creditDetails) {
+        this.creditDetails = creditDetails;
+    }
 
     @Override
     public String toString() {
         return "CreditsHeader{" +
-                "idClient=" + idClient +
                 ", requestedAmount=" + requestedAmount +
                 ", quotaNumber=" + quotaNumber +
                 '}';

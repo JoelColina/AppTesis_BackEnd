@@ -2,10 +2,7 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class PurchasingDetail {
@@ -14,14 +11,16 @@ public class PurchasingDetail {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private long idPurchase;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "purchase_id")
+    private PurchasingHeader purchasingHeader;
+
     private String product;
     private Number amount;
     private Number worth;
     private Number tax;
 
-    public PurchasingDetail( long idPurchase, String product, Number amount, Number worth, Number tax) {
-        this.idPurchase = idPurchase;
+    public PurchasingDetail(String product, Number amount, Number worth, Number tax) {
         this.product = product;
         this.amount = amount;
         this.worth = worth;
@@ -37,14 +36,6 @@ public class PurchasingDetail {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdPurchase() {
-        return idPurchase;
-    }
-
-    public void setIdPurchase(long idPurchase) {
-        this.idPurchase = idPurchase;
     }
 
     public String getProduct() {
@@ -79,10 +70,17 @@ public class PurchasingDetail {
         this.tax = tax;
     }
 
+    public PurchasingHeader getPurchasingHeader() {
+        return purchasingHeader;
+    }
+
+    public void setPurchasingHeader(PurchasingHeader purchasingHeader) {
+        this.purchasingHeader = purchasingHeader;
+    }
+
     @Override
     public String toString() {
         return "PurchasingDetail{" +
-                ", idPurchase=" + idPurchase +
                 ", product='" + product + '\'' +
                 ", amount=" + amount +
                 ", worth=" + worth +

@@ -2,11 +2,10 @@ package com.mindhub.homebanking.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class PurchasingHeader {
@@ -15,7 +14,13 @@ public class PurchasingHeader {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private long idClient;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @OneToMany(mappedBy = "purchasingHeader", fetch = FetchType.EAGER)
+    Set<PurchasingDetail> purchasingDetails = new HashSet<>();
+
     private String trade;
     private String product;
     private Number numberBuy;
@@ -31,8 +36,7 @@ public class PurchasingHeader {
     private String deliveryAddress;
     private String retiredBy;
 
-    public PurchasingHeader(long idClient, String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy) {
-        this.idClient = idClient;
+    public PurchasingHeader(String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy) {
         this.trade = trade;
         this.product = product;
         this.numberBuy = numberBuy;
@@ -58,14 +62,6 @@ public class PurchasingHeader {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdClient() {
-        return idClient;
-    }
-
-    public void setIdClient(long idClient) {
-        this.idClient = idClient;
     }
 
     public String getTrade() {
@@ -180,10 +176,25 @@ public class PurchasingHeader {
         this.retiredBy = retiredBy;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Set<PurchasingDetail> getPurchasingDetails() {
+        return purchasingDetails;
+    }
+
+    public void setPurchasingDetails(Set<PurchasingDetail> purchasingDetails) {
+        this.purchasingDetails = purchasingDetails;
+    }
+
     @Override
     public String toString() {
         return "PurchasingHeader{" +
-                "idClient=" + idClient +
                 ", trade='" + trade + '\'' +
                 ", product='" + product + '\'' +
                 ", numberBuy=" + numberBuy +

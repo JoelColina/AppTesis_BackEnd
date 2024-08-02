@@ -8,13 +8,11 @@ public class CreditDetailDTO {
 
     private long id;
 
-    private long idCredit;
     private Date dateExpiration;
     private String quotaStatus;
     private Date payDay;
 
     public CreditDetailDTO(CreditDetail creditdetail) {
-        this.idCredit = creditdetail.getIdCredit();
         this.dateExpiration = creditdetail.getDateExpiration();
         this.quotaStatus = creditdetail.getQuotaStatus();
         this.payDay = creditdetail.getPayDay();
@@ -26,14 +24,6 @@ public class CreditDetailDTO {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getIdCredit() {
-        return idCredit;
-    }
-
-    public void setIdCredit(long idCredit) {
-        this.idCredit = idCredit;
     }
 
     public Date getDateExpiration() {
