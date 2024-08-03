@@ -18,6 +18,8 @@ public class Account {
     private String number;
     private LocalDate creationDate;
     private double balance;
+    private boolean enable;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -29,12 +31,13 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance, Client client) {
+    public Account(String number, LocalDate creationDate, double balance, boolean enable) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
-//        this.client = client;
+        this.enable = enable;
     }
+
     public long getId() {
         return id;
     }
@@ -81,6 +84,14 @@ public class Account {
 
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     @Override

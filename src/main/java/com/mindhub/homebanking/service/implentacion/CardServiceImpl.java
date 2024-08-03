@@ -6,6 +6,7 @@ import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.service.CardService;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Entity;
@@ -30,6 +31,21 @@ public class CardServiceImpl implements CardService {
     @Override
     public CardDTO finById(Long id) {
         return this.cardRepository.findById(id).map(CardDTO::new).orElse(null);
+    }
+
+    @Override
+    public CardDTO save(CardDTO cardDTO) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(CardDTO cardDTO) {
+        return false;
+    }
+
+    @Override
+    public ResponseEntity<?> update(CardDTO cardDTO) {
+        return null;
     }
 
 }

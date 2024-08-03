@@ -4,6 +4,7 @@ import com.mindhub.homebanking.dtos.PurchasingHeaderDTO;
 import com.mindhub.homebanking.repositories.PurchasingHeaderRepository;
 import com.mindhub.homebanking.service.PurchasingHeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -22,6 +23,21 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
     @Override
     public PurchasingHeaderDTO finById(Long id) {
+        return null;
+    }
+
+    @Override
+    public PurchasingHeaderDTO save(PurchasingHeaderDTO purchasingHeaderDTO) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(PurchasingHeaderDTO purchasingHeaderDTO) {
+        return false;
+    }
+
+    @Override
+    public ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO) {
         return null;
     }
 }

@@ -11,6 +11,8 @@ public class AccountDTO {
     private String number;
     private LocalDate creationDate;
     private double balance;
+    private boolean enable;
+
     private Set<TransactionDTO> transactions;
 
     public AccountDTO(Account account){
@@ -18,6 +20,8 @@ public class AccountDTO {
        this.number = account.getNumber();
        this.creationDate = account.getCreationDate();
        this.balance = account.getBalance();
+       this.enable = account.isEnable();
+
 
 //       this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toSet());
 
@@ -61,5 +65,13 @@ public class AccountDTO {
 
     public void setTransactions(Set<TransactionDTO> transactions) {
         this.transactions = transactions;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

@@ -12,7 +12,6 @@ public class CommuneDTO {
         this.communes = communes;
     }
 
-
     public long getId() {
         return id;
     }

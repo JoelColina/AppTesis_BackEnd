@@ -62,7 +62,8 @@ public class AccountController {
         String newAccount;
         newAccount = NumberAccountRandom.getRandomNumber();
 
-        accountRepository.save(new Account(newAccount, createDate, balance, client));
+//        accountRepository.save(new Account(newAccount, createDate, balance, client));
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
