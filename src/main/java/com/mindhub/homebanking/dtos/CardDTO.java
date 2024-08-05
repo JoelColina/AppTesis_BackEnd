@@ -20,9 +20,9 @@ public class CardDTO {
     private Number totalLimit;
     private Number quotaUsed;
     private Number balanceQuota;
+    private boolean enabled;
 
     public CardDTO(Card card) {
-//        this.idClient = card.getIdClient();
         this.type = card.getType();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
@@ -33,6 +33,7 @@ public class CardDTO {
         this.totalLimit = card.getTotalLimit();
         this.quotaUsed = card.getQuotaUsed();
         this.balanceQuota = card.getBalanceQuota();
+        this.enabled = card.isEnabled();
     }
 
     public long getId() {
@@ -42,14 +43,6 @@ public class CardDTO {
     public void setId(long id) {
         this.id = id;
     }
-
-//    public long getIdClient() {
-//        return idClient;
-//    }
-//
-//    public void setIdClient(long idClient) {
-//        this.idClient = idClient;
-//    }
 
     public CardType getType() {
         return type;
@@ -129,5 +122,13 @@ public class CardDTO {
 
     public void setBalanceQuota(Number balanceQuota) {
         this.balanceQuota = balanceQuota;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

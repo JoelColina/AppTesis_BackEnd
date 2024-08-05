@@ -1,43 +1,99 @@
 package com.mindhub.homebanking.service.implentacion;
 
+import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.PurchasingHeaderDTO;
 import com.mindhub.homebanking.repositories.PurchasingHeaderRepository;
 import com.mindhub.homebanking.service.PurchasingHeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
+    private Map<String, Object> response;
+    private HttpStatus http;
+    private PurchasingHeaderDTO purchasingHeaderDTONew;
+
     @Autowired
     private PurchasingHeaderRepository purchasingHeaderRepository;
 
     @Override
     public Set<PurchasingHeaderDTO> finAll() {
-        return Set.of();
+        return this.purchasingHeaderRepository.findAll().stream().map(PurchasingHeaderDTO::new).collect(Collectors.toSet());
     }
 
     @Override
-    public PurchasingHeaderDTO finById(Long id) {
-        return null;
+    public PurchasingHeaderDTO findById(Long id) {
+        return this.purchasingHeaderRepository.findById(id).map(PurchasingHeaderDTO::new).orElse(null);
     }
 
     @Override
-    public PurchasingHeaderDTO save(PurchasingHeaderDTO purchasingHeaderDTO) {
-        return null;
+    public ResponseEntity<?> save(PurchasingHeaderDTO purchasingHeaderDTO) {
+        this.response = new HashMap<>();
+        purchasingHeaderDTONew = purchasingHeaderDTO;
+        try {
+//            this.accountRepository.save(accountDTO);
+            this.purchasingHeaderDTONew.setEnabled(true);
+            this.response.put("mensaje genenetal", "OPERATION_OK");
+            this.response.put("cuenta creada", purchasingHeaderDTONew);
+            this.http = HttpStatus.CREATED;
+
+        }catch (Exception e){
+            this.response.put("mensaje genenetal", "OPERATION_NOT_OK");
+            this.response.put("mensaje ERROR", e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(this.response, this.http);
     }
 
     @Override
     public boolean delete(PurchasingHeaderDTO purchasingHeaderDTO) {
-        return false;
+        boolean operation = false;
+
+        PurchasingHeaderDTO purchasingHeaderDTONew = findById(purchasingHeaderDTO.getId());
+
+        try {
+            purchasingHeaderDTONew.setEnabled(false);
+
+            update(purchasingHeaderDTONew);
+
+            operation = true;
+
+        }catch (Exception e){
+            operation = false;
+        }
+
+        return operation;
     }
 
     @Override
     public ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO) {
-        return null;
+        this.response = new HashMap<>();
+        this.purchasingHeaderDTONew = null;
+
+        try {
+            purchasingHeaderDTONew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getId()).map(PurchasingHeaderDTO::new).orElse(null);
+
+            this.response.put("Mensaje General","Operacion OK");
+            this.response.put("Datos actualizados",purchasingHeaderDTONew);
+            http = HttpStatus.ACCEPTED;
+
+        }catch (Exception e){
+//            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
+            this.response.put("Mensaje General","Operacion NOOK");
+            this.response.put("Mensaje error",e.getMessage());
+            http = HttpStatus.BAD_REQUEST;
+        }
+
+        //que se puede enviar en el response entity
+        return new ResponseEntity<>(this.response,this.http);
     }
 }

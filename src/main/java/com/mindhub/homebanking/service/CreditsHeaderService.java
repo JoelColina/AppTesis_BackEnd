@@ -12,10 +12,10 @@ public interface CreditsHeaderService {
 
     Set<CreditsHeaderDTO> finAll();
 
-    CreditsHeaderDTO finById(Long id);
+    CreditsHeaderDTO findById(Long id);
 
     // agregar
-    CreditsHeaderDTO save (CreditsHeaderDTO creditsHeaderDTO);
+    ResponseEntity<?> save (CreditsHeaderDTO creditsHeaderDTO);
 
     // eliminar
     boolean delete (CreditsHeaderDTO creditsHeaderDTO);

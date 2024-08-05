@@ -25,12 +25,12 @@ public class AddressesController {
     }
 
     @RequestMapping("/addresses")
-    public Set<AddressesDTO> getcard(){
+    public Set<AddressesDTO> getAddresses(){
         return this.addressesService.finAll();
     }
     @RequestMapping("/shopping/{id}")
-    public AddressesDTO getcard(@PathVariable long id){
-        return this.addressesService.finById(id);
+    public AddressesDTO getAddresses(@PathVariable long id){
+        return this.addressesService.findById(id);
     }
 
 }

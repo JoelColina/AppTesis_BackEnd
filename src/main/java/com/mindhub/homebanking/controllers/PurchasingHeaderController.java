@@ -24,12 +24,12 @@ public class PurchasingHeaderController {
     }
 
     @RequestMapping("/purchasingheaders")
-    public Set<PurchasingHeaderDTO> getcard(){
+    public Set<PurchasingHeaderDTO> getpurchasingheaders(){
         return this.purchasingHeaderService.finAll();
     }
 
     @RequestMapping("/purchasingheaders/{id}")
-    public PurchasingHeaderDTO getcard(@PathVariable long id){
-        return this.purchasingHeaderService.finById(id);
+    public PurchasingHeaderDTO getpurchasingheaders(@PathVariable long id){
+        return this.purchasingHeaderService.findById(id);
     }
 }

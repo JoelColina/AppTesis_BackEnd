@@ -17,5 +17,5 @@ public interface AccountService {
 
     boolean delete (AccountDTO accountDTO);
 
-    AccountDTO save (AccountDTO accountDTO);
+    ResponseEntity<?>  save (AccountDTO accountDTO);
 }

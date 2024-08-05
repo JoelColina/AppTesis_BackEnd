@@ -7,10 +7,12 @@ public class CreditsHeaderDTO {
 
     private Number requestedAmount;
     private Number quotaNumber;
+    private boolean enabled;
 
     public CreditsHeaderDTO(CreditsHeader creditsheader) {
         this.requestedAmount = creditsheader.getRequestedAmount();
         this.quotaNumber = creditsheader.getQuotaNumber();
+        this.enabled = creditsheader.isEnabled();
     }
 
     public long getId() {
@@ -35,5 +37,13 @@ public class CreditsHeaderDTO {
 
     public void setQuotaNumber(Number quotaNumber) {
         this.quotaNumber = quotaNumber;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

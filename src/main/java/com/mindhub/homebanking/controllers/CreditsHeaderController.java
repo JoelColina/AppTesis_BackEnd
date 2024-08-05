@@ -1,11 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.CreditsHeaderDTO;
-import com.mindhub.homebanking.dtos.PurchasingDetailDTO;
 import com.mindhub.homebanking.repositories.CreditsHeaderRepository;
-import com.mindhub.homebanking.repositories.PurchasingDetailRepository;
 import com.mindhub.homebanking.service.CreditsHeaderService;
-import com.mindhub.homebanking.service.PurchasingDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,13 +24,13 @@ public class CreditsHeaderController {
     }
 
     @RequestMapping("/creditsheaders")
-    public Set<CreditsHeaderDTO> getcard(){
+    public Set<CreditsHeaderDTO> getcreditsheaders(){
         return this.creditsheaderservice.finAll();
     }
 
     @RequestMapping("/creditsheaders/{id}")
-    public CreditsHeaderDTO getcard(@PathVariable long id){
-        return this.creditsheaderservice.finById(id);
+    public CreditsHeaderDTO getcreditsheaders(@PathVariable long id){
+        return this.creditsheaderservice.findById(id);
     }
 
 }

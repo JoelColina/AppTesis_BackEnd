@@ -10,16 +10,12 @@ import java.util.Set;
 public interface CardService {
     Set<CardDTO> finAll();
 
-    CardDTO finById(Long id);
-
+    CardDTO findById(Long id);
     // agregar
-    CardDTO save (CardDTO cardDTO);
-
+    ResponseEntity<?>  save (CardDTO cardDTO);
     // eliminar
     boolean delete (CardDTO cardDTO);
-
     // actualizar
     ResponseEntity<?> update(CardDTO cardDTO);
-
 
 }

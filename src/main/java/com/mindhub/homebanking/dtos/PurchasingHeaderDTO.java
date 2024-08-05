@@ -25,6 +25,7 @@ public class PurchasingHeaderDTO {
     private String deliverDate;
     private String deliveryAddress;
     private String retiredBy;
+    private boolean enabled;
 
     public PurchasingHeaderDTO(PurchasingHeader purchasingHeader) {
         this.trade = purchasingHeader.getTrade();
@@ -41,6 +42,7 @@ public class PurchasingHeaderDTO {
         this.deliverDate = purchasingHeader.getDeliverDate();
         this.deliveryAddress = purchasingHeader.getDeliveryAddress();
         this.retiredBy = purchasingHeader.getRetiredBy();
+        this.enabled = purchasingHeader.isEnabled();
     }
 
     public long getId() {
@@ -161,5 +163,13 @@ public class PurchasingHeaderDTO {
 
     public void setRetiredBy(String retiredBy) {
         this.retiredBy = retiredBy;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -21,13 +21,13 @@ public class PurchasingDetailController {
     }
 
     @RequestMapping("/purchasingdetails")
-    public Set<PurchasingDetailDTO> getcard(){
+    public Set<PurchasingDetailDTO> getpurchasingdetails(){
         return this.purchasingdetailservice.finAll();
     }
 
     @RequestMapping("/purchasingdetails/{id}")
-    public PurchasingDetailDTO getcard(@PathVariable long id){
-        return this.purchasingdetailservice.finById(id);
+    public PurchasingDetailDTO getpurchasingdetails(@PathVariable long id){
+        return this.purchasingdetailservice.findById(id);
     }
 
 }

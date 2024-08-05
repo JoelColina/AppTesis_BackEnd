@@ -13,10 +13,10 @@ public interface PurchasingDetailService {
 
     Set<PurchasingDetailDTO> finAll();
 
-    PurchasingDetailDTO finById(Long id);
+    PurchasingDetailDTO findById(Long id);
 
     // agregar
-    PurchasingDetailDTO save (PurchasingDetailDTO purchasingDetailDTO);
+    ResponseEntity<?> save (PurchasingDetailDTO purchasingDetailDTO);
 
     // actualizar
     ResponseEntity<?> update(PurchasingDetailDTO purchasingDetailDTO);

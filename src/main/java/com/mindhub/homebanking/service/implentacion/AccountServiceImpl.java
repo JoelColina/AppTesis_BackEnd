@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 
     private Map<String, Object> response;
     private HttpStatus http;
-
+    private AccountDTO accountDTONew;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -37,25 +37,24 @@ public class AccountServiceImpl implements AccountService {
     public ResponseEntity<?> update(AccountDTO accountDTO) {
 
         this.response = new HashMap<>();
-
-        AccountDTO accountDTONew = null;
+        this.accountDTONew = null;
 
         try {
             accountDTONew = this.accountRepository.findById(accountDTO.getId()).map(AccountDTO::new).orElse(null);
 
-//            return new ResponseEntity<>(accountDTONew, HttpStatus.ACCEPTED);
-
-            response = new HashMap<>((Map) accountDTONew);
+            this.response.put("Mensaje General","Operacion OK");
+            this.response.put("Datos actualizados",accountDTONew);
             http = HttpStatus.ACCEPTED;
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
-            response = new HashMap<>((Map) accountDTONew);
+            this.response.put("Mensaje General","Operacion NOOK");
+            this.response.put("Mensaje error",e.getMessage());
             http = HttpStatus.BAD_REQUEST;
         }
 
         //que se puede enviar en el response entity
-        return new ResponseEntity<>(response,null, http);
+        return new ResponseEntity<>(this.response,this.http);
     }
 
     @Override
@@ -80,16 +79,23 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO save(AccountDTO accountDTO) {
-
+    public ResponseEntity<?> save(AccountDTO accountDTO) {
+        this.response = new HashMap<>();
+        accountDTONew = accountDTO;
         try {
 //            this.accountRepository.save(accountDTO);
+            this.accountDTONew.setEnable(true);
+            this.response.put("mensaje genenetal", "OPERATION_OK");
+            this.response.put("cuenta creada", accountDTONew);
+            this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
-
+            this.response.put("mensaje genenetal", "OPERATION_NOT_OK");
+            this.response.put("mensaje ERROR", e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
         }
 
-        return null;
+        return new ResponseEntity<>(this.response, this.http);
     }
 
 }

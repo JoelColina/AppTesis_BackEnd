@@ -12,14 +12,11 @@ public interface PurchasingHeaderService {
 
     Set<PurchasingHeaderDTO> finAll();
 
-    PurchasingHeaderDTO finById(Long id);
-
+    PurchasingHeaderDTO findById(Long id);
     // agregar
-    PurchasingHeaderDTO save (PurchasingHeaderDTO purchasingHeaderDTO);
-
+    ResponseEntity<?>  save (PurchasingHeaderDTO purchasingHeaderDTO);
     // eliminar
     boolean delete (PurchasingHeaderDTO purchasingHeaderDTO);
-
     // actualizar
     ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO);
 }

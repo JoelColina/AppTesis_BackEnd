@@ -12,10 +12,10 @@ public interface CreditDetailService {
 
     Set<CreditDetailDTO> finAll();
 
-    CreditDetailDTO finById(Long id);
+    CreditDetailDTO findById(Long id);
 
     // agregar
-    CreditDetailDTO save (CreditDetailDTO creditDetailDTO);
+    ResponseEntity<?> save (CreditDetailDTO creditDetailDTO);
 
     // actualizar
     ResponseEntity<?> update(CreditDetailDTO creditDetailDTO);

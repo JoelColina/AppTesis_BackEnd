@@ -22,10 +22,12 @@ public class CreditsHeader {
 
     private Number requestedAmount;
     private Number quotaNumber;
+    private boolean enabled;
 
-    public CreditsHeader(Number requestedAmount, Number quotaNumber) {
+    public CreditsHeader(Number requestedAmount, Number quotaNumber, boolean enabled) {
         this.requestedAmount = requestedAmount;
         this.quotaNumber = quotaNumber;
+        this.enabled = enabled;
     }
 
     public CreditsHeader() {
@@ -71,11 +73,22 @@ public class CreditsHeader {
         this.creditDetails = creditDetails;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "CreditsHeader{" +
+                "client=" + client +
+                ", creditDetails=" + creditDetails +
                 ", requestedAmount=" + requestedAmount +
                 ", quotaNumber=" + quotaNumber +
+                ", enabled=" + enabled +
                 '}';
     }
 }

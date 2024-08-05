@@ -12,14 +12,11 @@ public interface AddressesService {
 
     Set<AddressesDTO> finAll();
 
-    AddressesDTO finById(Long id);
-
+    AddressesDTO findById(Long id);
     // agregar
-    AddressesDTO save (AddressesDTO addressesDTO);
-
+    ResponseEntity<?> save (AddressesDTO addressesDTO);
     // eliminar
     boolean delete (AddressesDTO addressesDTO);
-
     // actualizar
     ResponseEntity<?> update(AddressesDTO addressesDTO);
 }

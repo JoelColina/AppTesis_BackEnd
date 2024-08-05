@@ -27,13 +27,13 @@ public class CreditDetailController {
     }
 
     @RequestMapping("/creditsdetails")
-    public Set<CreditDetailDTO> getcard(){
+    public Set<CreditDetailDTO> getcreditsdetails(){
         return this.creditsdetailservice.finAll();
     }
 
     @RequestMapping("/creditsdetails/{id}")
-    public CreditDetailDTO getcard(@PathVariable long id){
-        return this.creditsdetailservice.finById(id);
+    public CreditDetailDTO getcreditsdetails(@PathVariable long id){
+        return this.creditsdetailservice.findById(id);
     }
 
 }

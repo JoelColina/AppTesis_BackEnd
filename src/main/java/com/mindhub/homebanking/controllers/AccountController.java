@@ -46,7 +46,6 @@ public class AccountController {
         return this.accountService.findById(id);
     }
 
-
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> register( Authentication authentication ) {
 

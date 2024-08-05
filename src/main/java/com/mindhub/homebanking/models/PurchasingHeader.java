@@ -35,8 +35,9 @@ public class PurchasingHeader {
     private String deliverDate;
     private String deliveryAddress;
     private String retiredBy;
+    private boolean enabled;
 
-    public PurchasingHeader(String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy) {
+    public PurchasingHeader(String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
         this.trade = trade;
         this.product = product;
         this.numberBuy = numberBuy;
@@ -51,6 +52,7 @@ public class PurchasingHeader {
         this.deliverDate = deliverDate;
         this.deliveryAddress = deliveryAddress;
         this.retiredBy = retiredBy;
+        this.enabled = enabled;
     }
 
     public PurchasingHeader() {
@@ -192,9 +194,19 @@ public class PurchasingHeader {
         this.purchasingDetails = purchasingDetails;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "PurchasingHeader{" +
+                "client=" + client +
+                ", purchasingDetails=" + purchasingDetails +
                 ", trade='" + trade + '\'' +
                 ", product='" + product + '\'' +
                 ", numberBuy=" + numberBuy +
@@ -209,6 +221,7 @@ public class PurchasingHeader {
                 ", deliverDate='" + deliverDate + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
                 ", retiredBy='" + retiredBy + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 }

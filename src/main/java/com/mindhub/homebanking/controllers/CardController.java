@@ -49,7 +49,7 @@ public class CardController {
 
     @RequestMapping("/cards/{id}")
     public CardDTO getcard(@PathVariable long id){
-        return this.cardService.finById(id);
+        return this.cardService.findById(id);
     }
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
