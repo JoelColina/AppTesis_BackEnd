@@ -28,7 +28,7 @@ public class AddressesController {
     public Set<AddressesDTO> getAddresses(){
         return this.addressesService.finAll();
     }
-    @RequestMapping("/shopping/{id}")
+    @RequestMapping("/addresses/{id}")
     public AddressesDTO getAddresses(@PathVariable long id){
         return this.addressesService.findById(id);
     }
