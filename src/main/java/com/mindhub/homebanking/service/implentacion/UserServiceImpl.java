@@ -42,11 +42,11 @@ public class UserServiceImpl implements UserService {
 
 
     public UserServiceImpl(UserRepository userRepository,
-                                CustomerService customerService,
+//                                CustomerService customerService,
                                 BCryptPasswordEncoder passwordEncoder) {
         this.UserRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.customerService = customerService;
+//        this.customerService = customerService;
 
     }
 
