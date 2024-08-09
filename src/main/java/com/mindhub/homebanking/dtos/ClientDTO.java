@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class ClientDTO {
 
-    private long id;
 
     private String names;
     private String lastName;
@@ -44,13 +43,7 @@ public class ClientDTO {
 //        this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNames() {
         return names;

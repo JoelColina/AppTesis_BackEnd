@@ -27,7 +27,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDTO finById(Long id) {
+    public ClientDTO finById(Long id)
+    {
         return this.clientRepository.findById(id).map(ClientDTO::new).orElse(null);
     }
 
