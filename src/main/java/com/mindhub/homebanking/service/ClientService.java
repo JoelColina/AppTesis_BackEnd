@@ -8,6 +8,8 @@ import java.util.Set;
 @Service
 public interface ClientService {
 
+    ClientDTO findByEmail(String email);
+
     Set<ClientDTO> findAll();
 
     ClientDTO finById (Long id);

@@ -17,8 +17,11 @@ public class AddressesController {
 
     private final AddressesService addressesService;
 
-    @Autowired
-    private AddressesRepository addressesRepository;
+    public AddressesController(AddressesService addressesService,
+                               AddressesRepository addressesRepository) {
+        this.addressesService = addressesService;
+        this.addressesRepository = addressesRepository;
+    }
 
     public AddressesController(AddressesService addressesService){
         this.addressesService = addressesService;

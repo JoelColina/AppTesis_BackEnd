@@ -16,6 +16,12 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepository clientRepository;
 
     @Override
+    public ClientDTO findByEmail(String email) {
+       ClientDTO clientDTO = null;
+       return this.clientRepository.findByEmail(email).map(ClientDTO::new).orElse(null);
+    }
+
+    @Override
     public Set<ClientDTO> findAll() {
          return this.clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toSet());
     }

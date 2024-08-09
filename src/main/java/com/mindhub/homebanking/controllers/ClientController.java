@@ -2,7 +2,9 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.AddressesRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.AddressesService;
 import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +21,22 @@ import java.util.Set;
 public class ClientController {
 
     private final ClientService clientService;
+    private final AddressesService addressesService;
 
     @Autowired
     private ClientRepository clientRepository;
 
-    public ClientController(ClientService clientService) {
+    public ClientController(AddressesService addressesService,
+                            ClientService clientService) {
+        this.addressesService = addressesService;
         this.clientService = clientService;
     }
+
+    @GetMapping
+    public ResponseEntity<?> show(@RequestParam(name = "username" ) String username ) {
+        return new ResponseEntity<>(this.clientService.findByUsername(username) ,HttpStatus.ACCEPTED  );
+    }
+
 
     @RequestMapping("/clients")
     public Set<ClientDTO> getClients(){

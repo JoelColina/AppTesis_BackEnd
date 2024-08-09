@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RefreshScope
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -35,11 +34,6 @@ public class UserController {
     {
         this.userService = userService;
         this.utilService = utilService;
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<?> index(){
-        return userService.findAll();
     }
 
     @GetMapping
