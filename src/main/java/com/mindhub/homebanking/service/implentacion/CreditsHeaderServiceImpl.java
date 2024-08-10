@@ -6,6 +6,7 @@ import com.mindhub.homebanking.dtos.PurchasingDetailDTO;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CreditsHeaderRepository;
 import com.mindhub.homebanking.service.CreditsHeaderService;
+import com.mindhub.homebanking.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +43,13 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         try {
 //            this.accountRepository.save(accountDTO);
             this.creditsHeaderDTONew.setEnabled(true);
-            this.response.put("mensaje genenetal", "OPERATION_OK");
-            this.response.put("cuenta creada", creditsHeaderDTONew);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, creditsHeaderDTONew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
-            this.response.put("mensaje genenetal", "OPERATION_NOT_OK");
-            this.response.put("mensaje ERROR", e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
 
@@ -63,9 +64,7 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
 
         try {
             creditsHeaderDTONew.setEnabled(false);
-
             update(creditsHeaderDTONew);
-
             operation = true;
 
         }catch (Exception e){
@@ -83,14 +82,14 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         try {
             creditsHeaderDTONew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getId()).map(CreditsHeaderDTO::new).orElse(null);
 
-            this.response.put("Mensaje General","Operacion OK");
-            this.response.put("Datos actualizados",creditsHeaderDTONew);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, creditsHeaderDTONew);
             http = HttpStatus.ACCEPTED;
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
-            this.response.put("Mensaje General","Operacion NOOK");
-            this.response.put("Mensaje error",e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;
         }
 

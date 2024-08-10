@@ -5,7 +5,6 @@ import com.mindhub.homebanking.dtos.PasswordUpdateDto;
 import com.mindhub.homebanking.dtos.RoleDto;
 import com.mindhub.homebanking.dtos.UserDto;
 import com.mindhub.homebanking.models.User;
-import com.mindhub.homebanking.repositories.UserRepository;
 import com.mindhub.homebanking.service.UserService;
 import com.mindhub.homebanking.utils.Constants;
 import com.mindhub.homebanking.utils.UsernameRandom;

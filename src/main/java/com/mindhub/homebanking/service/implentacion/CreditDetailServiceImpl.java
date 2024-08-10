@@ -6,6 +6,7 @@ import com.mindhub.homebanking.dtos.PurchasingDetailDTO;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.CreditDetailRepository;
 import com.mindhub.homebanking.service.CreditDetailService;
+import com.mindhub.homebanking.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +42,13 @@ public class CreditDetailServiceImpl implements CreditDetailService {
         this.response = new HashMap<>();
         creditDetailDTONew = creditDetailDTO;
         try {
-            this.response.put("mensaje genenetal", "OPERATION_OK");
-            this.response.put("cuenta creada", creditDetailDTONew);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, creditDetailDTONew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
-            this.response.put("mensaje genenetal", "OPERATION_NOT_OK");
-            this.response.put("mensaje ERROR", e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
 
@@ -61,14 +62,14 @@ public class CreditDetailServiceImpl implements CreditDetailService {
         try {
             creditDetailDTONew = this.creditDetailRepository.findById(creditDetailDTO.getId()).map(CreditDetailDTO::new).orElse(null);
 
-            this.response.put("Mensaje General","Operacion OK");
-            this.response.put("Datos actualizados",creditDetailDTONew);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, creditDetailDTONew);
             http = HttpStatus.ACCEPTED;
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
-            this.response.put("Mensaje General","Operacion NOOK");
-            this.response.put("Mensaje error",e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;
         }
 

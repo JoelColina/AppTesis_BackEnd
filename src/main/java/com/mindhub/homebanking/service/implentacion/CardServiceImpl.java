@@ -5,6 +5,7 @@ import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.models.AddressType;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.service.CardService;
+import com.mindhub.homebanking.utils.Constants;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class CardServiceImpl implements CardService {
 
     private Map<String, Object> response;
     private HttpStatus http;
-    private CardDTO cardDTONew;
+    private CardDTO cardDtoNew;
 
     @Autowired
     private CardRepository cardRepository;
@@ -44,17 +45,17 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseEntity<?> save(CardDTO cardDTO) {
         this.response = new HashMap<>();
-        cardDTONew = cardDTO;
+        cardDtoNew = cardDTO;
         try {
 //            this.accountRepository.save(accountDTO);
-            this.cardDTONew.setEnabled(true);
-            this.response.put("mensaje genenetal", "OPERATION_OK");
-            this.response.put("cuenta creada", cardDTONew);
+            this.cardDtoNew.setEnabled(true);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, cardDtoNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
-            this.response.put("mensaje genenetal", "OPERATION_NOT_OK");
-            this.response.put("mensaje ERROR", e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
 
@@ -65,13 +66,11 @@ public class CardServiceImpl implements CardService {
     public boolean delete(CardDTO cardDTO) {
         boolean operation = false;
 
-        CardDTO cardDTONew = findById(cardDTO.getId());
+        CardDTO cardDtoNew = findById(cardDTO.getId());
 
         try {
-            cardDTONew.setEnabled(false);
-
-            update(cardDTONew);
-
+            cardDtoNew.setEnabled(false);
+            update(cardDtoNew);
             operation = true;
 
         }catch (Exception e){
@@ -84,19 +83,19 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseEntity<?> update(CardDTO cardDTO) {
         this.response = new HashMap<>();
-        this.cardDTONew = null;
+        this.cardDtoNew = null;
 
         try {
-            cardDTONew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
+            cardDtoNew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
 
-            this.response.put("Mensaje General","Operacion OK");
-            this.response.put("Datos actualizados",cardDTONew);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, cardDtoNew);
             http = HttpStatus.ACCEPTED;
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
-            this.response.put("Mensaje General","Operacion NOOK");
-            this.response.put("Mensaje error",e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;
         }
 

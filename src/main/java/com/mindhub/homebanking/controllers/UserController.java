@@ -41,7 +41,6 @@ public class UserController {
         return new ResponseEntity<>(this.userService.findByUsername(username) ,HttpStatus.ACCEPTED  );
     }
 
-
     @PostMapping()
     public ResponseEntity<?> post(@Valid @RequestBody UserDto userDto, BindingResult result) {
         if (result .hasErrors()){

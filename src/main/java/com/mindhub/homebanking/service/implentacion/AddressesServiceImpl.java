@@ -5,6 +5,7 @@ import com.mindhub.homebanking.dtos.AddressesDTO;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.AddressesRepository;
 import com.mindhub.homebanking.service.AddressesService;
+import com.mindhub.homebanking.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AddressesServiceImpl implements AddressesService {
 
     private Map<String, Object> response;
     private HttpStatus http;
-    private AddressesDTO addressesDTONew;
+    private AddressesDTO addressesDtoNew;
 
     @Autowired
     private AddressesRepository addressesRepository;
@@ -38,18 +39,18 @@ public class AddressesServiceImpl implements AddressesService {
     @Override
     public ResponseEntity<?> save(AddressesDTO addressesDTO) {
         this.response = new HashMap<>();
-        addressesDTONew = addressesDTO;
+        addressesDtoNew = addressesDTO;
 
         try {
 //            this.accountRepository.save(accountDTO);
-            this.addressesDTONew.setEnabled(true);
-            this.response.put("mensaje genenetal", "OPERATION_OK");
-            this.response.put("Direccion creada", addressesDTONew);
+            this.addressesDtoNew.setEnabled(true);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, addressesDtoNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
-            this.response.put("mensaje genenetal", "OPERATION_NOT_OK");
-            this.response.put("mensaje ERROR", e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
 
@@ -59,17 +60,14 @@ public class AddressesServiceImpl implements AddressesService {
     @Override
     public boolean delete(AddressesDTO addressesDTO) {
         boolean operation = false;
-
-        AddressesDTO addressesDTONew = findById(addressesDTO.getId());
-
+        AddressesDTO addressesDtoNew = findById(addressesDTO.getId());
         try {
-            addressesDTONew.setEnabled(false);
 
-            update(addressesDTONew);
-
+            addressesDtoNew.setEnabled(false);
+            update(addressesDtoNew);
             operation = true;
-
         }catch (Exception e){
+
             operation = false;
         }
 
@@ -80,19 +78,19 @@ public class AddressesServiceImpl implements AddressesService {
     public ResponseEntity<?> update(AddressesDTO addressesDTO) {
 
         this.response = new HashMap<>();
-        this.addressesDTONew = null;
+        this.addressesDtoNew = null;
 
         try {
-            addressesDTONew = this.addressesRepository.findById(addressesDTO.getId()).map(AddressesDTO::new).orElse(null);
+            addressesDtoNew = this.addressesRepository.findById(addressesDTO.getId()).map(AddressesDTO::new).orElse(null);
 
-            this.response.put("Mensaje General","Operacion OK");
-            this.response.put("Datos actualizados",addressesDTONew);
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, addressesDtoNew);
             http = HttpStatus.ACCEPTED;
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
-            this.response.put("Mensaje General","Operacion NOOK");
-            this.response.put("Mensaje error",e.getMessage());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;
         }
 

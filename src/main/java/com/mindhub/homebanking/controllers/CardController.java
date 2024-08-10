@@ -2,6 +2,7 @@ package com.mindhub.homebanking.controllers;
 
 
 import com.mindhub.homebanking.dtos.CardDTO;
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -58,7 +59,8 @@ public class CardController {
 
         LocalDate createDate = LocalDate.now();
 
-        Client client= clientRepository.findByEmail(authentication.getName());
+        //Client client= clientRepository.findByEmail(authentication.getName());
+        ClientDTO client = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
 
 //        if (client.getCards().size() == 3){
 //            return new ResponseEntity<>("Ya cuenta con un maximo de 3 tarjetaas.", HttpStatus.FORBIDDEN);

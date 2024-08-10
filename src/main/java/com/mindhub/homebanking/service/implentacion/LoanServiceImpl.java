@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.service.implentacion;
 
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
@@ -50,7 +51,8 @@ public class LoanServiceImpl implements LoanService {
                                               Authentication authentication){
         String accExit = "1";
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+//        Client client = clientRepository.findByEmail(authentication.getName());
+        ClientDTO clientdto = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
 
         Loan loan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
 
@@ -108,7 +110,7 @@ public class LoanServiceImpl implements LoanService {
 
        // double amountTotal = loanApplicationDTO.getAmount() + ( loanApplicationDTO.getAmount() * 0.2);
 
-        ClientLoan clientLoan0 = new ClientLoan(loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments(), client, loan);
+        ClientLoan clientLoan0 = new ClientLoan(loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments()/*, clientdto, loan*/);
 
         clientLoanRepository.save(clientLoan0);
         transactionRepository.save(new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loan.getName() + "loan approved" , LocalDate.now(), account));

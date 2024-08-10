@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.service.implentacion;
 
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
@@ -46,7 +47,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         String accExit = "0";
 
-        Client client = clientRepository.findByEmail(authentication.getName());
+//        Client client = clientRepository.findByEmail(authentication.getName());
+        ClientDTO clientdto = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
 
         //valida variable fromAccount si viene vacio
         Account accountOrig = accountRepository.findByNumber(fromAccount);

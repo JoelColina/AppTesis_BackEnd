@@ -1,8 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.AccountService;
@@ -52,7 +52,9 @@ public class AccountController {
         int balance = 0;
         LocalDate createDate = LocalDate.now();
 
-        Client client= clientRepository.findByEmail(authentication.getName());
+        //Client client= clientRepository.findByEmail(authentication.getName());
+        ClientDTO client = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
+
 
 //       if (client.getAccounts().size() == 3){
 //           return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
@@ -68,8 +70,10 @@ public class AccountController {
 
 //   @RequestMapping(path = "/clients/current/accounts")
 //   public List<AccountDTO> getCurrentAccounts(Authentication authentication){
-//         Client client = clientRepository.findByEmail(authentication.getName());
-//         return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
+//       //Client client = clientRepository.findByEmail(authentication.getName());
+//       ClientDTO client = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
+//
+//       return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
 //   }
 
 }

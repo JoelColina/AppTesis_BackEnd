@@ -26,7 +26,7 @@ public class ClientLoan {
     public ClientLoan() {
     }
 
-    public ClientLoan(double amount, double payments, Client client, Loan loan) {
+    public ClientLoan(double amount, double payments/*,Client client, Loan loan*/) {
         this.id = getId();
         this.amount = amount;
         this.payments = payments;

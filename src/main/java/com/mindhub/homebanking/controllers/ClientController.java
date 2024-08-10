@@ -6,12 +6,17 @@ import com.mindhub.homebanking.repositories.AddressesRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.AddressesService;
 import com.mindhub.homebanking.service.ClientService;
+import com.mindhub.homebanking.service.UtilService;
+import com.mindhub.homebanking.service.implentacion.UtilServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
 
 import java.util.Date;
 import java.util.Set;
@@ -22,21 +27,26 @@ public class ClientController {
 
     private final ClientService clientService;
     private final AddressesService addressesService;
+    private final UtilService utilService;
 
     @Autowired
     private ClientRepository clientRepository;
 
-    public ClientController(AddressesService addressesService,
-                            ClientService clientService) {
-        this.addressesService = addressesService;
+    public ClientController(ClientService clientService,
+                            AddressesService addressesService,
+                            UtilService utilService) {
         this.clientService = clientService;
+        this.addressesService = addressesService;
+        this.utilService = utilService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> show(@RequestParam(name = "username" ) String username ) {
-        return new ResponseEntity<>(this.clientService.findByUsername(username) ,HttpStatus.ACCEPTED  );
+    @PostMapping()
+    public ResponseEntity<?> post(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
+        if (result .hasErrors()){
+            return new ResponseEntity<>( this.utilService.errorResult(result),HttpStatus.BAD_REQUEST );
+        }
+        return this.clientService.save(clientDTO);
     }
-
 
     @RequestMapping("/clients")
     public Set<ClientDTO> getClients(){
@@ -72,9 +82,10 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping("/clients/current")
-    public ClientDTO getAll(Authentication authentication) {
-        Client client= clientRepository.findByEmail(authentication.getName());
-        return new ClientDTO(client);
-    }
+//    @RequestMapping("/clients/current")
+//    public ClientDTO getAll(Authentication authentication) {
+//      //  Client client= clientRepository.findByEmail(authentication.getName());
+//        ClientDTO client = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
+//        return new ClientDTO(client);
+//    }
 }
