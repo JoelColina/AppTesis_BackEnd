@@ -80,12 +80,17 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         this.creditsHeaderDTONew = null;
 
         try {
-            creditsHeaderDTONew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getId()).map(CreditsHeaderDTO::new).orElse(null);
+            creditsHeaderDTO = findById(creditsHeaderDTO.getId());
+            if (creditsHeaderDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else {
+                creditsHeaderDTONew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getId()).map(CreditsHeaderDTO::new).orElse(null);
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, creditsHeaderDTONew);
-            http = HttpStatus.ACCEPTED;
-
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, creditsHeaderDTONew);
+                http = HttpStatus.ACCEPTED;
+            }
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);

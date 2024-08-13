@@ -5,6 +5,7 @@ import com.mindhub.homebanking.dtos.UserDto;
 import com.mindhub.homebanking.service.UserService;
 import com.mindhub.homebanking.service.UtilService;
 
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

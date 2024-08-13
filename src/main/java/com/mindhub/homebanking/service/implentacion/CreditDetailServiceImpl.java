@@ -60,12 +60,17 @@ public class CreditDetailServiceImpl implements CreditDetailService {
         this.creditDetailDTONew = null;
 
         try {
-            creditDetailDTONew = this.creditDetailRepository.findById(creditDetailDTO.getId()).map(CreditDetailDTO::new).orElse(null);
+            creditDetailDTO = findById(creditDetailDTO.getId());
+            if (creditDetailDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else {
+                creditDetailDTONew = this.creditDetailRepository.findById(creditDetailDTO.getId()).map(CreditDetailDTO::new).orElse(null);
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, creditDetailDTONew);
-            http = HttpStatus.ACCEPTED;
-
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, creditDetailDTONew);
+                http = HttpStatus.ACCEPTED;
+            }
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);

@@ -2,21 +2,18 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AddressesRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.AddressesService;
 import com.mindhub.homebanking.service.ClientService;
 import com.mindhub.homebanking.service.UtilService;
-import com.mindhub.homebanking.service.implentacion.UtilServiceImp;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.BindingResult;
-import javax.validation.Valid;
+
 
 import java.util.Date;
 import java.util.Set;

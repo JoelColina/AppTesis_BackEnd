@@ -41,11 +41,18 @@ public class AccountServiceImpl implements AccountService {
         this.accountDtoNew = null;
 
         try {
-            accountDtoNew = this.accountRepository.findById(accountDTO.getId()).map(AccountDTO::new).orElse(null);
+            accountDTO = findById(accountDTO.getId());
+            if (accountDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, accountDtoNew);
-            http = HttpStatus.ACCEPTED;
+            }else {
+                accountDtoNew = this.accountRepository.findById(accountDTO.getId()).map(AccountDTO::new).orElse(null);
+
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, accountDtoNew);
+                http = HttpStatus.ACCEPTED;
+            }
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);

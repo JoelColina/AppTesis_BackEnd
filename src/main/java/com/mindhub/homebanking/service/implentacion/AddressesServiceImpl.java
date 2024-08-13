@@ -2,6 +2,9 @@ package com.mindhub.homebanking.service.implentacion;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.AddressesDTO;
+import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.models.Addresses;
+import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.AddressesRepository;
 import com.mindhub.homebanking.service.AddressesService;
@@ -22,6 +25,8 @@ public class AddressesServiceImpl implements AddressesService {
     private Map<String, Object> response;
     private HttpStatus http;
     private AddressesDTO addressesDtoNew;
+    private AddressesDTO addressesDtoOld;
+    private Addresses addressesNew;
 
     @Autowired
     private AddressesRepository addressesRepository;
@@ -76,16 +81,24 @@ public class AddressesServiceImpl implements AddressesService {
 
     @Override
     public ResponseEntity<?> update(AddressesDTO addressesDTO) {
-
+//        addressesDtoOld = new AddressesDTO();
+        addressesNew = new Addresses();
         this.response = new HashMap<>();
         this.addressesDtoNew = null;
 
         try {
-            addressesDtoNew = this.addressesRepository.findById(addressesDTO.getId()).map(AddressesDTO::new).orElse(null);
+            addressesDTO = findById(addressesDTO.getId());
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, addressesDtoNew);
-            http = HttpStatus.ACCEPTED;
+            if (addressesDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else {
+                addressesDtoNew = this.addressesRepository.findById(addressesDTO.getId()).map(AddressesDTO::new).orElse(null);
+
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, addressesDtoNew);
+                http = HttpStatus.ACCEPTED;
+            }
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);

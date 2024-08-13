@@ -86,11 +86,18 @@ public class CardServiceImpl implements CardService {
         this.cardDtoNew = null;
 
         try {
-            cardDtoNew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
+            cardDTO = findById(cardDTO.getId());
+            if (cardDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, cardDtoNew);
-            http = HttpStatus.ACCEPTED;
+            }else {
+                cardDtoNew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
+
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, cardDtoNew);
+                http = HttpStatus.ACCEPTED;
+            }
 
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);

@@ -28,7 +28,6 @@ public class ClientDTO {
     }
 
     public ClientDTO(Client client) {
-
         this.names = client.getNames();
         this.lastName = client.getLastName();
         this.motherLastName = client.getMotherLastName();

@@ -24,6 +24,9 @@ public class AddressesDTO {
         this.enabled = addresses.isEnabled();
     }
 
+    public AddressesDTO() {
+    }
+
     public long getId() {
         return id;
     }

@@ -59,12 +59,17 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
         this.purchasingDetailDTONew = null;
 
         try {
-            purchasingDetailDTONew = this.purchasingdetailrepository.findById(purchasingDetailDTO.getId()).map(PurchasingDetailDTO::new).orElse(null);
+            purchasingDetailDTO = findById(purchasingDetailDTO.getId());
+            if (purchasingDetailDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else {
+                purchasingDetailDTONew = this.purchasingdetailrepository.findById(purchasingDetailDTO.getId()).map(PurchasingDetailDTO::new).orElse(null);
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, purchasingDetailDTONew);
-            http = HttpStatus.ACCEPTED;
-
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, purchasingDetailDTONew);
+                http = HttpStatus.ACCEPTED;
+            }
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);

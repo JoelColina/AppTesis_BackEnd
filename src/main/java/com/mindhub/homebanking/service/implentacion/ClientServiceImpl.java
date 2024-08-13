@@ -5,7 +5,6 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.ClientService;
 import com.mindhub.homebanking.utils.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,7 @@ public class ClientServiceImpl implements ClientService {
             if (this.clientRepository.findByEmail(clientDTO.getEmail()).isEmpty()) {
 //                this.clientDtoNew = userMapper.userToUserDto(UserRepository.save(this.user));
 
-                this.clientDtoNew = this.clientRepository.save(ClientToClientDto(clientDTO));
+                this.clientDtoNew = this.clientRepository.wait(clientToClientDto(clientDTO));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.USER.USER, clientDtoNew);
@@ -79,7 +78,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> update(ClientDTO clientDTO) {
         clientDtoOld = new ClientDTO();
+//        clientNew = new Client();
         clientDtoNew = new ClientDTO();
+
         this.response = new HashMap<>();
 
         try {
@@ -99,7 +100,10 @@ public class ClientServiceImpl implements ClientService {
                 clientDtoOld.setDebtAccount(clientDTO.getDebtAccount());
                 clientDtoOld.setAvailableSpace(clientDTO.getAvailableSpace());
 
-                clientDtoNew = this.clientRepository.save(ClientToClientDto(clientDtoOld));
+//                clientNew = this.clientRepository.save(ClientDtoToClient(clientDtoOld));
+
+                clientDtoNew = this.clientRepository.findByEmail(clientDTO.getEmail()).map(ClientDTO::new).orElse(null);
+
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.USER.USER, clientDtoNew);
                 this.http = HttpStatus.ACCEPTED;
@@ -125,7 +129,7 @@ public class ClientServiceImpl implements ClientService {
                 this.http = HttpStatus.NOT_FOUND;
             } else {
 //                clientDtoOld.setEnabled(false);
-                this.clientRepository.save(ClientToClientDto(clientDtoOld));
+                this.clientRepository.save(clientDtoToClient(clientDtoOld));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.http = HttpStatus.ACCEPTED;
@@ -137,7 +141,7 @@ public class ClientServiceImpl implements ClientService {
         return new ResponseEntity<>(this.response, this.http);
     }
 
-    private Optional <ClientDTO> ClientDtoToClient(Client client){
+    private Optional <ClientDTO> clientToClientDto(Client client){
 
         clientDtoNew.setNames(client.getNames());
         clientDtoNew.setLastName(client.getLastName());
@@ -153,7 +157,7 @@ public class ClientServiceImpl implements ClientService {
         return Optional.ofNullable(clientDtoNew);
     }
 
-    private Optional <Client> ClientToClientDto (ClientDTO clientDto){
+    private Optional <Client> clientDtoToClient(ClientDTO clientDto){
 
         clientNew.setNames(clientDto.getNames());
         clientNew.setLastName(clientDto.getLastName());

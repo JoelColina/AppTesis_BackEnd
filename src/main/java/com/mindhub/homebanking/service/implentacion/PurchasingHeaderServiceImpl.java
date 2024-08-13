@@ -79,12 +79,17 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
         this.purchasingHeaderDTONew = null;
 
         try {
-            purchasingHeaderDTONew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getId()).map(PurchasingHeaderDTO::new).orElse(null);
+            purchasingHeaderDTO = findById(purchasingHeaderDTO.getId());
+            if (purchasingHeaderDTO == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else {
+                purchasingHeaderDTONew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getId()).map(PurchasingHeaderDTO::new).orElse(null);
 
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, purchasingHeaderDTONew);
-            http = HttpStatus.ACCEPTED;
-
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, purchasingHeaderDTONew);
+                http = HttpStatus.ACCEPTED;
+            }
         }catch (Exception e){
 //            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
