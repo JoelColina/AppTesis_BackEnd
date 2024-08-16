@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.service.implentacion;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.mappers.HomeBankingMapper;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.ClientService;
@@ -17,10 +18,10 @@ import static java.rmi.server.LogStream.log;
 @Service
 public class ClientServiceImpl implements ClientService {
 
+    private HomeBankingMapper homeBankingMapper;
     private ClientRepository clientRepository;
 
     private Map<String, Object> response;
-    private ClientDTO clientDtoNew;
     private ClientDTO clientDtoOld;
     private HttpStatus http;
     private Client clientNew;
@@ -48,18 +49,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> save(ClientDTO clientDTO) {
         log("inicio de operacion de creacion de cliente");
-        clientDtoNew = new ClientDTO();
-        clientDtoOld = new ClientDTO();
+        clientNew = new Client();
+//        clientDtoOld = new ClientDTO();
         this.response = new HashMap<>();
 
         try {
             if (this.clientRepository.findByEmail(clientDTO.getEmail()).isEmpty()) {
 //                this.clientDtoNew = userMapper.userToUserDto(UserRepository.save(this.user));
 
-                this.clientDtoNew = this.clientRepository.wait(clientToClientDto(clientDTO));
+                this.clientNew = this.clientRepository.save(this.homeBankingMapper.clientDtoToClient(clientDTO));
+//                this.clientDtoNew = clientMapper.clientDtoToClient(clientRepository.save(clientDTO));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, clientDtoNew);
+                this.response.put(Constants.USER.USER, clientNew);
                 this.http = HttpStatus.CREATED;
             } else {
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
@@ -78,8 +80,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> update(ClientDTO clientDTO) {
         clientDtoOld = new ClientDTO();
-//        clientNew = new Client();
-        clientDtoNew = new ClientDTO();
+        clientNew = new Client();
 
         this.response = new HashMap<>();
 
@@ -100,12 +101,10 @@ public class ClientServiceImpl implements ClientService {
                 clientDtoOld.setDebtAccount(clientDTO.getDebtAccount());
                 clientDtoOld.setAvailableSpace(clientDTO.getAvailableSpace());
 
-//                clientNew = this.clientRepository.save(ClientDtoToClient(clientDtoOld));
-
-                clientDtoNew = this.clientRepository.findByEmail(clientDTO.getEmail()).map(ClientDTO::new).orElse(null);
-
+                clientNew = this.clientRepository.save(this.homeBankingMapper.clientDtoToClient(clientDtoOld));
+                               // clientDtoNew = this.clientRepository.findByEmail(clientDTO.getEmail()).map(ClientDTO::new).orElse(null);
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, clientDtoNew);
+                this.response.put(Constants.USER.USER, clientNew);
                 this.http = HttpStatus.ACCEPTED;
             }
         } catch (Exception e) {
@@ -120,7 +119,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> delete(ClientDTO clientDTO) {
         clientDtoOld = new ClientDTO();
-        clientDtoNew = new ClientDTO();
+
         this.response = new HashMap<>();
         try {
             clientDtoOld = findByEmail(clientDTO.getEmail());
@@ -129,7 +128,7 @@ public class ClientServiceImpl implements ClientService {
                 this.http = HttpStatus.NOT_FOUND;
             } else {
 //                clientDtoOld.setEnabled(false);
-                this.clientRepository.save(clientDtoToClient(clientDtoOld));
+                this.clientRepository.save(this.homeBankingMapper.clientDtoToClient(clientDtoOld));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.http = HttpStatus.ACCEPTED;
@@ -141,35 +140,4 @@ public class ClientServiceImpl implements ClientService {
         return new ResponseEntity<>(this.response, this.http);
     }
 
-    private Optional <ClientDTO> clientToClientDto(Client client){
-
-        clientDtoNew.setNames(client.getNames());
-        clientDtoNew.setLastName(client.getLastName());
-        clientDtoNew.setMotherLastName(client.getMotherLastName());
-        clientDtoNew.setRuth(client.getRuth());
-        clientDtoNew.setBirthDate(client.getBirthDate());
-        clientDtoNew.setTelephoneNumber(client.getTelephoneNumber());
-        clientDtoNew.setEmail(client.getEmail());
-        clientDtoNew.setTotalLimit(client.getTotalLimit());
-        clientDtoNew.setDebtAccount(client.getDebtAccount());
-        clientDtoNew.setAvailableSpace(client.getAvailableSpace());
-
-        return Optional.ofNullable(clientDtoNew);
-    }
-
-    private Optional <Client> clientDtoToClient(ClientDTO clientDto){
-
-        clientNew.setNames(clientDto.getNames());
-        clientNew.setLastName(clientDto.getLastName());
-        clientNew.setMotherLastName(clientDto.getMotherLastName());
-        clientNew.setRuth(clientDto.getRuth());
-        clientNew.setBirthDate(clientDto.getBirthDate());
-        clientNew.setTelephoneNumber(clientDto.getTelephoneNumber());
-        clientNew.setEmail(clientDto.getEmail());
-        clientNew.setTotalLimit(clientDto.getTotalLimit());
-        clientNew.setDebtAccount(clientDto.getDebtAccount());
-        clientNew.setAvailableSpace(clientDto.getAvailableSpace());
-
-        return Optional.ofNullable(this.clientNew);
-    }
 }
