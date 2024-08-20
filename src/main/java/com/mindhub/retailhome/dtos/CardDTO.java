@@ -3,10 +3,14 @@ package com.mindhub.retailhome.dtos;
 import com.mindhub.retailhome.models.Card;
 import com.mindhub.retailhome.models.CardColor;
 import com.mindhub.retailhome.models.CardType;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
 
+@Getter
+@Setter
 public class CardDTO {
     private long id;
 //    private long idClient;
@@ -39,99 +43,4 @@ public class CardDTO {
     public CardDTO() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public CardType getType() {
-        return type;
-    }
-
-    public void setType(CardType type) {
-        this.type = type;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public int getCvv() {
-        return cvv;
-    }
-
-    public void setCvv(int cvv) {
-        this.cvv = cvv;
-    }
-
-    public LocalDate getValidDate() {
-        return validDate;
-    }
-
-    public void setValidDate(LocalDate validDate) {
-        this.validDate = validDate;
-    }
-
-    public Date getThruDate() {
-        return thruDate;
-    }
-
-    public void setThruDate(Date thruDate) {
-        this.thruDate = thruDate;
-    }
-
-    public String getCardHolder() {
-        return cardHolder;
-    }
-
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
-    }
-
-    public CardColor getColor() {
-        return color;
-    }
-
-    public void setColor(CardColor color) {
-        this.color = color;
-    }
-
-    public Number getTotalLimit() {
-        return totalLimit;
-    }
-
-    public void setTotalLimit(Number totalLimit) {
-        this.totalLimit = totalLimit;
-    }
-
-    public Number getQuotaUsed() {
-        return quotaUsed;
-    }
-
-    public void setQuotaUsed(Number quotaUsed) {
-        this.quotaUsed = quotaUsed;
-    }
-
-    public Number getBalanceQuota() {
-        return balanceQuota;
-    }
-
-    public void setBalanceQuota(Number balanceQuota) {
-        this.balanceQuota = balanceQuota;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

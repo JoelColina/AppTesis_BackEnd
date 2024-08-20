@@ -1,9 +1,13 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.CreditDetail;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 public class CreditDetailDTO {
 
     private long id;
@@ -21,35 +25,4 @@ public class CreditDetailDTO {
     public CreditDetailDTO() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getDateExpiration() {
-        return dateExpiration;
-    }
-
-    public void setDateExpiration(Date dateExpiration) {
-        this.dateExpiration = dateExpiration;
-    }
-
-    public String getQuotaStatus() {
-        return quotaStatus;
-    }
-
-    public void setQuotaStatus(String quotaStatus) {
-        this.quotaStatus = quotaStatus;
-    }
-
-    public Date getPayDay() {
-        return payDay;
-    }
-
-    public void setPayDay(Date payDay) {
-        this.payDay = payDay;
-    }
 }

@@ -1,5 +1,10 @@
 package com.mindhub.retailhome.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class LoanApplicationDTO {
     private long loanId;
     private double amount;
@@ -16,35 +21,4 @@ public class LoanApplicationDTO {
     public LoanApplicationDTO() {
     }
 
-    public long getLoanId() {
-        return loanId;
-    }
-
-    public void setLoanId(long loanId) {
-        this.loanId = loanId;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getPayments() {
-        return payments;
-    }
-
-    public void setPayments(double payments) {
-        this.payments = payments;
-    }
-
-    public String getToAccountNumber() {
-        return toAccountNumber;
-    }
-
-    public void setToAccountNumber(String toAccountNumber) {
-        this.toAccountNumber = toAccountNumber;
-    }
 }

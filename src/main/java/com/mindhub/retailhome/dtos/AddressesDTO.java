@@ -2,7 +2,11 @@ package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.AddressType;
 import com.mindhub.retailhome.models.Addresses;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class AddressesDTO {
 
     private long id;
@@ -27,67 +31,4 @@ public class AddressesDTO {
     public AddressesDTO() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Number getNumber() {
-        return number;
-    }
-
-    public void setNumber(Number number) {
-        this.number = number;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCommune() {
-        return commune;
-    }
-
-    public void setCommune(String commune) {
-        this.commune = commune;
-    }
-
-    public Number getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(Number postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public AddressType getType() {
-        return type;
-    }
-
-    public void setType(AddressType type) {
-        this.type = type;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

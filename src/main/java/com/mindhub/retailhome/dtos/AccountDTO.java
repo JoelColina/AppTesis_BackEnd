@@ -1,10 +1,14 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.Account;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
+@Getter
+@Setter
 public class AccountDTO {
     private long id;
     private String number;
@@ -29,51 +33,4 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public Set<TransactionDTO> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<TransactionDTO> transactions) {
-        this.transactions = transactions;
-    }
-
-    public boolean isEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
 }

@@ -1,11 +1,15 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 public class Card {
 
@@ -50,15 +54,7 @@ public class Card {
     public Card() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-//    public long getIdClient() {
+    //    public long getIdClient() {
 //        return idClient;
 //    }
 //
@@ -66,99 +62,4 @@ public class Card {
 //        this.idClient = idClient;
 //    }
 
-    public CardType getType() {
-        return type;
-    }
-
-    public void setType(CardType type) {
-        this.type = type;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public int getCvv() {
-        return cvv;
-    }
-
-    public void setCvv(int cvv) {
-        this.cvv = cvv;
-    }
-
-    public LocalDate getValidDate() {
-        return validDate;
-    }
-
-    public void setValidDate(LocalDate validDate) {
-        this.validDate = validDate;
-    }
-
-    public Date getThruDate() {
-        return thruDate;
-    }
-
-    public void setThruDate(Date thruDate) {
-        this.thruDate = thruDate;
-    }
-
-    public String getCardHolder() {
-        return cardHolder;
-    }
-
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
-    }
-
-    public CardColor getColor() {
-        return color;
-    }
-
-    public void setColor(CardColor color) {
-        this.color = color;
-    }
-
-    public Number getTotalLimit() {
-        return totalLimit;
-    }
-
-    public void setTotalLimit(Number totalLimit) {
-        this.totalLimit = totalLimit;
-    }
-
-    public Number getQuotaUsed() {
-        return quotaUsed;
-    }
-
-    public void setQuotaUsed(Number quotaUsed) {
-        this.quotaUsed = quotaUsed;
-    }
-
-    public Number getBalanceQuota() {
-        return balanceQuota;
-    }
-
-    public void setBalanceQuota(Number balanceQuota) {
-        this.balanceQuota = balanceQuota;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

@@ -1,10 +1,14 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 public class CreditDetail {
     @Id
@@ -29,46 +33,6 @@ public class CreditDetail {
     public CreditDetail() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-    public Date getDateExpiration() {
-        return dateExpiration;
-    }
-
-    public void setDateExpiration(Date dateExpiration) {
-        this.dateExpiration = dateExpiration;
-    }
-
-    public String getQuotaStatus() {
-        return quotaStatus;
-    }
-
-    public void setQuotaStatus(String quotaStatus) {
-        this.quotaStatus = quotaStatus;
-    }
-
-    public Date getPayDay() {
-        return payDay;
-    }
-
-    public void setPayDay(Date payDay) {
-        this.payDay = payDay;
-    }
-
-    public CreditsHeader getCreditsHeader() {
-        return creditsHeader;
-    }
-
-    public void setCreditsHeader(CreditsHeader creditsHeader) {
-        this.creditsHeader = creditsHeader;
-    }
 
     @Override
     public String toString() {

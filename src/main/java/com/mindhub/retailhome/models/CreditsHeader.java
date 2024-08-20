@@ -1,11 +1,15 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 public class CreditsHeader {
     @Id
@@ -31,54 +35,6 @@ public class CreditsHeader {
     }
 
     public CreditsHeader() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Number getRequestedAmount() {
-        return requestedAmount;
-    }
-
-    public void setRequestedAmount(Number requestedAmount) {
-        this.requestedAmount = requestedAmount;
-    }
-
-    public Number getQuotaNumber() {
-        return quotaNumber;
-    }
-
-    public void setQuotaNumber(Number quotaNumber) {
-        this.quotaNumber = quotaNumber;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Set<CreditDetail> getCreditDetails() {
-        return creditDetails;
-    }
-
-    public void setCreditDetails(Set<CreditDetail> creditDetails) {
-        this.creditDetails = creditDetails;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     @Override

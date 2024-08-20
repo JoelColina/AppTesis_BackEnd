@@ -1,9 +1,13 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.Client;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 public class ClientDTO {
 
   //  private long id;
@@ -54,79 +58,7 @@ public class ClientDTO {
 //        this.id = id;
 //    }
 
-    public String getNames() {
-        return names;
-    }
-
-    public void setNames(String names) {
-        this.names = names;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMotherLastName() {
-        return motherLastName;
-    }
-
-    public void setMotherLastName(String motherLastName) {
-        this.motherLastName = motherLastName;
-    }
-
-    public String getRuth() {
-        return ruth;
-    }
-
-    public void setRuth(String ruth) {
-        this.ruth = ruth;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Number getTelephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(Number telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
-
-    public Number getTotalLimit() {
-        return totalLimit;
-    }
-
-    public void setTotalLimit(Number totalLimit) {
-        this.totalLimit = totalLimit;
-    }
-
-    public Number getDebtAccount() {
-        return debtAccount;
-    }
-
-    public void setDebtAccount(Number debtAccount) {
-        this.debtAccount = debtAccount;
-    }
-
-    public Number getAvailableSpace() {
-        return availableSpace;
-    }
-
-    public void setAvailableSpace(Number availableSpace) {
-        this.availableSpace = availableSpace;
-    }
-
-//    public Set<AccountDTO> getAccounts() {
+    //    public Set<AccountDTO> getAccounts() {
 //        return accounts;
 //    }
 //
@@ -150,19 +82,4 @@ public class ClientDTO {
 //        this.cards = cards;
 //    }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-       this.password = password;
-    }
 }

@@ -1,5 +1,10 @@
 package com.mindhub.retailhome.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class CommuneDTO {
     private long id;
 
@@ -12,27 +17,4 @@ public class CommuneDTO {
         this.communes = communes;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getIdRegion() {
-        return idRegion;
-    }
-
-    public void setIdRegion(int idRegion) {
-        this.idRegion = idRegion;
-    }
-
-    public String getCommunes() {
-        return communes;
-    }
-
-    public void setCommunes(String communes) {
-        this.communes = communes;
-    }
 }

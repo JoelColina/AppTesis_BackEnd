@@ -1,10 +1,14 @@
 package com.mindhub.retailhome.models;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 public class ClientLoan {
     @Id
@@ -34,43 +38,4 @@ public class ClientLoan {
 //        this.loan = loan;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getPayments() {
-        return payments;
-    }
-
-    public void setPayments(double payments) {
-        this.payments = payments;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Loan getLoan() {
-        return loan;
-    }
-
-    public void setLoan(Loan loan) {
-        this.loan = loan;
-    }
 }

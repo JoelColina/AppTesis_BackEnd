@@ -1,5 +1,7 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,8 +11,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -61,127 +66,7 @@ public class Client {
     public Client() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNames() {
-        return names;
-    }
-
-    public void setNames(String names) {
-        this.names = names;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMotherLastName() {
-        return motherLastName;
-    }
-
-    public void setMotherLastName(String motherLastName) {
-        this.motherLastName = motherLastName;
-    }
-
-    public String getRuth() {
-        return ruth;
-    }
-
-    public void setRuth(String ruth) {
-        this.ruth = ruth;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Number getTelephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(Number telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Number getTotalLimit() {
-        return totalLimit;
-    }
-
-    public void setTotalLimit(Number totalLimit) {
-        this.totalLimit = totalLimit;
-    }
-
-    public Number getDebtAccount() {
-        return debtAccount;
-    }
-
-    public void setDebtAccount(Number debtAccount) {
-        this.debtAccount = debtAccount;
-    }
-
-    public Number getAvailableSpace() {
-        return availableSpace;
-    }
-
-    public void setAvailableSpace(Number availableSpace) {
-        this.availableSpace = availableSpace;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Addresses> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(Set<Addresses> addresses) {
-        this.addresses = addresses;
-    }
-
-    public Set<CreditsHeader> getCreditsHeaders() {
-        return creditsHeaders;
-    }
-
-    public void setCreditsHeaders(Set<CreditsHeader> creditsHeaders) {
-        this.creditsHeaders = creditsHeaders;
-    }
-
-    public Set<PurchasingHeader> getPurchasingHeaders() {
-        return purchasingHeaders;
-    }
-
-    public void setPurchasingHeaders(Set<PurchasingHeader> purchasingHeaders) {
-        this.purchasingHeaders = purchasingHeaders;
-    }
-
-//    @JsonIgnore
+    //    @JsonIgnore
 //    public Set<ClientLoan> getClientLoans() {
 //        return clientLoans;
 //    }
@@ -193,14 +78,6 @@ public class Client {
 
     public List<Loan> getLoans(){
         return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
-    }
-
-    public Set<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
     }
 
 

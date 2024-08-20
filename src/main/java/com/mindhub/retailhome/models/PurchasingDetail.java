@@ -1,9 +1,13 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 public class PurchasingDetail {
     @Id
@@ -28,54 +32,6 @@ public class PurchasingDetail {
     }
 
     public PurchasingDetail() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
-    public Number getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Number amount) {
-        this.amount = amount;
-    }
-
-    public Number getWorth() {
-        return worth;
-    }
-
-    public void setWorth(Number worth) {
-        this.worth = worth;
-    }
-
-    public Number getTax() {
-        return tax;
-    }
-
-    public void setTax(Number tax) {
-        this.tax = tax;
-    }
-
-    public PurchasingHeader getPurchasingHeader() {
-        return purchasingHeader;
-    }
-
-    public void setPurchasingHeader(PurchasingHeader purchasingHeader) {
-        this.purchasingHeader = purchasingHeader;
     }
 
     @Override

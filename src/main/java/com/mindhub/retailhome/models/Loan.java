@@ -1,5 +1,7 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,8 +11,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
 @Entity
 public class Loan {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -33,42 +38,6 @@ public class Loan {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments.addAll(payments);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getMaxAmount() {
-        return maxAmount;
-    }
-
-    public void setMaxAmount(int maxAmount) {
-        this.maxAmount = maxAmount;
-    }
-
-    public List<Integer> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Integer> payments) {
-        this.payments = payments;
-    }
-
-    public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
     }
 
     public void addClientLoans(ClientLoan clientLoan) {

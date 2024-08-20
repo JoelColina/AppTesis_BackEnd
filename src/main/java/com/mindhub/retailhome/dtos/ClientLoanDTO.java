@@ -1,7 +1,11 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.ClientLoan;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ClientLoanDTO {
     private long id;
     private double amount;
@@ -20,43 +24,4 @@ public class ClientLoanDTO {
 //        this.name = clientLoan.getLoan().getName();
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public double getPayments() {
-        return payments;
-    }
-
-    public void setPayments(double payments) {
-        this.payments = payments;
-    }
-
-    public long getLoanid() {
-        return loanid;
-    }
-
-    public void setLoanid(long loanid) {
-        this.loanid = loanid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
