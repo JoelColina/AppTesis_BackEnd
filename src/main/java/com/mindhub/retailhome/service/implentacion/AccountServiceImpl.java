@@ -1,6 +1,9 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.AccountDTO;
+import com.mindhub.retailhome.mappers.AccountMapper;
+import com.mindhub.retailhome.mappers.ClientMapper;
+import com.mindhub.retailhome.models.Account;
 import com.mindhub.retailhome.repositories.AccountRepository;
 import com.mindhub.retailhome.service.AccountService;
 import com.mindhub.retailhome.utils.Constants;
@@ -17,9 +20,11 @@ import java.util.stream.Collectors;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    private AccountMapper accountMapper;
     private Map<String, Object> response;
     private HttpStatus http;
     private AccountDTO accountDtoNew;
+    private Account accountNew;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -39,6 +44,7 @@ public class AccountServiceImpl implements AccountService {
 
         this.response = new HashMap<>();
         this.accountDtoNew = null;
+        this.accountNew = null;
 
         try {
             accountDTO = findById(accountDTO.getId());
@@ -47,10 +53,15 @@ public class AccountServiceImpl implements AccountService {
                 this.http = HttpStatus.CONFLICT;
 
             }else {
-                accountDtoNew = this.accountRepository.findById(accountDTO.getId()).map(AccountDTO::new).orElse(null);
+                accountDtoNew.setBalance(accountDTO.getBalance());
+                accountDtoNew.setNumber(accountDTO.getNumber());
+                accountDtoNew.setCreationDate(accountDTO.getCreationDate());
+
+                accountNew = this.accountRepository.save(this.accountMapper.accountDtoToAccount(accountDtoNew));
+                //accountDtoNew = this.accountRepository.findById(accountDTO.getId()).map(AccountDTO::new).orElse(null);
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, accountDtoNew);
+                this.response.put(Constants.USER.USER, accountNew);
                 http = HttpStatus.ACCEPTED;
             }
 

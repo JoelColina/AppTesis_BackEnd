@@ -21,6 +21,7 @@ public class ClientServiceImpl implements ClientService {
 
     private Map<String, Object> response;
     private ClientDTO clientDtoOld;
+    private ClientDTO clientDtoNew;
     private HttpStatus http;
     private Client clientNew;
 
@@ -74,8 +75,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ResponseEntity<?> update(ClientDTO clientDTO) {
-        clientDtoOld = new ClientDTO();
-        clientNew = new Client();
+        clientDtoNew = null;
+        clientNew = null;
 
         this.response = new HashMap<>();
 
@@ -85,18 +86,18 @@ public class ClientServiceImpl implements ClientService {
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             } else {
-                clientDtoOld.setNames(clientDTO.getNames());
-                clientDtoOld.setLastName(clientDTO.getLastName());
-                clientDtoOld.setMotherLastName(clientDTO.getMotherLastName());
-                clientDtoOld.setRuth(clientDTO.getRuth());
-                clientDtoOld.setBirthDate(clientDTO.getBirthDate());
-                clientDtoOld.setTelephoneNumber(clientDTO.getTelephoneNumber());
-                clientDtoOld.setEmail(clientDTO.getEmail());
-                clientDtoOld.setTotalLimit(clientDTO.getTotalLimit());
-                clientDtoOld.setDebtAccount(clientDTO.getDebtAccount());
-                clientDtoOld.setAvailableSpace(clientDTO.getAvailableSpace());
+                clientDtoNew.setNames(clientDTO.getNames());
+                clientDtoNew.setLastName(clientDTO.getLastName());
+                clientDtoNew.setMotherLastName(clientDTO.getMotherLastName());
+                clientDtoNew.setRuth(clientDTO.getRuth());
+                clientDtoNew.setBirthDate(clientDTO.getBirthDate());
+                clientDtoNew.setTelephoneNumber(clientDTO.getTelephoneNumber());
+                clientDtoNew.setEmail(clientDTO.getEmail());
+                clientDtoNew.setTotalLimit(clientDTO.getTotalLimit());
+                clientDtoNew.setDebtAccount(clientDTO.getDebtAccount());
+                clientDtoNew.setAvailableSpace(clientDTO.getAvailableSpace());
 
-                clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDtoOld));
+                clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDtoNew));
                                // clientDtoNew = this.clientRepository.findByEmail(clientDTO.getEmail()).map(ClientDTO::new).orElse(null);
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.USER.USER, clientNew);
