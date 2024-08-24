@@ -12,8 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class CardDTO {
-    private long id;
-//    private long idClient;
+
     private CardType type;
     private String number;
     private int cvv;
@@ -25,6 +24,7 @@ public class CardDTO {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
+    private Long idClient;
 
     public CardDTO(Card card) {
         this.type = card.getType();
@@ -38,6 +38,7 @@ public class CardDTO {
         this.quotaUsed = card.getQuotaUsed();
         this.balanceQuota = card.getBalanceQuota();
         this.enabled = card.isEnabled();
+        this.idClient = card.getIdClient();
     }
 
     public CardDTO() {

@@ -10,8 +10,6 @@ import java.util.Date;
 @Setter
 public class ClientDTO {
 
-  //  private long id;
-
     private String names;
     private String lastName;
     private String motherLastName;
@@ -50,36 +48,5 @@ public class ClientDTO {
 //        this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-
-    //    public Set<AccountDTO> getAccounts() {
-//        return accounts;
-//    }
-//
-//    public void setAccounts(Set<AccountDTO> accounts) {
-//        this.accounts = accounts;
-//    }
-//
-//    public Set<ClientLoanDTO> getLoans() {
-//        return loans;
-//    }
-//
-//    public void setLoans(Set<ClientLoanDTO> loans) {
-//        this.loans = loans;
-//    }
-//
-//    public Set<CardDTO> getCards() {
-//        return cards;
-//    }
-//
-//    public void setCards(Set<CardDTO> cards) {
-//        this.cards = cards;
-//    }
 
 }

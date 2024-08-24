@@ -1,6 +1,8 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.CreditsHeaderDTO;
+import com.mindhub.retailhome.mappers.CreditsHeaderMapper;
+import com.mindhub.retailhome.models.CreditsHeader;
 import com.mindhub.retailhome.repositories.CreditsHeaderRepository;
 import com.mindhub.retailhome.service.CreditsHeaderService;
 import com.mindhub.retailhome.utils.Constants;
@@ -19,6 +21,8 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     private Map<String, Object> response;
     private HttpStatus http;
     private CreditsHeaderDTO creditsHeaderDTONew;
+    private CreditsHeaderMapper creditsHeaderMapper;
+    private CreditsHeader creditsHeaderNew;
 
     @Autowired
     private CreditsHeaderRepository creditsHeaderRepository;
@@ -36,12 +40,16 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     @Override
     public ResponseEntity<?> save(CreditsHeaderDTO creditsHeaderDTO) {
         this.response = new HashMap<>();
-        creditsHeaderDTONew = creditsHeaderDTO;
+        creditsHeaderNew = null;
+
         try {
+
+            this.creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDTO));
+
 //            this.accountRepository.save(accountDTO);
-            this.creditsHeaderDTONew.setEnabled(true);
+            this.creditsHeaderNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, creditsHeaderDTONew);
+            this.response.put(Constants.USER.USER, creditsHeaderNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -57,7 +65,7 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     public boolean delete(CreditsHeaderDTO creditsHeaderDTO) {
         boolean operation = false;
 
-        CreditsHeaderDTO creditsHeaderDTONew = findById(creditsHeaderDTO.getId());
+        CreditsHeaderDTO creditsHeaderDTONew = findById(creditsHeaderDTO.getIdClient());
 
         try {
             creditsHeaderDTONew.setEnabled(false);
@@ -75,17 +83,25 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     public ResponseEntity<?> update(CreditsHeaderDTO creditsHeaderDTO) {
         this.response = new HashMap<>();
         this.creditsHeaderDTONew = null;
+        this.creditsHeaderNew = null;
+
 
         try {
-            creditsHeaderDTO = findById(creditsHeaderDTO.getId());
+            creditsHeaderDTO = findById(creditsHeaderDTO.getIdClient());
             if (creditsHeaderDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
-                creditsHeaderDTONew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getId()).map(CreditsHeaderDTO::new).orElse(null);
+
+                creditsHeaderDTONew.setRequestedAmount(creditsHeaderDTO.getRequestedAmount());
+                creditsHeaderDTONew.setQuotaNumber(creditsHeaderDTO.getQuotaNumber());
+
+                creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDTONew));
+
+//                creditsHeaderDTONew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getId()).map(CreditsHeaderDTO::new).orElse(null);
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, creditsHeaderDTONew);
+                this.response.put(Constants.USER.USER, creditsHeaderNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){
@@ -95,7 +111,6 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
             http = HttpStatus.BAD_REQUEST;
         }
 
-        //que se puede enviar en el response entity
         return new ResponseEntity<>(this.response,this.http);
     }
 }

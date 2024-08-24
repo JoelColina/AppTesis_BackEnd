@@ -40,6 +40,7 @@ public class PurchasingHeader {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
+    private long idClient;
 
     public PurchasingHeader(String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
         this.trade = trade;
@@ -57,6 +58,7 @@ public class PurchasingHeader {
         this.deliveryAddress = deliveryAddress;
         this.retiredBy = retiredBy;
         this.enabled = enabled;
+        this.idClient = client.getId();
     }
 
     public PurchasingHeader() {

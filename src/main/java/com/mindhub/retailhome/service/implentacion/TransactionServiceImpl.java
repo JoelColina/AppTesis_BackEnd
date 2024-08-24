@@ -95,8 +95,8 @@ public class TransactionServiceImpl implements TransactionService {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        transactionRepository.save(new Transaction(TransactionType.DEBIT, -amount, description + " " + toAccount +" .", LocalDate.now(), accountOrig));
-        transactionRepository.save(new Transaction(TransactionType.CREDIT, amount, description + " " + fromAccount +" .", LocalDate.now(), accountDestin));
+      //  transactionRepository.save(new Transaction(TransactionType.DEBIT, -amount, description + " " + toAccount +" .", LocalDate.now(), accountOrig));
+       // transactionRepository.save(new Transaction(TransactionType.CREDIT, amount, description + " " + fromAccount +" .", LocalDate.now(), accountDestin));
 
         accountOrig.setBalance(accountOrig.getBalance() - amount);
         accountDestin.setBalance(accountDestin.getBalance() + amount);

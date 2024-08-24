@@ -47,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
         this.accountNew = null;
 
         try {
-            accountDTO = findById(accountDTO.getId());
+            accountDTO = findById(accountDTO.getIdClient());
             if (accountDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
@@ -66,7 +66,6 @@ public class AccountServiceImpl implements AccountService {
             }
 
         }catch (Exception e){
-//            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;
@@ -78,7 +77,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean delete(AccountDTO accountDTO) {
         boolean operation = false;
-        AccountDTO accountDtoNew = findById(accountDTO.getId());
+        AccountDTO accountDtoNew = findById(accountDTO.getIdClient());
 
         try {
             accountDtoNew.setEnable(false);
@@ -87,18 +86,19 @@ public class AccountServiceImpl implements AccountService {
         }catch (Exception e){
             operation = false;
         }
-
         return operation;
-
     }
 
     @Override
     public ResponseEntity<?> save(AccountDTO accountDTO) {
         this.response = new HashMap<>();
         accountDtoNew = accountDTO;
+        accountNew = null;
+
         try {
-//            this.accountRepository.save(accountDTO);
-            this.accountDtoNew.setEnable(true);
+            //this.accountRepository.save(accountDTO);
+            this.accountNew = this.accountRepository.save(this.accountMapper.accountDtoToAccount(accountDTO));
+            this.accountNew.setEnable(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.USER.USER, accountDtoNew);
             this.http = HttpStatus.CREATED;

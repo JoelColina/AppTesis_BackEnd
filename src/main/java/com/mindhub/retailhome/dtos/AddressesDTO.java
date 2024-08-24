@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 public class AddressesDTO {
 
-    private long id;
     private String address;
     private Number number;
     private String city;
@@ -17,6 +16,7 @@ public class AddressesDTO {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
+    private Long idClient;
 
     public AddressesDTO(Addresses addresses){
         this.address = addresses.getAddress();
@@ -26,6 +26,7 @@ public class AddressesDTO {
         this.postalCode = addresses.getPostalCode();
         this.type = addresses.getType();
         this.enabled = addresses.isEnabled();
+        this.idClient = addresses.getIdClient();
     }
 
     public AddressesDTO() {

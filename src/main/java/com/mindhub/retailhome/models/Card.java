@@ -30,13 +30,14 @@ public class Card {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
+    private Long idClient;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    public Card(CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, boolean enabled, Client client) {
-//        this.idClient = idClient;
+    public Card(CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, boolean enabled) {
+
         this.type = type;
         this.number = number;
         this.cvv = cvv;
@@ -48,18 +49,11 @@ public class Card {
         this.quotaUsed = quotaUsed;
         this.balanceQuota = balanceQuota;
         this.enabled = enabled;
-//        this.client = client;
+        this.idClient = client.getId();
     }
 
     public Card() {
     }
 
-    //    public long getIdClient() {
-//        return idClient;
-//    }
-//
-//    public void setIdClient(long idClient) {
-//        this.idClient = idClient;
-//    }
 
 }

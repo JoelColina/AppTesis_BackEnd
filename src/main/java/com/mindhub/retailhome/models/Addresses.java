@@ -26,6 +26,7 @@ public class Addresses {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
+    private long idClient;
 
     public Addresses(String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
 
@@ -36,6 +37,7 @@ public class Addresses {
         this.postalCode = postalCode;
         this.type = type;
         this.enabled = enabled;
+        this.idClient = client.getId();
     }
 
     public Addresses() {

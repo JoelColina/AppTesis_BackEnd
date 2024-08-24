@@ -1,6 +1,8 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.CreditDetailDTO;
+import com.mindhub.retailhome.mappers.CreditDetailMapper;
+import com.mindhub.retailhome.models.CreditDetail;
 import com.mindhub.retailhome.repositories.CreditDetailRepository;
 import com.mindhub.retailhome.service.CreditDetailService;
 import com.mindhub.retailhome.utils.Constants;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +23,8 @@ public class CreditDetailServiceImpl implements CreditDetailService {
     private Map<String, Object> response;
     private HttpStatus http;
     private CreditDetailDTO creditDetailDTONew;
+    private CreditDetail creditDetailNew;
+    private CreditDetailMapper creditDetailMapper;
 
     @Autowired
     private CreditDetailRepository creditDetailRepository;
@@ -38,7 +43,12 @@ public class CreditDetailServiceImpl implements CreditDetailService {
     public ResponseEntity<?> save(CreditDetailDTO creditDetailDTO) {
         this.response = new HashMap<>();
         creditDetailDTONew = creditDetailDTO;
+        this.creditDetailNew = null;
+
         try {
+
+            this.creditDetailNew = this.creditDetailRepository.save(this.creditDetailMapper.creditDetailDtoToCreditDetail(creditDetailDTO));
+
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.USER.USER, creditDetailDTONew);
             this.http = HttpStatus.CREATED;
@@ -57,15 +67,22 @@ public class CreditDetailServiceImpl implements CreditDetailService {
         this.creditDetailDTONew = null;
 
         try {
-            creditDetailDTO = findById(creditDetailDTO.getId());
+            creditDetailDTO = findById(creditDetailDTO.getIdCredit());
             if (creditDetailDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
-                creditDetailDTONew = this.creditDetailRepository.findById(creditDetailDTO.getId()).map(CreditDetailDTO::new).orElse(null);
+
+                creditDetailDTONew.setDateExpiration(creditDetailDTO.getDateExpiration());
+                creditDetailDTONew.setQuotaStatus(creditDetailDTO.getQuotaStatus());
+                creditDetailDTONew.setPayDay(creditDetailDTO.getPayDay());
+
+                creditDetailNew = this.creditDetailRepository.save(this.creditDetailMapper.creditDetailDtoToCreditDetail(creditDetailDTONew));
+
+//                creditDetailDTONew = this.creditDetailRepository.findById(creditDetailDTO.getId()).map(CreditDetailDTO::new).orElse(null);
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, creditDetailDTONew);
+                this.response.put(Constants.USER.USER, creditDetailNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){

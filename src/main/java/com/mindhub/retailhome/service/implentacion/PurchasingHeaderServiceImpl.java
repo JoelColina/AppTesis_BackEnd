@@ -1,6 +1,9 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.PurchasingHeaderDTO;
+import com.mindhub.retailhome.mappers.PurchasingHeaderMapper;
+import com.mindhub.retailhome.models.AddressType;
+import com.mindhub.retailhome.models.PurchasingHeader;
 import com.mindhub.retailhome.repositories.PurchasingHeaderRepository;
 import com.mindhub.retailhome.service.PurchasingHeaderService;
 import com.mindhub.retailhome.utils.Constants;
@@ -9,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +24,8 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     private Map<String, Object> response;
     private HttpStatus http;
     private PurchasingHeaderDTO purchasingHeaderDTONew;
+    private PurchasingHeader purchasingHeaderNew;
+    private PurchasingHeaderMapper purchasingHeaderMapper;
 
     @Autowired
     private PurchasingHeaderRepository purchasingHeaderRepository;
@@ -37,12 +43,15 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     @Override
     public ResponseEntity<?> save(PurchasingHeaderDTO purchasingHeaderDTO) {
         this.response = new HashMap<>();
-        purchasingHeaderDTONew = purchasingHeaderDTO;
+        purchasingHeaderNew = null;
         try {
+
+            this.purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.purchasingHeaderDtoToPurchasingHeader(purchasingHeaderDTO));
+
 //            this.accountRepository.save(accountDTO);
-            this.purchasingHeaderDTONew.setEnabled(true);
+            this.purchasingHeaderNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, purchasingHeaderDTONew);
+            this.response.put(Constants.USER.USER, purchasingHeaderNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -58,7 +67,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     public boolean delete(PurchasingHeaderDTO purchasingHeaderDTO) {
         boolean operation = false;
 
-        PurchasingHeaderDTO purchasingHeaderDTONew = findById(purchasingHeaderDTO.getId());
+        PurchasingHeaderDTO purchasingHeaderDTONew = findById(purchasingHeaderDTO.getIdClient());
 
         try {
             purchasingHeaderDTONew.setEnabled(false);
@@ -76,17 +85,36 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     public ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO) {
         this.response = new HashMap<>();
         this.purchasingHeaderDTONew = null;
+        this.purchasingHeaderNew = null;
 
         try {
-            purchasingHeaderDTO = findById(purchasingHeaderDTO.getId());
+            purchasingHeaderDTO = findById(purchasingHeaderDTO.getIdClient());
             if (purchasingHeaderDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
-                purchasingHeaderDTONew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getId()).map(PurchasingHeaderDTO::new).orElse(null);
+
+                purchasingHeaderDTONew.setTrade(purchasingHeaderDTO.getTrade());
+                purchasingHeaderDTONew.setProduct(purchasingHeaderDTO.getProduct());
+                purchasingHeaderDTONew.setNumberBuy(purchasingHeaderDTO.getNumberBuy());
+                purchasingHeaderDTONew.setSku(purchasingHeaderDTO.getSku());
+                purchasingHeaderDTONew.setPurchaseDate(purchasingHeaderDTO.getPurchaseDate());
+                purchasingHeaderDTONew.setAmount(purchasingHeaderDTO.getAmount());
+                purchasingHeaderDTONew.setWorth(purchasingHeaderDTO.getWorth());
+                purchasingHeaderDTONew.setNroQuotes(purchasingHeaderDTO.getNroQuotes());
+                purchasingHeaderDTONew.setTotalValue(purchasingHeaderDTO.getTotalValue());
+                purchasingHeaderDTONew.setCardType(purchasingHeaderDTO.getCardType());
+                purchasingHeaderDTONew.setType(purchasingHeaderDTO.getType());
+                purchasingHeaderDTONew.setDeliverDate(purchasingHeaderDTO.getDeliverDate());
+                purchasingHeaderDTONew.setDeliveryAddress(purchasingHeaderDTO.getDeliveryAddress());
+                purchasingHeaderDTONew.setRetiredBy(purchasingHeaderDTO.getRetiredBy());
+
+                purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.purchasingHeaderDtoToPurchasingHeader(purchasingHeaderDTONew));
+
+//                purchasingHeaderDTONew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getId()).map(PurchasingHeaderDTO::new).orElse(null);
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, purchasingHeaderDTONew);
+                this.response.put(Constants.USER.USER, purchasingHeaderNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){

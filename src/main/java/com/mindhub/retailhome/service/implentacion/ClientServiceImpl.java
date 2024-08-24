@@ -6,6 +6,7 @@ import com.mindhub.retailhome.models.Client;
 import com.mindhub.retailhome.repositories.ClientRepository;
 import com.mindhub.retailhome.service.ClientService;
 import com.mindhub.retailhome.utils.Constants;
+import com.mindhub.retailhome.utils.UsernameRandom;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,19 @@ public class ClientServiceImpl implements ClientService {
 
     private ClientMapper clientMapper;
     private ClientRepository clientRepository;
+    private UsernameRandom usernameRandom;
 
     private Map<String, Object> response;
     private ClientDTO clientDtoOld;
     private ClientDTO clientDtoNew;
     private HttpStatus http;
     private Client clientNew;
+    private String vacio;
+    private String userId;
 
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository, UsernameRandom usernameRandom) {
         this.clientRepository = clientRepository;
+        this.usernameRandom = usernameRandom;
     }
 
     @Override
@@ -48,12 +53,22 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> save(ClientDTO clientDTO) {
         clientNew = new Client();
-//        clientDtoOld = new ClientDTO();
         this.response = new HashMap<>();
+        this.vacio.isEmpty();
+        this.userId = null;
+        String nomId = "RH";
 
         try {
             if (this.clientRepository.findByEmail(clientDTO.getEmail()) == null) {
-//                this.clientDtoNew = userMapper.userToUserDto(UserRepository.save(this.user));
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            } else {
+                //if comprobar si cliente no este creado empty
+                this.vacio = String.valueOf(this.clientRepository.findByEmail(clientDTO.getEmail()));
+
+                if (vacio.isEmpty()){
+                    userId = UsernameRandom.userNameRandom(nomId);
+                }
 
                 this.clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDTO));
 //                this.clientDtoNew = clientMapper.clientDtoToClient(clientRepository.save(clientDTO));
@@ -61,9 +76,6 @@ public class ClientServiceImpl implements ClientService {
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.USER.USER, clientNew);
                 this.http = HttpStatus.CREATED;
-            } else {
-                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
-                this.http = HttpStatus.CONFLICT;
             }
         } catch (Exception ex) {
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);

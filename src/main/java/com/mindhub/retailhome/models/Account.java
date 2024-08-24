@@ -23,6 +23,7 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
     private boolean enable;
+    private long idClient;
 
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -40,6 +41,16 @@ public class Account {
         this.creationDate = creationDate;
         this.balance = balance;
         this.enable = enable;
+        this.idClient = client.getId();
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void addAccount(Transaction transaction) {
+        transaction.setAccount(this);
+        transactions.add(transaction);
     }
 
     @Override

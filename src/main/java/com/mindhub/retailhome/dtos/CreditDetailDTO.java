@@ -10,16 +10,16 @@ import java.util.Date;
 @Setter
 public class CreditDetailDTO {
 
-    private long id;
-
     private Date dateExpiration;
     private String quotaStatus;
     private Date payDay;
+    private long idCredit;
 
     public CreditDetailDTO(CreditDetail creditdetail) {
         this.dateExpiration = creditdetail.getDateExpiration();
         this.quotaStatus = creditdetail.getQuotaStatus();
         this.payDay = creditdetail.getPayDay();
+        this.idCredit = creditdetail.getId();
     }
 
     public CreditDetailDTO() {

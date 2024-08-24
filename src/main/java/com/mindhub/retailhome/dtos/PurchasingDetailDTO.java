@@ -8,17 +8,18 @@ import lombok.Setter;
 @Setter
 public class PurchasingDetailDTO {
 
-    private long id;
     private String product;
     private Number amount;
     private Number worth;
     private Number tax;
+    private long idPurchasing;
 
     public PurchasingDetailDTO(PurchasingDetail purchasingdetail) {
         this.product = purchasingdetail.getProduct();
         this.amount = purchasingdetail.getAmount();
         this.worth = purchasingdetail.getWorth();
         this.tax = purchasingdetail.getTax();
+        this.idPurchasing = purchasingdetail.getId();
     }
 
     public PurchasingDetailDTO() {

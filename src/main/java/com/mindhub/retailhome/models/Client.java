@@ -2,14 +2,13 @@ package com.mindhub.retailhome.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -33,7 +32,7 @@ public class Client {
     private Number availableSpace;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    Set<Addresses> addresses = new HashSet<>();
+    Set<Addresses> addressess = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     Set<CreditsHeader> creditsHeaders = new HashSet<>();
@@ -66,19 +65,33 @@ public class Client {
     public Client() {
     }
 
-    //    @JsonIgnore
-//    public Set<ClientLoan> getClientLoans() {
-//        return clientLoans;
+    @JsonIgnore
+    public Set<Addresses> getAddressess() {
+        return addressess;
+    }
+
+    public void addClient(Addresses addresses) {
+        addresses.setClient(this);
+        addressess.add(addresses);
+    }
+
+//    public Set<Addresses> getAddressess() {
+//        return addressess;
 //    }
+
+    @JsonIgnore
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
 
     public void addClientLoans(ClientLoan clientLoan){
         clientLoan.setClient(this);
         clientLoans.add(clientLoan);
     }
 
-    public List<Loan> getLoans(){
-        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
-    }
+//    public List<Loan> getLoans(){
+//        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
+//    }
 
 
     @Override

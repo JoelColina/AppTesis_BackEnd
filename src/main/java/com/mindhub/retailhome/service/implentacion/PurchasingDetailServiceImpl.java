@@ -1,6 +1,8 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.PurchasingDetailDTO;
+import com.mindhub.retailhome.mappers.PurchasingDetailMapper;
+import com.mindhub.retailhome.models.PurchasingDetail;
 import com.mindhub.retailhome.repositories.PurchasingDetailRepository;
 import com.mindhub.retailhome.service.PurchasingDetailService;
 import com.mindhub.retailhome.utils.Constants;
@@ -19,6 +21,8 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
     private Map<String, Object> response;
     private HttpStatus http;
     private PurchasingDetailDTO purchasingDetailDTONew;
+    private PurchasingDetail purchasingDetailNew;
+    private PurchasingDetailMapper purchasingDetailMapper;
 
     @Autowired
     private PurchasingDetailRepository purchasingdetailrepository;
@@ -36,11 +40,14 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
     @Override
     public ResponseEntity<?> save(PurchasingDetailDTO purchasingDetailDTO) {
         this.response = new HashMap<>();
-        purchasingDetailDTONew = purchasingDetailDTO;
+        purchasingDetailNew = null;
+
         try {
+            this.purchasingDetailNew = this.purchasingdetailrepository.save(this.purchasingDetailMapper.purchasingDetailDtoToPurchasingDetail(purchasingDetailDTO));
+
 //            this.accountRepository.save(accountDTO);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, purchasingDetailDTONew);
+            this.response.put(Constants.USER.USER, purchasingDetailNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -56,17 +63,26 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
     public ResponseEntity<?> update(PurchasingDetailDTO purchasingDetailDTO) {
         this.response = new HashMap<>();
         this.purchasingDetailDTONew = null;
+        this.purchasingDetailNew = null;
 
         try {
-            purchasingDetailDTO = findById(purchasingDetailDTO.getId());
+            purchasingDetailDTO = findById(purchasingDetailDTO.getIdPurchasing());
             if (purchasingDetailDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
+
             }else {
-                purchasingDetailDTONew = this.purchasingdetailrepository.findById(purchasingDetailDTO.getId()).map(PurchasingDetailDTO::new).orElse(null);
+                purchasingDetailDTONew.setProduct(purchasingDetailDTO.getProduct());
+                purchasingDetailDTONew.setAmount(purchasingDetailDTO.getAmount());
+                purchasingDetailDTONew.setWorth(purchasingDetailDTO.getWorth());
+                purchasingDetailDTONew.setTax(purchasingDetailDTO.getTax());
+
+                purchasingDetailNew = this.purchasingdetailrepository.save(this.purchasingDetailMapper.purchasingDetailDtoToPurchasingDetail(purchasingDetailDTONew));
+
+//                purchasingDetailDTONew = this.purchasingdetailrepository.findById(purchasingDetailDTO.getId()).map(PurchasingDetailDTO::new).orElse(null);
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, purchasingDetailDTONew);
+                this.response.put(Constants.USER.USER, purchasingDetailNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){

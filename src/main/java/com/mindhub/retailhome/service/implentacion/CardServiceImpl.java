@@ -1,6 +1,10 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.CardDTO;
+import com.mindhub.retailhome.mappers.CardMapper;
+import com.mindhub.retailhome.models.Card;
+import com.mindhub.retailhome.models.CardColor;
+import com.mindhub.retailhome.models.CardType;
 import com.mindhub.retailhome.repositories.CardRepository;
 import com.mindhub.retailhome.service.CardService;
 import com.mindhub.retailhome.utils.Constants;
@@ -9,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +26,8 @@ public class CardServiceImpl implements CardService {
     private Map<String, Object> response;
     private HttpStatus http;
     private CardDTO cardDtoNew;
+    private Card cardNew;
+    private CardMapper cardMapper;
 
     @Autowired
     private CardRepository cardRepository;
@@ -38,11 +46,14 @@ public class CardServiceImpl implements CardService {
     public ResponseEntity<?> save(CardDTO cardDTO) {
         this.response = new HashMap<>();
         cardDtoNew = cardDTO;
+        cardNew = null;
+
         try {
-//            this.accountRepository.save(accountDTO);
-            this.cardDtoNew.setEnabled(true);
+            this.cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDTO));
+
+            this.cardNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, cardDtoNew);
+            this.response.put(Constants.USER.USER, cardNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -50,7 +61,6 @@ public class CardServiceImpl implements CardService {
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
-
         return new ResponseEntity<>(this.response, this.http);
     }
 
@@ -58,7 +68,7 @@ public class CardServiceImpl implements CardService {
     public boolean delete(CardDTO cardDTO) {
         boolean operation = false;
 
-        CardDTO cardDtoNew = findById(cardDTO.getId());
+        CardDTO cardDtoNew = findById(cardDTO.getIdClient());
 
         try {
             cardDtoNew.setEnabled(false);
@@ -76,29 +86,40 @@ public class CardServiceImpl implements CardService {
     public ResponseEntity<?> update(CardDTO cardDTO) {
         this.response = new HashMap<>();
         this.cardDtoNew = null;
+        this.cardNew = null;
 
         try {
-            cardDTO = findById(cardDTO.getId());
+            cardDTO = findById(cardDTO.getIdClient());
             if (cardDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
 
             }else {
-                cardDtoNew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
+
+                cardDtoNew.setType(cardDTO.getType());
+                cardDtoNew.setNumber(cardDTO.getNumber());
+                cardDtoNew.setCvv(cardDTO.getCvv());
+                cardDtoNew.setValidDate(cardDTO.getValidDate());
+                cardDtoNew.setThruDate(cardDTO.getThruDate());
+                cardDtoNew.setCardHolder(cardDTO.getCardHolder());
+                cardDtoNew.setColor(cardDTO.getColor());
+                cardDtoNew.setTotalLimit(cardDTO.getTotalLimit());
+                cardDtoNew.setQuotaUsed(cardDTO.getQuotaUsed());
+                cardDtoNew.setBalanceQuota(cardDTO.getBalanceQuota());
+
+                cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDtoNew));
+//                cardDtoNew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, cardDtoNew);
+                this.response.put(Constants.USER.USER, cardNew);
                 http = HttpStatus.ACCEPTED;
             }
 
         }catch (Exception e){
-//            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;
         }
-
-        //que se puede enviar en el response entity
         return new ResponseEntity<>(this.response,this.http);
     }
 

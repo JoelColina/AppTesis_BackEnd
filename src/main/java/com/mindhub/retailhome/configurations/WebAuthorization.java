@@ -45,10 +45,10 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
 //        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
     }
 
-    private void clearAuthenticationAttributes(HttpServletRequest request) {
+//    private void clearAuthenticationAttributes(HttpServletRequest request) {
 //        HttpSession session = request.getSession(false);
 //        if (session != null) {
 //            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 //        }
-    }
+ //   }
 }

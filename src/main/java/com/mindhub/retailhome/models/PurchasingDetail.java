@@ -23,12 +23,14 @@ public class PurchasingDetail {
     private Number amount;
     private Number worth;
     private Number tax;
+    private long idPurchasing;
 
     public PurchasingDetail(String product, Number amount, Number worth, Number tax) {
         this.product = product;
         this.amount = amount;
         this.worth = worth;
         this.tax = tax;
+        this.idPurchasing = purchasingHeader.getId();
     }
 
     public PurchasingDetail() {

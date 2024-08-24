@@ -20,14 +20,16 @@ public class CreditDetail {
     @JoinColumn(name = "credit_id")
     private CreditsHeader creditsHeader;
 
-     private Date dateExpiration;
+    private Date dateExpiration;
     private String quotaStatus;
     private Date payDay;
+    private long idCredit;
 
     public CreditDetail(Date dateExpiration, String quotaStatus, Date payDay) {
         this.dateExpiration = dateExpiration;
         this.quotaStatus = quotaStatus;
         this.payDay = payDay;
+        this.idCredit = creditsHeader.getId();
     }
 
     public CreditDetail() {

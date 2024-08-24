@@ -11,8 +11,6 @@ import java.util.Date;
 @Setter
 public class PurchasingHeaderDTO {
 
-    private long id;
-
     private String trade;
     private String product;
     private Number numberBuy;
@@ -28,6 +26,7 @@ public class PurchasingHeaderDTO {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
+    private long idClient;
 
     public PurchasingHeaderDTO(PurchasingHeader purchasingHeader) {
         this.trade = purchasingHeader.getTrade();
@@ -45,6 +44,7 @@ public class PurchasingHeaderDTO {
         this.deliveryAddress = purchasingHeader.getDeliveryAddress();
         this.retiredBy = purchasingHeader.getRetiredBy();
         this.enabled = purchasingHeader.isEnabled();
+        this.idClient = purchasingHeader.getIdClient();
     }
 
     public PurchasingHeaderDTO() {

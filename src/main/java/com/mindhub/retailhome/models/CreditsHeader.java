@@ -27,11 +27,13 @@ public class CreditsHeader {
     private Number requestedAmount;
     private Number quotaNumber;
     private boolean enabled;
+    private long idClient;
 
-    public CreditsHeader(Number requestedAmount, Number quotaNumber, boolean enabled) {
+    public CreditsHeader(Number requestedAmount, Number quotaNumber, boolean enabled, Client client) {
         this.requestedAmount = requestedAmount;
         this.quotaNumber = quotaNumber;
         this.enabled = enabled;
+        this.idClient = client.getId();
     }
 
     public CreditsHeader() {
@@ -47,4 +49,5 @@ public class CreditsHeader {
                 ", enabled=" + enabled +
                 '}';
     }
+
 }
