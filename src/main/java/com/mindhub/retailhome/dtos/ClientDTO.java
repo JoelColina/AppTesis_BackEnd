@@ -20,6 +20,7 @@ public class ClientDTO {
     private Number totalLimit;
     private Number debtAccount;
     private Number availableSpace;
+    private String idClient;
 
 //    Set<AccountDTO> accounts;
 //    Set<ClientLoanDTO> loans;
@@ -40,7 +41,7 @@ public class ClientDTO {
         this.totalLimit = client.getTotalLimit();
         this.debtAccount = client.getDebtAccount();
         this.availableSpace = client.getAvailableSpace();
-
+        this.idClient = client.getIdClient();
         this.password = client.getPassword();
 
 //        this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());

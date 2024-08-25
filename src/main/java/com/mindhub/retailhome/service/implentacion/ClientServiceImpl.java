@@ -29,6 +29,7 @@ public class ClientServiceImpl implements ClientService {
     private String vacio;
     private String userId;
 
+
     public ClientServiceImpl(ClientRepository clientRepository, UsernameRandom usernameRandom) {
         this.clientRepository = clientRepository;
         this.usernameRandom = usernameRandom;
@@ -68,6 +69,7 @@ public class ClientServiceImpl implements ClientService {
 
                 if (vacio.isEmpty()){
                     userId = UsernameRandom.userNameRandom(nomId);
+                    Client creCli = clientRepository.findById(userId);
                 }
 
                 this.clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDTO));

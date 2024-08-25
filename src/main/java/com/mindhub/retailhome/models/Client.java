@@ -30,6 +30,7 @@ public class Client {
     private Number totalLimit;
     private Number debtAccount;
     private Number availableSpace;
+    private String idClient;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     Set<Addresses> addressess = new HashSet<>();
@@ -48,7 +49,7 @@ public class Client {
 
     private String password;
 
-    public Client(String names, String lastName, String motherLastName, String ruth, Date birthDate, Number telephoneNumber, String email, Number totalLimit, Number debtAccount, Number availableSpace, String password) {
+    public Client(String idClient, String names, String lastName, String motherLastName, String ruth, Date birthDate, Number telephoneNumber, String email, Number totalLimit, Number debtAccount, Number availableSpace, String password) {
         this.names = names;
         this.lastName = lastName;
         this.motherLastName = motherLastName;
@@ -59,7 +60,7 @@ public class Client {
         this.totalLimit = totalLimit;
         this.debtAccount = debtAccount;
         this.availableSpace = availableSpace;
-        this.password = password;
+        this.idClient = idClient;
     }
 
     public Client() {
