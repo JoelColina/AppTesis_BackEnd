@@ -75,7 +75,7 @@ public class ClientController {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
-        clientRepository.save(new Client(nombres, apellidoPaterno, apellidoMaterno, rut, fechaNacimiento, numeroTelefono, email, cupoTotal, deudaCta, cupoDisponible, passwordEncoder.encode(password)));
+//        clientRepository.save(new Client(nombres, apellidoPaterno, apellidoMaterno, rut, fechaNacimiento, numeroTelefono, email, cupoTotal, deudaCta, cupoDisponible, passwordEncoder.encode(password)));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
