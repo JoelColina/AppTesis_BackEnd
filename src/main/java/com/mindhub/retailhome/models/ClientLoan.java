@@ -18,11 +18,11 @@ public class ClientLoan {
 
     private double amount;
     private double payments;
-    private long idClient;
+    private String idClient;
     private long idLoans;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "idClient")
     private Client client;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -35,7 +35,7 @@ public class ClientLoan {
     public ClientLoan(double amount, double payments) {
         this.amount = amount;
         this.payments = payments;
-        this.idClient = client.getId();
+        this.idClient = client.getIdClient();
         this.idLoans = loan.getId();
     }
 

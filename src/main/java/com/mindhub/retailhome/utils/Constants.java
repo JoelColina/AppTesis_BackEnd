@@ -34,7 +34,7 @@ public class Constants {
         public static final String FAIL = "Fail";
 
     }
-    public static  final  String LOGGED_OK = "Hello you have successfully logged in ";
-    public static final String USER_GENERATE = "a";
+    public static final  String LOGGED_OK = "Hello you have successfully logged in ";
+    public static final String USER_GENERATE = "HR";
 
 }

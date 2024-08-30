@@ -36,20 +36,24 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     public CreditsHeaderDTO findById(Long id) {
         return this.creditsHeaderRepository.findById(id).map(CreditsHeaderDTO::new).orElse(null);
     }
+    @Override
+    public CreditsHeaderDTO findCreditsHeaderDto(String idClient) {
+        return (CreditsHeaderDTO) this.creditsHeaderRepository.findAccountDto(idClient).mapToObj(CreditsHeaderDTO::new).toList();
+    }
 
     @Override
     public ResponseEntity<?> save(CreditsHeaderDTO creditsHeaderDTO) {
         this.response = new HashMap<>();
         creditsHeaderNew = null;
+        creditsHeaderDTONew = null;
 
         try {
-
             this.creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDTO));
+            this.creditsHeaderDTONew = creditsHeaderMapper.creditsHeaderToCreditsHeaderDto(creditsHeaderRepository.save(creditsHeaderNew));
 
-//            this.accountRepository.save(accountDTO);
             this.creditsHeaderNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, creditsHeaderNew);
+            this.response.put(Constants.USER.USER, creditsHeaderDTONew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -65,7 +69,7 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     public boolean delete(CreditsHeaderDTO creditsHeaderDTO) {
         boolean operation = false;
 
-        CreditsHeaderDTO creditsHeaderDTONew = findById(creditsHeaderDTO.getIdClient());
+        CreditsHeaderDTO creditsHeaderDTONew = findCreditsHeaderDto(creditsHeaderDTO.getIdClient());
 
         try {
             creditsHeaderDTONew.setEnabled(false);
@@ -85,9 +89,8 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         this.creditsHeaderDTONew = null;
         this.creditsHeaderNew = null;
 
-
         try {
-            creditsHeaderDTO = findById(creditsHeaderDTO.getIdClient());
+            creditsHeaderDTO = findCreditsHeaderDto(creditsHeaderDTO.getIdClient());
             if (creditsHeaderDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
@@ -96,16 +99,14 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
                 creditsHeaderDTONew.setRequestedAmount(creditsHeaderDTO.getRequestedAmount());
                 creditsHeaderDTONew.setQuotaNumber(creditsHeaderDTO.getQuotaNumber());
 
-                creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDTONew));
-
-//                creditsHeaderDTONew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getId()).map(CreditsHeaderDTO::new).orElse(null);
+                this.creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDTONew));
+                this.creditsHeaderDTONew = creditsHeaderMapper.creditsHeaderToCreditsHeaderDto(creditsHeaderRepository.save(creditsHeaderNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, creditsHeaderNew);
+                this.response.put(Constants.USER.USER, creditsHeaderDTONew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){
-//            response new ResponseEntity<>(accountDTONew, HttpStatus.BAD_REQUEST);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             http = HttpStatus.BAD_REQUEST;

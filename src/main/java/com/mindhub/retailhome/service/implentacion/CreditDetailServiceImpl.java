@@ -22,7 +22,8 @@ public class CreditDetailServiceImpl implements CreditDetailService {
 
     private Map<String, Object> response;
     private HttpStatus http;
-    private CreditDetailDTO creditDetailDTONew;
+    private CreditDetailDTO creditDetailDtoNew;
+    private CreditDetailDTO creditDetailDtoOld;
     private CreditDetail creditDetailNew;
     private CreditDetailMapper creditDetailMapper;
 
@@ -42,15 +43,16 @@ public class CreditDetailServiceImpl implements CreditDetailService {
     @Override
     public ResponseEntity<?> save(CreditDetailDTO creditDetailDTO) {
         this.response = new HashMap<>();
-        creditDetailDTONew = creditDetailDTO;
+        creditDetailDtoNew = creditDetailDTO;
         this.creditDetailNew = null;
 
         try {
 
             this.creditDetailNew = this.creditDetailRepository.save(this.creditDetailMapper.creditDetailDtoToCreditDetail(creditDetailDTO));
+            this.creditDetailDtoNew = creditDetailMapper.creditDetailToCreditDetailDto(creditDetailRepository.save(creditDetailNew));
 
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, creditDetailDTONew);
+            this.response.put(Constants.USER.USER, creditDetailDtoNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -64,7 +66,9 @@ public class CreditDetailServiceImpl implements CreditDetailService {
     @Override
     public ResponseEntity<?> update(CreditDetailDTO creditDetailDTO) {
         this.response = new HashMap<>();
-        this.creditDetailDTONew = null;
+        this.creditDetailDtoNew = null;
+        this.creditDetailDtoOld = null;
+        this.creditDetailNew = null;
 
         try {
             creditDetailDTO = findById(creditDetailDTO.getIdCredit());
@@ -73,16 +77,15 @@ public class CreditDetailServiceImpl implements CreditDetailService {
                 this.http = HttpStatus.CONFLICT;
             }else {
 
-                creditDetailDTONew.setDateExpiration(creditDetailDTO.getDateExpiration());
-                creditDetailDTONew.setQuotaStatus(creditDetailDTO.getQuotaStatus());
-                creditDetailDTONew.setPayDay(creditDetailDTO.getPayDay());
+                creditDetailDtoOld.setDateExpiration(creditDetailDTO.getDateExpiration());
+                creditDetailDtoOld.setQuotaStatus(creditDetailDTO.getQuotaStatus());
+                creditDetailDtoOld.setPayDay(creditDetailDTO.getPayDay());
 
-                creditDetailNew = this.creditDetailRepository.save(this.creditDetailMapper.creditDetailDtoToCreditDetail(creditDetailDTONew));
-
-//                creditDetailDTONew = this.creditDetailRepository.findById(creditDetailDTO.getId()).map(CreditDetailDTO::new).orElse(null);
+               creditDetailNew = this.creditDetailRepository.save(this.creditDetailMapper.creditDetailDtoToCreditDetail(creditDetailDtoOld));
+                this.creditDetailDtoNew = creditDetailMapper.creditDetailToCreditDetailDto(creditDetailRepository.save(creditDetailNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, creditDetailNew);
+                this.response.put(Constants.USER.USER, creditDetailDtoNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){

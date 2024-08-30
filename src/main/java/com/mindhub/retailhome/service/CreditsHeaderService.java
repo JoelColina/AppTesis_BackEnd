@@ -13,6 +13,8 @@ public interface CreditsHeaderService {
 
     CreditsHeaderDTO findById(Long id);
 
+    CreditsHeaderDTO findCreditsHeaderDto(String idClient);
+
     // agregar
     ResponseEntity<?> save (CreditsHeaderDTO creditsHeaderDTO);
 

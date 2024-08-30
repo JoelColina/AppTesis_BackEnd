@@ -24,7 +24,7 @@ public class CardDTO {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
-    private Long idClient;
+    private String idClient;
 
     public CardDTO(Card card) {
         this.type = card.getType();
@@ -44,4 +44,6 @@ public class CardDTO {
     public CardDTO() {
     }
 
+    public CardDTO(double card) {
+    }
 }

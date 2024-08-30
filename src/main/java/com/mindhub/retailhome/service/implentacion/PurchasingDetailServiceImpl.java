@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 public class PurchasingDetailServiceImpl implements PurchasingDetailService {
     private Map<String, Object> response;
     private HttpStatus http;
-    private PurchasingDetailDTO purchasingDetailDTONew;
+    private PurchasingDetailDTO purchasingDetailDtoNew;
+    private PurchasingDetailDTO purchasingDetailDtoOld;
     private PurchasingDetail purchasingDetailNew;
     private PurchasingDetailMapper purchasingDetailMapper;
 
@@ -41,13 +42,14 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
     public ResponseEntity<?> save(PurchasingDetailDTO purchasingDetailDTO) {
         this.response = new HashMap<>();
         purchasingDetailNew = null;
+        purchasingDetailDtoNew = null;
 
         try {
             this.purchasingDetailNew = this.purchasingdetailrepository.save(this.purchasingDetailMapper.purchasingDetailDtoToPurchasingDetail(purchasingDetailDTO));
+            this.purchasingDetailDtoNew = purchasingDetailMapper.purchasingDetailToPurchasingDetailDto(purchasingdetailrepository.save(purchasingDetailNew));
 
-//            this.accountRepository.save(accountDTO);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, purchasingDetailNew);
+            this.response.put(Constants.USER.USER, purchasingDetailDtoNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -62,7 +64,8 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
     @Override
     public ResponseEntity<?> update(PurchasingDetailDTO purchasingDetailDTO) {
         this.response = new HashMap<>();
-        this.purchasingDetailDTONew = null;
+        this.purchasingDetailDtoNew = null;
+        this.purchasingDetailDtoOld = null;
         this.purchasingDetailNew = null;
 
         try {
@@ -72,17 +75,16 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
                 this.http = HttpStatus.CONFLICT;
 
             }else {
-                purchasingDetailDTONew.setProduct(purchasingDetailDTO.getProduct());
-                purchasingDetailDTONew.setAmount(purchasingDetailDTO.getAmount());
-                purchasingDetailDTONew.setWorth(purchasingDetailDTO.getWorth());
-                purchasingDetailDTONew.setTax(purchasingDetailDTO.getTax());
+                purchasingDetailDtoOld.setProduct(purchasingDetailDTO.getProduct());
+                purchasingDetailDtoOld.setAmount(purchasingDetailDTO.getAmount());
+                purchasingDetailDtoOld.setWorth(purchasingDetailDTO.getWorth());
+                purchasingDetailDtoOld.setTax(purchasingDetailDTO.getTax());
 
-                purchasingDetailNew = this.purchasingdetailrepository.save(this.purchasingDetailMapper.purchasingDetailDtoToPurchasingDetail(purchasingDetailDTONew));
-
-//                purchasingDetailDTONew = this.purchasingdetailrepository.findById(purchasingDetailDTO.getId()).map(PurchasingDetailDTO::new).orElse(null);
+                purchasingDetailNew = this.purchasingdetailrepository.save(this.purchasingDetailMapper.purchasingDetailDtoToPurchasingDetail(purchasingDetailDtoOld));
+                this.purchasingDetailDtoNew = purchasingDetailMapper.purchasingDetailToPurchasingDetailDto(purchasingdetailrepository.save(purchasingDetailNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, purchasingDetailNew);
+                this.response.put(Constants.USER.USER, purchasingDetailDtoNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){

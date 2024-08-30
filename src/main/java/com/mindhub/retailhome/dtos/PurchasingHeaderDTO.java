@@ -26,7 +26,7 @@ public class PurchasingHeaderDTO {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
-    private long idClient;
+    private String idClient;
 
     public PurchasingHeaderDTO(PurchasingHeader purchasingHeader) {
         this.trade = purchasingHeader.getTrade();
@@ -50,4 +50,6 @@ public class PurchasingHeaderDTO {
     public PurchasingHeaderDTO() {
     }
 
+    public PurchasingHeaderDTO(double purchasingHeader) {
+    }
 }

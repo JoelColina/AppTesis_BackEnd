@@ -18,7 +18,7 @@ public class CreditsHeader {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "idClient")
     private Client client;
 
     @OneToMany(mappedBy = "creditsHeader", fetch = FetchType.EAGER)
@@ -27,13 +27,13 @@ public class CreditsHeader {
     private Number requestedAmount;
     private Number quotaNumber;
     private boolean enabled;
-    private long idClient;
+    private String idClient;
 
     public CreditsHeader(Number requestedAmount, Number quotaNumber, boolean enabled, Client client) {
         this.requestedAmount = requestedAmount;
         this.quotaNumber = quotaNumber;
         this.enabled = enabled;
-        this.idClient = client.getId();
+        this.idClient = client.getIdClient();
     }
 
     public CreditsHeader() {

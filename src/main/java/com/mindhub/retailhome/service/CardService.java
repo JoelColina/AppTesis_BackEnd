@@ -11,6 +11,9 @@ public interface CardService {
     Set<CardDTO> finAll();
 
     CardDTO findById(Long id);
+
+    CardDTO findByIdClient(String idClient);
+
     // agregar
     ResponseEntity<?>  save (CardDTO cardDTO);
     // eliminar

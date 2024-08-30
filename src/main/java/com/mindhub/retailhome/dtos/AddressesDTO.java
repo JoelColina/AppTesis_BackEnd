@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressesDTO {
-
     private String address;
     private Number number;
     private String city;
@@ -16,7 +15,7 @@ public class AddressesDTO {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-    private Long idClient;
+    private String idClient;
 
     public AddressesDTO(Addresses addresses){
         this.address = addresses.getAddress();
@@ -32,4 +31,6 @@ public class AddressesDTO {
     public AddressesDTO() {
     }
 
+    public AddressesDTO(double addresses) {
+    }
 }

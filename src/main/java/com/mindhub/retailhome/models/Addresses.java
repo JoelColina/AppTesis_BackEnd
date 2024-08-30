@@ -16,7 +16,7 @@ public class Addresses {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "idClient")
     private Client client;
 
     private String address;
@@ -26,7 +26,7 @@ public class Addresses {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-    private long idClient;
+    private String idClient;
 
     public Addresses(String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
 
@@ -37,7 +37,7 @@ public class Addresses {
         this.postalCode = postalCode;
         this.type = type;
         this.enabled = enabled;
-        this.idClient = client.getId();
+        this.idClient = client.getIdClient();
     }
 
     public Addresses() {
@@ -46,7 +46,6 @@ public class Addresses {
     @Override
     public String toString() {
         return "Addresses{" +
-//                "idClient=" + idClient +
                 ", address='" + address + '\'' +
                 ", number=" + number +
                 ", city='" + city + '\'' +

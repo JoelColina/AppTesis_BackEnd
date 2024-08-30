@@ -2,7 +2,6 @@ package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.PurchasingHeaderDTO;
 import com.mindhub.retailhome.mappers.PurchasingHeaderMapper;
-import com.mindhub.retailhome.models.AddressType;
 import com.mindhub.retailhome.models.PurchasingHeader;
 import com.mindhub.retailhome.repositories.PurchasingHeaderRepository;
 import com.mindhub.retailhome.service.PurchasingHeaderService;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +21,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
     private Map<String, Object> response;
     private HttpStatus http;
-    private PurchasingHeaderDTO purchasingHeaderDTONew;
+    private PurchasingHeaderDTO purchasingHeaderDtoNew;
     private PurchasingHeader purchasingHeaderNew;
     private PurchasingHeaderMapper purchasingHeaderMapper;
 
@@ -41,17 +39,24 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     }
 
     @Override
+    public PurchasingHeaderDTO PurchasingHeaderDto(String idClient) {
+        return (PurchasingHeaderDTO) this.purchasingHeaderRepository.PurchasingHeaderDto(idClient).mapToObj(PurchasingHeaderDTO::new).toList();
+    }
+
+    @Override
     public ResponseEntity<?> save(PurchasingHeaderDTO purchasingHeaderDTO) {
         this.response = new HashMap<>();
-        purchasingHeaderNew = null;
+        PurchasingHeader purchasingHeaderNew = null;
+        purchasingHeaderDtoNew = null;
+
         try {
+            this.purchasingHeaderNew.setEnabled(true);
 
             this.purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.purchasingHeaderDtoToPurchasingHeader(purchasingHeaderDTO));
+            this.purchasingHeaderDtoNew = purchasingHeaderMapper.purchasingHeaderToPurchasingHeaderDto(purchasingHeaderRepository.save(purchasingHeaderNew));
 
-//            this.accountRepository.save(accountDTO);
-            this.purchasingHeaderNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, purchasingHeaderNew);
+            this.response.put(Constants.USER.USER, purchasingHeaderDtoNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -67,7 +72,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     public boolean delete(PurchasingHeaderDTO purchasingHeaderDTO) {
         boolean operation = false;
 
-        PurchasingHeaderDTO purchasingHeaderDTONew = findById(purchasingHeaderDTO.getIdClient());
+        PurchasingHeaderDTO purchasingHeaderDTONew = PurchasingHeaderDto(purchasingHeaderDTO.getIdClient());
 
         try {
             purchasingHeaderDTONew.setEnabled(false);
@@ -84,37 +89,37 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     @Override
     public ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO) {
         this.response = new HashMap<>();
-        this.purchasingHeaderDTONew = null;
+        PurchasingHeaderDTO purchasingHeaderDtoOld = null;
+        this.purchasingHeaderDtoNew = null;
         this.purchasingHeaderNew = null;
 
         try {
-            purchasingHeaderDTO = findById(purchasingHeaderDTO.getIdClient());
+            purchasingHeaderDTO = PurchasingHeaderDto(purchasingHeaderDTO.getIdClient());
             if (purchasingHeaderDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
 
-                purchasingHeaderDTONew.setTrade(purchasingHeaderDTO.getTrade());
-                purchasingHeaderDTONew.setProduct(purchasingHeaderDTO.getProduct());
-                purchasingHeaderDTONew.setNumberBuy(purchasingHeaderDTO.getNumberBuy());
-                purchasingHeaderDTONew.setSku(purchasingHeaderDTO.getSku());
-                purchasingHeaderDTONew.setPurchaseDate(purchasingHeaderDTO.getPurchaseDate());
-                purchasingHeaderDTONew.setAmount(purchasingHeaderDTO.getAmount());
-                purchasingHeaderDTONew.setWorth(purchasingHeaderDTO.getWorth());
-                purchasingHeaderDTONew.setNroQuotes(purchasingHeaderDTO.getNroQuotes());
-                purchasingHeaderDTONew.setTotalValue(purchasingHeaderDTO.getTotalValue());
-                purchasingHeaderDTONew.setCardType(purchasingHeaderDTO.getCardType());
-                purchasingHeaderDTONew.setType(purchasingHeaderDTO.getType());
-                purchasingHeaderDTONew.setDeliverDate(purchasingHeaderDTO.getDeliverDate());
-                purchasingHeaderDTONew.setDeliveryAddress(purchasingHeaderDTO.getDeliveryAddress());
-                purchasingHeaderDTONew.setRetiredBy(purchasingHeaderDTO.getRetiredBy());
+                purchasingHeaderDtoOld.setTrade(purchasingHeaderDTO.getTrade());
+                purchasingHeaderDtoOld.setProduct(purchasingHeaderDTO.getProduct());
+                purchasingHeaderDtoOld.setNumberBuy(purchasingHeaderDTO.getNumberBuy());
+                purchasingHeaderDtoOld.setSku(purchasingHeaderDTO.getSku());
+                purchasingHeaderDtoOld.setPurchaseDate(purchasingHeaderDTO.getPurchaseDate());
+                purchasingHeaderDtoOld.setAmount(purchasingHeaderDTO.getAmount());
+                purchasingHeaderDtoOld.setWorth(purchasingHeaderDTO.getWorth());
+                purchasingHeaderDtoOld.setNroQuotes(purchasingHeaderDTO.getNroQuotes());
+                purchasingHeaderDtoOld.setTotalValue(purchasingHeaderDTO.getTotalValue());
+                purchasingHeaderDtoOld.setCardType(purchasingHeaderDTO.getCardType());
+                purchasingHeaderDtoOld.setType(purchasingHeaderDTO.getType());
+                purchasingHeaderDtoOld.setDeliverDate(purchasingHeaderDTO.getDeliverDate());
+                purchasingHeaderDtoOld.setDeliveryAddress(purchasingHeaderDTO.getDeliveryAddress());
+                purchasingHeaderDtoOld.setRetiredBy(purchasingHeaderDTO.getRetiredBy());
 
-                purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.purchasingHeaderDtoToPurchasingHeader(purchasingHeaderDTONew));
-
-//                purchasingHeaderDTONew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getId()).map(PurchasingHeaderDTO::new).orElse(null);
+                purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.purchasingHeaderDtoToPurchasingHeader(purchasingHeaderDtoOld));
+                this.purchasingHeaderDtoNew = purchasingHeaderMapper.purchasingHeaderToPurchasingHeaderDto(purchasingHeaderRepository.save(purchasingHeaderNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, purchasingHeaderNew);
+                this.response.put(Constants.USER.USER, purchasingHeaderDtoNew);
                 http = HttpStatus.ACCEPTED;
             }
         }catch (Exception e){

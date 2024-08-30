@@ -10,8 +10,10 @@ import java.util.Set;
 public interface AddressesService {
 
     Set<AddressesDTO> finAll();
-
     AddressesDTO findById(Long id);
+   // AddressesDTO findByIdClient(String id);
+    AddressesDTO finAddressesDto(String id);
+
     // agregar
     ResponseEntity<?> save (AddressesDTO addressesDTO);
     // eliminar

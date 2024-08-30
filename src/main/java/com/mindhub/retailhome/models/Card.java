@@ -30,10 +30,10 @@ public class Card {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
-    private Long idClient;
+    private String idClient;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "idClient")
     private Client client;
 
     public Card(CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, boolean enabled) {
@@ -49,7 +49,7 @@ public class Card {
         this.quotaUsed = quotaUsed;
         this.balanceQuota = balanceQuota;
         this.enabled = enabled;
-        this.idClient = client.getId();
+        this.idClient = client.getIdClient();
     }
 
     public Card() {

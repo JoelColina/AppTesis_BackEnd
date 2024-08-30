@@ -10,7 +10,7 @@ public class CreditsHeaderDTO {
 
     private Number requestedAmount;
     private Number quotaNumber;
-    private long idClient;
+    private String idClient;
     private boolean enabled;
 
     public CreditsHeaderDTO(CreditsHeader creditsheader) {
@@ -23,4 +23,6 @@ public class CreditsHeaderDTO {
     public CreditsHeaderDTO() {
     }
 
+    public CreditsHeaderDTO(double creditsheader) {
+    }
 }

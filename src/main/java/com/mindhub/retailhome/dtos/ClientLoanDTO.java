@@ -10,7 +10,7 @@ public class ClientLoanDTO {
 
     private double amount;
     private double payments;
-    private long idClient;
+    private String idClient;
     private long idLoans;
     private String name;
 

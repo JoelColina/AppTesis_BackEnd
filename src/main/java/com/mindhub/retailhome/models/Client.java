@@ -31,25 +31,31 @@ public class Client {
     private Number debtAccount;
     private Number availableSpace;
     private String idClient;
+    private boolean enabled;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @JoinColumn(name="idClient" ,nullable = false)
     Set<Addresses> addressess = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @JoinColumn(name="idClient" ,nullable = false)
     Set<CreditsHeader> creditsHeaders = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @JoinColumn(name="idClient" ,nullable = false)
     Set<PurchasingHeader> purchasingHeaders = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @JoinColumn(name="idClient" ,nullable = false)
     Set<ClientLoan> clientLoans = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @JoinColumn(name="idClient" ,nullable = false)
     Set<Card> cards = new HashSet<>();
 
     private String password;
 
-    public Client(String idClient, String names, String lastName, String motherLastName, String ruth, Date birthDate, Number telephoneNumber, String email, Number totalLimit, Number debtAccount, Number availableSpace, String password) {
+    public Client(String names, String lastName, String motherLastName, String ruth, Date birthDate, Number telephoneNumber, String email, Number totalLimit, Number debtAccount, Number availableSpace, String password, boolean enabled) {
         this.names = names;
         this.lastName = lastName;
         this.motherLastName = motherLastName;
@@ -60,7 +66,7 @@ public class Client {
         this.totalLimit = totalLimit;
         this.debtAccount = debtAccount;
         this.availableSpace = availableSpace;
-        this.idClient = idClient;
+        this.enabled = enabled;
     }
 
     public Client() {

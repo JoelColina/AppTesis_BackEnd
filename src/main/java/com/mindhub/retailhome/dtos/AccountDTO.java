@@ -16,7 +16,7 @@ public class AccountDTO {
     private LocalDate creationDate;
     private double balance;
     private boolean enable;
-    private Long idClient;
+    private String idClient;
 
     @Getter
     private Set<TransactionDTO> transactions;
@@ -35,4 +35,6 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
+    public AccountDTO(double account) {
+    }
 }

@@ -1,8 +1,8 @@
 package com.mindhub.retailhome.service.implentacion;
 
+import com.mindhub.retailhome.dtos.AccountDTO;
 import com.mindhub.retailhome.dtos.AddressesDTO;
 import com.mindhub.retailhome.mappers.AddressesMapper;
-import com.mindhub.retailhome.models.AddressType;
 import com.mindhub.retailhome.models.Addresses;
 import com.mindhub.retailhome.repositories.AddressesRepository;
 import com.mindhub.retailhome.service.AddressesService;
@@ -41,6 +41,11 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     @Override
+    public AddressesDTO finAddressesDto(String idClient) {
+        return (AddressesDTO) this.addressesRepository.findAccountDto(idClient).mapToObj(AddressesDTO::new).toList();
+    }
+
+    @Override
     public ResponseEntity<?> save(AddressesDTO addressesDTO) {
         this.response = new HashMap<>();
         addressesDtoNew = addressesDTO;
@@ -67,13 +72,8 @@ public class AddressesServiceImpl implements AddressesService {
     @Override
     public boolean delete(AddressesDTO addressesDTO) {
         boolean operation = false;
-
-
-
-        AddressesDTO addressesDtoNew = findById(addressesDTO.getIdClient());
-
+        AddressesDTO addressesDtoNew = finAddressesDto(addressesDTO.getIdClient());
         try {
-
             addressesDtoNew.setEnabled(false);
             update(addressesDtoNew);
             operation = true;
@@ -93,7 +93,7 @@ public class AddressesServiceImpl implements AddressesService {
         this.addressesDtoNew = null;
 
         try {
-            addressesDTO = findById(addressesDTO.getIdClient());
+            addressesDTO = finAddressesDto(addressesDTO.getIdClient());
 
             if (addressesDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);

@@ -26,9 +26,7 @@ public class ClientServiceImpl implements ClientService {
     private ClientDTO clientDtoNew;
     private HttpStatus http;
     private Client clientNew;
-    private String vacio;
     private String userId;
-
 
     public ClientServiceImpl(ClientRepository clientRepository, UsernameRandom usernameRandom) {
         this.clientRepository = clientRepository;
@@ -53,32 +51,35 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ResponseEntity<?> save(ClientDTO clientDTO) {
+        clientDtoNew = new ClientDTO();
         clientNew = new Client();
         this.response = new HashMap<>();
-        this.vacio.isEmpty();
         this.userId = null;
-        String nomId = "RH";
 
         try {
-            if (this.clientRepository.findByEmail(clientDTO.getEmail()) == null) {
+
+            if(this.clientRepository.findByEmail(clientDTO.getEmail()) != null){
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
-            } else {
-                //if comprobar si cliente no este creado empty
-                this.vacio = String.valueOf(this.clientRepository.findByEmail(clientDTO.getEmail()));
-
-                if (vacio.isEmpty()){
-                    userId = UsernameRandom.userNameRandom(nomId);
-                    Client creCli = clientRepository.findById(userId);
-                }
-
-                this.clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDTO));
-//                this.clientDtoNew = clientMapper.clientDtoToClient(clientRepository.save(clientDTO));
-
-                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, clientNew);
-                this.http = HttpStatus.CREATED;
+                return new ResponseEntity<>(this.response, this.http);
             }
+
+            while (userId.isEmpty()) {
+                userId = UsernameRandom.userNameRandom(Constants.USER_GENERATE);
+                clientDtoNew = this.clientRepository.findByIdClient(userId);
+                if (clientDtoNew != null) {
+                    userId = "";
+                }
+            }
+
+            clientDTO.setIdClient(userId);
+            this.clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDTO));
+            this.clientDtoNew = clientMapper.clientToClientDto(clientRepository.save(clientNew));
+
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, clientDtoNew);
+            this.http = HttpStatus.CREATED;
+
         } catch (Exception ex) {
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
             this.response.put(Constants.GEMERAL.ERROR, ex.getMessage());
@@ -90,6 +91,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> update(ClientDTO clientDTO) {
         clientDtoNew = null;
+        clientDtoOld = null;
         clientNew = null;
 
         this.response = new HashMap<>();
@@ -100,21 +102,24 @@ public class ClientServiceImpl implements ClientService {
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             } else {
-                clientDtoNew.setNames(clientDTO.getNames());
-                clientDtoNew.setLastName(clientDTO.getLastName());
-                clientDtoNew.setMotherLastName(clientDTO.getMotherLastName());
-                clientDtoNew.setRuth(clientDTO.getRuth());
-                clientDtoNew.setBirthDate(clientDTO.getBirthDate());
-                clientDtoNew.setTelephoneNumber(clientDTO.getTelephoneNumber());
-                clientDtoNew.setEmail(clientDTO.getEmail());
-                clientDtoNew.setTotalLimit(clientDTO.getTotalLimit());
-                clientDtoNew.setDebtAccount(clientDTO.getDebtAccount());
-                clientDtoNew.setAvailableSpace(clientDTO.getAvailableSpace());
+                clientDtoOld.setNames(clientDTO.getNames());
+                clientDtoOld.setLastName(clientDTO.getLastName());
+                clientDtoOld.setMotherLastName(clientDTO.getMotherLastName());
+                clientDtoOld.setRuth(clientDTO.getRuth());
+                clientDtoOld.setBirthDate(clientDTO.getBirthDate());
+                clientDtoOld.setTelephoneNumber(clientDTO.getTelephoneNumber());
+                clientDtoOld.setEmail(clientDTO.getEmail());
+                clientDtoOld.setTotalLimit(clientDTO.getTotalLimit());
+                clientDtoOld.setDebtAccount(clientDTO.getDebtAccount());
+                clientDtoOld.setAvailableSpace(clientDTO.getAvailableSpace());
+                clientDtoOld.setIdClient(clientDTO.getIdClient());
+                clientDtoOld.setEnabled(clientDTO.isEnabled());
 
-                clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDtoNew));
-                               // clientDtoNew = this.clientRepository.findByEmail(clientDTO.getEmail()).map(ClientDTO::new).orElse(null);
+                clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDtoOld));
+                this.clientDtoNew = clientMapper.clientToClientDto(clientRepository.save(clientNew));
+
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, clientNew);
+                this.response.put(Constants.USER.USER, clientDtoNew);
                 this.http = HttpStatus.ACCEPTED;
             }
         } catch (Exception e) {
@@ -129,17 +134,16 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> delete(ClientDTO clientDTO) {
         clientDtoOld = new ClientDTO();
-
         this.response = new HashMap<>();
+
         try {
             clientDtoOld = findByEmail(clientDTO.getEmail());
             if (clientDtoOld == null) {
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.NOT_FOUND;
             } else {
-//                clientDtoOld.setEnabled(false);
+                clientDtoOld.setEnabled(false);
                 this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDtoOld));
-
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.http = HttpStatus.ACCEPTED;
             }

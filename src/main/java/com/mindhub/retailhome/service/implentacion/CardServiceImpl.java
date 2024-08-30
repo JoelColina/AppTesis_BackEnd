@@ -3,8 +3,6 @@ package com.mindhub.retailhome.service.implentacion;
 import com.mindhub.retailhome.dtos.CardDTO;
 import com.mindhub.retailhome.mappers.CardMapper;
 import com.mindhub.retailhome.models.Card;
-import com.mindhub.retailhome.models.CardColor;
-import com.mindhub.retailhome.models.CardType;
 import com.mindhub.retailhome.repositories.CardRepository;
 import com.mindhub.retailhome.service.CardService;
 import com.mindhub.retailhome.utils.Constants;
@@ -13,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +22,7 @@ public class CardServiceImpl implements CardService {
     private Map<String, Object> response;
     private HttpStatus http;
     private CardDTO cardDtoNew;
+    private CardDTO cardDtoOld;
     private Card cardNew;
     private CardMapper cardMapper;
 
@@ -43,17 +40,24 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public CardDTO findByIdClient(String idClient) {
+        return (CardDTO) this.cardRepository.findCardDto(idClient).mapToObj(CardDTO::new).toList();
+    }
+
+    @Override
     public ResponseEntity<?> save(CardDTO cardDTO) {
         this.response = new HashMap<>();
-        cardDtoNew = cardDTO;
+        cardDtoNew = null;
         cardNew = null;
 
         try {
+
             this.cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDTO));
+            this.cardDtoNew = cardMapper.cardToCardDto(cardRepository.save(cardNew));
 
             this.cardNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.USER.USER, cardNew);
+            this.response.put(Constants.USER.USER, cardDtoNew);
             this.http = HttpStatus.CREATED;
 
         }catch (Exception e){
@@ -68,7 +72,7 @@ public class CardServiceImpl implements CardService {
     public boolean delete(CardDTO cardDTO) {
         boolean operation = false;
 
-        CardDTO cardDtoNew = findById(cardDTO.getIdClient());
+        CardDTO cardDtoNew = findByIdClient(cardDTO.getIdClient());
 
         try {
             cardDtoNew.setEnabled(false);
@@ -82,36 +86,38 @@ public class CardServiceImpl implements CardService {
         return operation;
     }
 
+
     @Override
     public ResponseEntity<?> update(CardDTO cardDTO) {
         this.response = new HashMap<>();
         this.cardDtoNew = null;
+        this.cardDtoOld = null;
         this.cardNew = null;
 
         try {
-            cardDTO = findById(cardDTO.getIdClient());
+            cardDTO = findByIdClient(cardDTO.getIdClient());
             if (cardDTO == null){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
 
             }else {
 
-                cardDtoNew.setType(cardDTO.getType());
-                cardDtoNew.setNumber(cardDTO.getNumber());
-                cardDtoNew.setCvv(cardDTO.getCvv());
-                cardDtoNew.setValidDate(cardDTO.getValidDate());
-                cardDtoNew.setThruDate(cardDTO.getThruDate());
-                cardDtoNew.setCardHolder(cardDTO.getCardHolder());
-                cardDtoNew.setColor(cardDTO.getColor());
-                cardDtoNew.setTotalLimit(cardDTO.getTotalLimit());
-                cardDtoNew.setQuotaUsed(cardDTO.getQuotaUsed());
-                cardDtoNew.setBalanceQuota(cardDTO.getBalanceQuota());
+                cardDtoOld.setType(cardDTO.getType());
+                cardDtoOld.setNumber(cardDTO.getNumber());
+                cardDtoOld.setCvv(cardDTO.getCvv());
+                cardDtoOld.setValidDate(cardDTO.getValidDate());
+                cardDtoOld.setThruDate(cardDTO.getThruDate());
+                cardDtoOld.setCardHolder(cardDTO.getCardHolder());
+                cardDtoOld.setColor(cardDTO.getColor());
+                cardDtoOld.setTotalLimit(cardDTO.getTotalLimit());
+                cardDtoOld.setQuotaUsed(cardDTO.getQuotaUsed());
+                cardDtoOld.setBalanceQuota(cardDTO.getBalanceQuota());
 
-                cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDtoNew));
-//                cardDtoNew = this.cardRepository.findById(cardDTO.getId()).map(CardDTO::new).orElse(null);
+                cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDtoOld));
+                this.cardDtoNew = cardMapper.cardToCardDto(cardRepository.save(cardNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, cardNew);
+                this.response.put(Constants.USER.USER, cardDtoNew);
                 http = HttpStatus.ACCEPTED;
             }
 

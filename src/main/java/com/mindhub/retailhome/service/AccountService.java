@@ -12,6 +12,10 @@ public interface AccountService {
     Set<AccountDTO> findAll();
 
     AccountDTO findById(Long id);
+//
+//    AccountDTO findByIdClient(String idClient);
+//
+    AccountDTO findAccountDto (String idClient);
 
     ResponseEntity<?> update(AccountDTO accountDTO);
 
