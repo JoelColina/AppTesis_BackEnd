@@ -1,8 +1,10 @@
 package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.AccountDTO;
+import com.mindhub.retailhome.dtos.AddressesDTO;
 import com.mindhub.retailhome.mappers.AccountMapper;
 import com.mindhub.retailhome.models.Account;
+import com.mindhub.retailhome.models.Addresses;
 import com.mindhub.retailhome.repositories.AccountRepository;
 import com.mindhub.retailhome.service.AccountService;
 import com.mindhub.retailhome.utils.Constants;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,10 +43,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO findAccountDto(String idClient) {
-        return (AccountDTO) this.accountRepository.findAccountDto(idClient).mapToObj(AccountDTO::new).toList();
+    public List<AccountDTO> findAccountByClient(String idClient) {
+        return this.accountRepository.findAccountByClient(idClient).stream().map(AccountDTO::new).collect(Collectors.toList());
     }
-
 
     @Override
     public ResponseEntity<?> update(AccountDTO accountDTO) {
@@ -54,16 +56,16 @@ public class AccountServiceImpl implements AccountService {
         this.accountNew = null;
 
         try {
-            accountDTO = findAccountDto(accountDTO.getIdClient());
+            List<AccountDTO> listDtoNew = findAccountByClient(accountDTO.getIdClient());
 
-            if (accountDTO == null){
+            if (listDtoNew.isEmpty()){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
 
             }else {
-                accountDtoOld.setBalance(accountDTO.getBalance());
-                accountDtoOld.setNumber(accountDTO.getNumber());
-                accountDtoOld.setCreationDate(accountDTO.getCreationDate());
+
+                listDtoNew = listDtoNew.stream().filter(x -> x.equals(accountDTO)).toList();
+                AccountDTO accountDtoOld = getAccountDTO(accountDTO, (Account) listDtoNew);
 
                 accountNew = this.accountRepository.save(this.accountMapper.accountDtoToAccount(accountDtoOld));
                 this.accountDtoNew = accountMapper.accountToAccountDto(accountRepository.save(accountNew));
@@ -82,14 +84,35 @@ public class AccountServiceImpl implements AccountService {
         return new ResponseEntity<>(this.response,this.http);
     }
 
+    private AccountDTO getAccountDTO(AccountDTO accountDTO, Account listDtoNew) {
+
+        AccountDTO accountDtoNew = new AccountDTO(listDtoNew);
+
+        accountDtoNew.setBalance(accountDTO.getBalance());
+        accountDtoNew.setNumber(accountDTO.getNumber());
+        accountDtoNew.setCreationDate(accountDTO.getCreationDate());
+
+        return accountDtoNew;
+    }
+
     @Override
     public boolean delete(AccountDTO accountDTO) {
         boolean operation = false;
-        AccountDTO accountDtoNew = findAccountDto(accountDTO.getIdClient());
+        List<AccountDTO> listDtoNew = findAccountByClient(accountDTO.getIdClient());
+
         try {
-            accountDtoNew.setEnable(false);
-            update(accountDtoNew);
-            operation = true;
+            if (listDtoNew.isEmpty()){
+                operation = false;
+            }else{
+
+                listDtoNew = listDtoNew.stream().filter(x -> x.equals(accountDTO)).toList();
+                AccountDTO deleteDto = getAccountDTO(accountDTO, (Account) listDtoNew);
+
+                deleteDto.setEnable(false);
+                update(deleteDto);
+                operation = true;
+            }
+
         }catch (Exception e){
             operation = false;
         }

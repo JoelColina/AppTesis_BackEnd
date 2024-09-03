@@ -1,6 +1,5 @@
 package com.mindhub.retailhome.service.implentacion;
 
-import com.mindhub.retailhome.dtos.AccountDTO;
 import com.mindhub.retailhome.dtos.AddressesDTO;
 import com.mindhub.retailhome.mappers.AddressesMapper;
 import com.mindhub.retailhome.models.Addresses;
@@ -13,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +23,7 @@ public class AddressesServiceImpl implements AddressesService {
     private Map<String, Object> response;
     private HttpStatus http;
     private AddressesDTO addressesDtoNew;
+    private AddressesDTO addressesDTONew;
     private Addresses addressesNew;
     private AddressesMapper addressesMapper;
 
@@ -41,8 +42,8 @@ public class AddressesServiceImpl implements AddressesService {
     }
 
     @Override
-    public AddressesDTO finAddressesDto(String idClient) {
-        return (AddressesDTO) this.addressesRepository.findAccountDto(idClient).mapToObj(AddressesDTO::new).toList();
+    public List<AddressesDTO> findAddressesByClient(String idClient) {
+        return this.addressesRepository.findAddressesByClient(idClient).stream().map(AddressesDTO::new).collect(Collectors.toList());
     }
 
     @Override
@@ -72,13 +73,21 @@ public class AddressesServiceImpl implements AddressesService {
     @Override
     public boolean delete(AddressesDTO addressesDTO) {
         boolean operation = false;
-        AddressesDTO addressesDtoNew = finAddressesDto(addressesDTO.getIdClient());
-        try {
-            addressesDtoNew.setEnabled(false);
-            update(addressesDtoNew);
-            operation = true;
-        }catch (Exception e){
+        List<AddressesDTO> listDtoNew = findAddressesByClient(addressesDTO.getIdClient());
 
+        try {
+            if (listDtoNew.isEmpty()){
+                operation = false;
+            }else{
+
+                listDtoNew = listDtoNew.stream().filter(x -> x.equals(addressesDTO)).toList();
+                AddressesDTO deleteDto = getAddressesDTO(addressesDTO, (Addresses) listDtoNew);
+
+                deleteDto.setEnabled(false);
+                update(deleteDto);
+                operation = true;
+            }
+        }catch (Exception e){
             operation = false;
         }
 
@@ -93,24 +102,21 @@ public class AddressesServiceImpl implements AddressesService {
         this.addressesDtoNew = null;
 
         try {
-            addressesDTO = finAddressesDto(addressesDTO.getIdClient());
+            List<AddressesDTO> listDtoNew = findAddressesByClient(addressesDTO.getIdClient());
 
-            if (addressesDTO == null){
+            if (listDtoNew.isEmpty()){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
+                listDtoNew = listDtoNew.stream().filter(x -> x.equals(addressesDTO)).toList();
 
-                addressesDtoNew.setAddress(addressesDTO.getAddress());
-                addressesDtoNew.setNumber(addressesDTO.getNumber());
-                addressesDtoNew.setCity(addressesDTO.getCity());
-                addressesDtoNew.setCommune(addressesDTO.getCommune());
-                addressesDtoNew.setPostalCode(addressesDTO.getPostalCode());
-                addressesDtoNew.setType(addressesDTO.getType());
+                AddressesDTO addressesDtoOld = getAddressesDTO(addressesDTO, (Addresses) listDtoNew);
 
-                addressesNew = this.addressesRepository.save(this.addressesMapper.addressesDtoToAddresses(addressesDtoNew));
-//                addressesDtoNew = this.addressesRepository.findById(addressesDTO.getId()).map(AddressesDTO::new).orElse(null);
+                addressesNew = this.addressesRepository.save(this.addressesMapper.addressesDtoToAddresses(addressesDtoOld));
+                this.addressesDTONew = addressesMapper.AddressesToaddressesDto(addressesRepository.save(addressesNew));
+
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, addressesDtoNew);
+                this.response.put(Constants.USER.USER, addressesDTONew);
                 http = HttpStatus.ACCEPTED;
             }
 
@@ -121,5 +127,18 @@ public class AddressesServiceImpl implements AddressesService {
         }
 
         return new ResponseEntity<>(this.response,this.http);
+    }
+
+    private static AddressesDTO getAddressesDTO(AddressesDTO addressesDTO, Addresses listDtoNew) {
+
+        AddressesDTO addressesDtoNew = new AddressesDTO(listDtoNew);
+
+        addressesDtoNew.setAddress(addressesDTO.getAddress());
+        addressesDtoNew.setNumber(addressesDTO.getNumber());
+        addressesDtoNew.setCity(addressesDTO.getCity());
+        addressesDtoNew.setCommune(addressesDTO.getCommune());
+        addressesDtoNew.setPostalCode(addressesDTO.getPostalCode());
+        addressesDtoNew.setType(addressesDTO.getType());
+        return addressesDtoNew;
     }
 }

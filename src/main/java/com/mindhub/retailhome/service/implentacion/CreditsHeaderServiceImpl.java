@@ -1,7 +1,9 @@
 package com.mindhub.retailhome.service.implentacion;
 
+import com.mindhub.retailhome.dtos.AddressesDTO;
 import com.mindhub.retailhome.dtos.CreditsHeaderDTO;
 import com.mindhub.retailhome.mappers.CreditsHeaderMapper;
+import com.mindhub.retailhome.models.Addresses;
 import com.mindhub.retailhome.models.CreditsHeader;
 import com.mindhub.retailhome.repositories.CreditsHeaderRepository;
 import com.mindhub.retailhome.service.CreditsHeaderService;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,9 +39,10 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     public CreditsHeaderDTO findById(Long id) {
         return this.creditsHeaderRepository.findById(id).map(CreditsHeaderDTO::new).orElse(null);
     }
+
     @Override
-    public CreditsHeaderDTO findCreditsHeaderDto(String idClient) {
-        return (CreditsHeaderDTO) this.creditsHeaderRepository.findAccountDto(idClient).mapToObj(CreditsHeaderDTO::new).toList();
+    public List<CreditsHeaderDTO> findCreditsHeaderByClient(String idClient) {
+        return this.creditsHeaderRepository.findCreditsHeaderByClient(idClient).stream().map(CreditsHeaderDTO::new).collect(Collectors.toList());
     }
 
     @Override
@@ -69,13 +73,19 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     public boolean delete(CreditsHeaderDTO creditsHeaderDTO) {
         boolean operation = false;
 
-        CreditsHeaderDTO creditsHeaderDTONew = findCreditsHeaderDto(creditsHeaderDTO.getIdClient());
+        List<CreditsHeaderDTO> listDtoNew = findCreditsHeaderByClient(creditsHeaderDTO.getIdClient());
 
         try {
-            creditsHeaderDTONew.setEnabled(false);
-            update(creditsHeaderDTONew);
-            operation = true;
+            if (listDtoNew.isEmpty()){
+                operation = false;
+            }else{
+                listDtoNew = listDtoNew.stream().filter(x -> x.equals(creditsHeaderDTO)).toList();
+                CreditsHeaderDTO deleteDto = getCreditsHeaderDTO(creditsHeaderDTO, (CreditsHeader) listDtoNew);
 
+                deleteDto.setEnabled(false);
+                update(deleteDto);
+                operation = true;
+            }
         }catch (Exception e){
             operation = false;
         }
@@ -90,16 +100,18 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         this.creditsHeaderNew = null;
 
         try {
-            creditsHeaderDTO = findCreditsHeaderDto(creditsHeaderDTO.getIdClient());
-            if (creditsHeaderDTO == null){
+            List<CreditsHeaderDTO> listDtoNew = findCreditsHeaderByClient(creditsHeaderDTO.getIdClient());
+
+            if (listDtoNew.isEmpty()){
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
 
-                creditsHeaderDTONew.setRequestedAmount(creditsHeaderDTO.getRequestedAmount());
-                creditsHeaderDTONew.setQuotaNumber(creditsHeaderDTO.getQuotaNumber());
+                listDtoNew = listDtoNew.stream().filter(x -> x.equals(creditsHeaderDTO)).toList();
 
-                this.creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDTONew));
+                CreditsHeaderDTO creditsHeaderDtoOld = getCreditsHeaderDTO(creditsHeaderDTO, (CreditsHeader) listDtoNew);
+
+                this.creditsHeaderNew = this.creditsHeaderRepository.save(this.creditsHeaderMapper.creditsHeaderDtoToCreditsHeader(creditsHeaderDtoOld));
                 this.creditsHeaderDTONew = creditsHeaderMapper.creditsHeaderToCreditsHeaderDto(creditsHeaderRepository.save(creditsHeaderNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
@@ -113,5 +125,16 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         }
 
         return new ResponseEntity<>(this.response,this.http);
+    }
+
+    private CreditsHeaderDTO getCreditsHeaderDTO(CreditsHeaderDTO creditsHeaderDTO, CreditsHeader listDtoNew) {
+
+        CreditsHeaderDTO creditsHeaderDTONew = new CreditsHeaderDTO(listDtoNew);
+
+        creditsHeaderDTONew.setRequestedAmount(creditsHeaderDTO.getRequestedAmount());
+        creditsHeaderDTONew.setQuotaNumber(creditsHeaderDTO.getQuotaNumber());
+
+        return creditsHeaderDTONew;
+
     }
 }
