@@ -1,6 +1,7 @@
 package com.mindhub.retailhome.configurations;
 
 import com.mindhub.retailhome.dtos.ClientDTO;
+import com.mindhub.retailhome.mappers.ClientMapper;
 import com.mindhub.retailhome.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,22 +17,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
-    @Autowired
+
     ClientRepository clientRepository;
+    ClientMapper clientMapper;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(inputName-> {
 
-            ClientDTO client = clientRepository.findByEmail(inputName);
+            ClientDTO clientDto = this.clientMapper.clientToClientDto(this.clientRepository.findByEmail(inputName));
 
-            if (client != null) {
-                return new User(client.getEmail(), client.getPassword(),
+            if (clientDto != null) {
+                return new User(clientDto, clientDto(),
                         AuthorityUtils.createAuthorityList("CLIENT"));
             } else {
                 throw new UsernameNotFoundException("Unknown user: " + inputName);

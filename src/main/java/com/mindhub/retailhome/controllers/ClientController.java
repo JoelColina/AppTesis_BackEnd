@@ -1,12 +1,12 @@
 package com.mindhub.retailhome.controllers;
 
 import com.mindhub.retailhome.dtos.ClientDTO;
-import com.mindhub.retailhome.models.Client;
+
 import com.mindhub.retailhome.repositories.ClientRepository;
 import com.mindhub.retailhome.service.AddressesService;
 import com.mindhub.retailhome.service.ClientService;
 import com.mindhub.retailhome.service.UtilService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

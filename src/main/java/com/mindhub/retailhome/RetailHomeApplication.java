@@ -1,26 +1,27 @@
 package com.mindhub.retailhome;
 
-import com.mindhub.retailhome.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @SpringBootApplication
 public class RetailHomeApplication {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(RetailHomeApplication.class, args);
 	}
 
-	public RetailHomeApplication(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-
-	public Utils utils;
+//	@Bean
+//	public RetailHomeApplication(PasswordEncoder passwordEncoder) {
+//		this.passwordEncoder = passwordEncoder
+//	}
+//	@Bean
+//	public Utils utils;
 
 //	@Bean
 //	public CommandLineRunner iniData(ClientRepository clientRepository

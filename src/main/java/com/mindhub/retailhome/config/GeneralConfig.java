@@ -23,11 +23,11 @@ public class GeneralConfig implements WebMvcConfigurer {
         registry.addViewController("/error_403").setViewName("error_403");
     }
 
-    @Bean
+ /*   @Bean
      public BCryptPasswordEncoder passwordEncoder()
     {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 //
 //    @Bean
 //    public ModelMapper modelMapper(){

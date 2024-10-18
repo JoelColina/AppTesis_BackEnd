@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@Entity
+
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -44,7 +43,6 @@ public class Transaction {
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
                 ", date=" + date +
-//                ", account=" + account +
                 '}';
     }
 }

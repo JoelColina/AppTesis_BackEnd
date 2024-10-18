@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "client_loan")
 public class ClientLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -18,7 +19,6 @@ public class ClientLoan {
 
     private double amount;
     private double payments;
-    private long idClient;
     private long idLoans;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,11 +32,12 @@ public class ClientLoan {
     public ClientLoan() {
     }
 
-    public ClientLoan(double amount, double payments) {
+    public ClientLoan(long id, double amount, double payments, long idClient, long idLoans, Client client, Loan loan) {
+        this.id = id;
         this.amount = amount;
         this.payments = payments;
-        this.idClient = client.getId();
-        this.idLoans = loan.getId();
+        this.idLoans = idLoans;
+        this.client = client;
+        this.loan = loan;
     }
-
 }

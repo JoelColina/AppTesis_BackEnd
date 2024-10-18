@@ -1,5 +1,6 @@
 package com.mindhub.retailhome.models;
 
+import com.mindhub.retailhome.utils.enums.AddressType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "purchasing_header")
 public class PurchasingHeader {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -40,9 +42,11 @@ public class PurchasingHeader {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
-    private long idClient;
 
-    public PurchasingHeader(String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
+    public PurchasingHeader(long id, Client client, Set<PurchasingDetail> purchasingDetails, String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
+        this.id = id;
+        this.client = client;
+        this.purchasingDetails = purchasingDetails;
         this.trade = trade;
         this.product = product;
         this.numberBuy = numberBuy;
@@ -58,32 +62,11 @@ public class PurchasingHeader {
         this.deliveryAddress = deliveryAddress;
         this.retiredBy = retiredBy;
         this.enabled = enabled;
-        this.idClient = client.getId();
     }
 
     public PurchasingHeader() {
     }
 
-    @Override
-    public String toString() {
-        return "PurchasingHeader{" +
-                "client=" + client +
-                ", purchasingDetails=" + purchasingDetails +
-                ", trade='" + trade + '\'' +
-                ", product='" + product + '\'' +
-                ", numberBuy=" + numberBuy +
-                ", sku=" + sku +
-                ", purchaseDate=" + purchaseDate +
-                ", amount=" + amount +
-                ", worth=" + worth +
-                ", nroQuotes=" + nroQuotes +
-                ", totalValue=" + totalValue +
-                ", cardType='" + cardType + '\'' +
-                ", type=" + type +
-                ", deliverDate='" + deliverDate + '\'' +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                ", retiredBy='" + retiredBy + '\'' +
-                ", enabled=" + enabled +
-                '}';
-    }
+
+
 }

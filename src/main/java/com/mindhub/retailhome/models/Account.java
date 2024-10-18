@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -22,9 +23,6 @@ public class Account {
     private String number;
     private LocalDate creationDate;
     private double balance;
-    private boolean enable;
-    private long idClient;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -36,31 +34,13 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance, boolean enable) {
+    public Account(long id, String number, LocalDate creationDate, double balance, boolean enable, Client client, Set<Transaction> transactions) {
+        this.id = id;
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
-        this.enable = enable;
-        this.idClient = client.getId();
+        this.client = client;
+        this.transactions = transactions;
     }
 
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void addAccount(Transaction transaction) {
-        transaction.setAccount(this);
-        transactions.add(transaction);
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "number='" + number + '\'' +
-                ", creationDate=" + creationDate +
-                ", balance=" + balance +
-                ", client=" + client +
-                ", transactions=" + transactions +
-                '}';
-    }
 }

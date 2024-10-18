@@ -1,5 +1,7 @@
 package com.mindhub.retailhome.models;
 
+import com.mindhub.retailhome.utils.enums.CardColor;
+import com.mindhub.retailhome.utils.enums.CardType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,14 +13,14 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
+@Table(name = "cards")
 public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-//
-//    private long idClient;
+
     private CardType type;
     private String number;
     private int cvv;
@@ -30,7 +32,7 @@ public class Card {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
-    private Long idClient;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -49,11 +51,10 @@ public class Card {
         this.quotaUsed = quotaUsed;
         this.balanceQuota = balanceQuota;
         this.enabled = enabled;
-        this.idClient = client.getId();
+
     }
 
     public Card() {
     }
-
 
 }

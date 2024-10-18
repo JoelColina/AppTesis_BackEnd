@@ -1,5 +1,6 @@
 package com.mindhub.retailhome.models;
 
+import com.mindhub.retailhome.utils.enums.AddressType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "addresses")
 public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -26,7 +28,7 @@ public class Addresses {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-    private long idClient;
+
 
     public Addresses(String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
 
@@ -37,23 +39,10 @@ public class Addresses {
         this.postalCode = postalCode;
         this.type = type;
         this.enabled = enabled;
-        this.idClient = client.getId();
+
     }
 
     public Addresses() {
     }
 
-    @Override
-    public String toString() {
-        return "Addresses{" +
-//                "idClient=" + idClient +
-                ", address='" + address + '\'' +
-                ", number=" + number +
-                ", city='" + city + '\'' +
-                ", commune='" + commune + '\'' +
-                ", postalCode=" + postalCode +
-                ", type=" + type +
-                ", enabled=" + enabled +
-                '}';
-    }
 }

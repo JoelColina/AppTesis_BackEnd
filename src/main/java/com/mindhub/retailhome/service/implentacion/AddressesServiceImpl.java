@@ -2,7 +2,6 @@ package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.AddressesDTO;
 import com.mindhub.retailhome.mappers.AddressesMapper;
-import com.mindhub.retailhome.models.AddressType;
 import com.mindhub.retailhome.models.Addresses;
 import com.mindhub.retailhome.repositories.AddressesRepository;
 import com.mindhub.retailhome.service.AddressesService;
@@ -32,12 +31,14 @@ public class AddressesServiceImpl implements AddressesService {
 
     @Override
     public Set<AddressesDTO> finAll() {
-        return this.addressesRepository.findAll().stream().map(AddressesDTO::new).collect(Collectors.toSet());
+        return this.addressesMapper.addressesToaddressesDto( this.addressesRepository.findAll());
+       // return this.addressesRepository.findAll().stream().map(AddressesDTO::new).collect(Collectors.toSet());
     }
 
     @Override
     public AddressesDTO findById(Long id) {
-        return this.addressesRepository.findById(id).map(AddressesDTO::new).orElse(null);
+
+        return this.addressesMapper.addressesToaddressesDto(this.addressesRepository.findById(id).orElse(null));
     }
 
     @Override

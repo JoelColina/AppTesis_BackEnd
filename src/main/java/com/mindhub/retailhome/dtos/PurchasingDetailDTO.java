@@ -1,11 +1,15 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.PurchasingDetail;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
 public class PurchasingDetailDTO {
 
     private String product;
@@ -14,15 +18,5 @@ public class PurchasingDetailDTO {
     private Number tax;
     private long idPurchasing;
 
-    public PurchasingDetailDTO(PurchasingDetail purchasingdetail) {
-        this.product = purchasingdetail.getProduct();
-        this.amount = purchasingdetail.getAmount();
-        this.worth = purchasingdetail.getWorth();
-        this.tax = purchasingdetail.getTax();
-        this.idPurchasing = purchasingdetail.getId();
-    }
-
-    public PurchasingDetailDTO() {
-    }
 
 }

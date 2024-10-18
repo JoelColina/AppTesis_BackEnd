@@ -2,7 +2,6 @@ package com.mindhub.retailhome.service.implentacion;
 
 import com.mindhub.retailhome.dtos.PurchasingHeaderDTO;
 import com.mindhub.retailhome.mappers.PurchasingHeaderMapper;
-import com.mindhub.retailhome.models.AddressType;
 import com.mindhub.retailhome.models.PurchasingHeader;
 import com.mindhub.retailhome.repositories.PurchasingHeaderRepository;
 import com.mindhub.retailhome.service.PurchasingHeaderService;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
