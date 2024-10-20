@@ -1,16 +1,18 @@
 package com.mindhub.retailhome.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
+@Table(name = "credits_header")
 public class CreditsHeader {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -18,7 +20,7 @@ public class CreditsHeader {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idClient")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @OneToMany(mappedBy = "creditsHeader", fetch = FetchType.EAGER)
@@ -28,26 +30,5 @@ public class CreditsHeader {
     private Number quotaNumber;
     private boolean enabled;
     private String idClient;
-
-    public CreditsHeader(Number requestedAmount, Number quotaNumber, boolean enabled, Client client) {
-        this.requestedAmount = requestedAmount;
-        this.quotaNumber = quotaNumber;
-        this.enabled = enabled;
-        this.idClient = client.getIdClient();
-    }
-
-    public CreditsHeader() {
-    }
-
-    @Override
-    public String toString() {
-        return "CreditsHeader{" +
-                "client=" + client +
-                ", creditDetails=" + creditDetails +
-                ", requestedAmount=" + requestedAmount +
-                ", quotaNumber=" + quotaNumber +
-                ", enabled=" + enabled +
-                '}';
-    }
 
 }

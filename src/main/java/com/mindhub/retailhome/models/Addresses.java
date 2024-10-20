@@ -1,14 +1,16 @@
 package com.mindhub.retailhome.models;
 
+import com.mindhub.retailhome.utils.enums.AddressType;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Table(name = "addresses")
 public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -16,7 +18,7 @@ public class Addresses {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idClient")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     private String address;
@@ -26,10 +28,10 @@ public class Addresses {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-    private String idClient;
 
-    public Addresses(String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
+    public Addresses(long id, String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
 
+        this.id = id;
         this.address = address;
         this.number = number;
         this.city = city;
@@ -37,22 +39,9 @@ public class Addresses {
         this.postalCode = postalCode;
         this.type = type;
         this.enabled = enabled;
-        this.idClient = client.getIdClient();
     }
 
     public Addresses() {
     }
 
-    @Override
-    public String toString() {
-        return "Addresses{" +
-                ", address='" + address + '\'' +
-                ", number=" + number +
-                ", city='" + city + '\'' +
-                ", commune='" + commune + '\'' +
-                ", postalCode=" + postalCode +
-                ", type=" + type +
-                ", enabled=" + enabled +
-                '}';
-    }
 }

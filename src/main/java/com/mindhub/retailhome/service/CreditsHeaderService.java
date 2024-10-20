@@ -13,7 +13,7 @@ public interface CreditsHeaderService {
 
     Set<CreditsHeaderDTO> finAll();
     CreditsHeaderDTO findById(Long id);
-    List<CreditsHeaderDTO> findCreditsHeaderByClient(String idClient);
+//    List<CreditsHeaderDTO> findCreditsHeaderByClient(String idClient);
     // agregar
     ResponseEntity<?> save (CreditsHeaderDTO creditsHeaderDTO);
     // eliminar

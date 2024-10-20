@@ -1,4 +1,4 @@
-package com.mindhub.retailhome.models;
+package com.mindhub.retailhome.utils.enums;
 
 public enum CardColor {
     GOLD,

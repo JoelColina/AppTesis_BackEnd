@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 import java.util.Date;
 
 public class UsernameRandom {
-    public static String userNameRandom( String value) {
+    public static long userNameRandom( long value) {
         String length = "000000000";
         int min_val = 100;
         int max_val = 1000000;
@@ -12,9 +12,9 @@ public class UsernameRandom {
         rand.setSeed(new Date().getTime());
         long num = rand.nextInt((max_val - min_val) + 1) + min_val;
         int numLength =  Long.toString(num).length();
-        String newNum = Long.toString(num);
+        long newNum = Long.parseLong(Long.toString(num));
         int numSubString = 8-numLength;
-        String complete = length.substring(0,numSubString);
-        return value.concat(complete).concat(newNum);
+        long complete = Long.parseLong(length.substring(0,numSubString));
+        return value + complete + newNum;
     }
 }

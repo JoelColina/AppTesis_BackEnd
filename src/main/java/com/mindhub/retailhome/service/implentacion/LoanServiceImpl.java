@@ -37,19 +37,30 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<LoanDTO> findAll() {
-        return this.loanRepository.findAll().stream().map(LoanDTO::new).collect(toList());
+        return List.of();
     }
 
     @Override
     public LoanDTO findById(long id) {
-        return this.loanRepository.findById(id).map(LoanDTO::new).orElse(null);
+        return null;
     }
-    @Override
+
+    //
+//    @Override
+//    public List<LoanDTO> findAll() {
+//        return this.loanRepository.findAll().stream().map(LoanDTO::new).collect(toList());
+//    }
+//
+//    @Override
+//    public LoanDTO findById(long id) {
+//        return this.loanRepository.findById(id).map(LoanDTO::new).orElse(null);
+//    }
+//    @Override
     public ResponseEntity<Object> newRegister(LoanApplicationDTO loanApplicationDTO,
                                               Authentication authentication){
         String accExit = "1";
 
-        ClientDTO client = clientRepository.findByEmail(authentication.getName());
+      //  ClientDTO client = clientRepository.findByEmail(authentication.getName());
 //        ClientDTO clientdto = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
 
         Loan loan = loanRepository.findById(loanApplicationDTO.getLoanId()).orElse(null);
@@ -108,9 +119,9 @@ public class LoanServiceImpl implements LoanService {
 
        // double amountTotal = loanApplicationDTO.getAmount() + ( loanApplicationDTO.getAmount() * 0.2);
 
-        ClientLoan clientLoan0 = new ClientLoan(loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments()/*, clientdto, loan*/);
+//        ClientLoan clientLoan0 = new ClientLoan(loanApplicationDTO.getAmount(), loanApplicationDTO.getPayments()/*, clientdto, loan*/);
 
-        clientLoanRepository.save(clientLoan0);
+//        clientLoanRepository.save(clientLoan0);
      //   transactionRepository.save(new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loan.getName() + "loan approved" , LocalDate.now(), account));
 //        transactionRepository.save(new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loan.getName() + "loan approved" , LocalDate.now()));
         account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());

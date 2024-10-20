@@ -58,7 +58,7 @@ public class CardController {
 
         LocalDate createDate = LocalDate.now();
 
-        ClientDTO client= clientRepository.findByEmail(authentication.getName());
+        //ClientDTO client= clientRepository.findByEmail(authentication.getName());
 
 //        if (client.getCards().size() == 3){
 //            return new ResponseEntity<>("Ya cuenta con un maximo de 3 tarjetaas.", HttpStatus.FORBIDDEN);

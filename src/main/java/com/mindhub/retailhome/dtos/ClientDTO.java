@@ -1,13 +1,15 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.Client;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class ClientDTO {
 
     private String names;
@@ -20,36 +22,9 @@ public class ClientDTO {
     private Number totalLimit;
     private Number debtAccount;
     private Number availableSpace;
-    private String idClient;
-    private boolean enabled;
-
-//    Set<AccountDTO> accounts;
-//    Set<ClientLoanDTO> loans;
-//    Set<CardDTO> cards;
+    private long idClient;
+    private String username;
     private String password;
-
-    public ClientDTO() {
-    }
-
-    public ClientDTO(Client client) {
-        this.names = client.getNames();
-        this.lastName = client.getLastName();
-        this.motherLastName = client.getMotherLastName();
-        this.ruth = client.getRuth();
-        this.birthDate = client.getBirthDate();
-        this.telephoneNumber = client.getTelephoneNumber();
-        this.email = client.getEmail();
-        this.totalLimit = client.getTotalLimit();
-        this.debtAccount = client.getDebtAccount();
-        this.availableSpace = client.getAvailableSpace();
-        this.idClient = client.getIdClient();
-        this.password = client.getPassword();
-        this.enabled = client.isEnabled();
-
-//        this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toSet());
-//        this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toSet());
-//        this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
-    }
-
+    private boolean enabled;
 
 }

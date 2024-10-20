@@ -1,16 +1,19 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.Card;
-import com.mindhub.retailhome.models.CardColor;
-import com.mindhub.retailhome.models.CardType;
-import lombok.Getter;
-import lombok.Setter;
+import com.mindhub.retailhome.utils.enums.CardColor;
+import com.mindhub.retailhome.utils.enums.CardType;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-@Getter
-@Setter
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class CardDTO {
 
     private CardType type;
@@ -24,26 +27,5 @@ public class CardDTO {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
-    private String idClient;
-
-    public CardDTO(Card card) {
-        this.type = card.getType();
-        this.number = card.getNumber();
-        this.cvv = card.getCvv();
-        this.validDate = card.getValidDate();
-        this.thruDate = card.getThruDate();
-        this.cardHolder = card.getCardHolder();
-        this.color = card.getColor();
-        this.totalLimit = card.getTotalLimit();
-        this.quotaUsed = card.getQuotaUsed();
-        this.balanceQuota = card.getBalanceQuota();
-        this.enabled = card.isEnabled();
-        this.idClient = card.getIdClient();
-    }
-
-    public CardDTO() {
-    }
-
-    public CardDTO(double card) {
-    }
+    private long idClient;
 }

@@ -1,12 +1,14 @@
 package com.mindhub.retailhome.dtos;
 
-import com.mindhub.retailhome.models.AddressType;
+import com.mindhub.retailhome.utils.enums.AddressType;
 import com.mindhub.retailhome.models.Addresses;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class AddressesDTO {
     private String address;
     private Number number;
@@ -15,22 +17,5 @@ public class AddressesDTO {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-    private String idClient;
-
-    public AddressesDTO(Addresses addresses){
-        this.address = addresses.getAddress();
-        this.number = addresses.getNumber();
-        this.city = addresses.getCity();
-        this.commune = addresses.getCommune();
-        this.postalCode = addresses.getPostalCode();
-        this.type = addresses.getType();
-        this.enabled = addresses.isEnabled();
-        this.idClient = addresses.getIdClient();
-    }
-
-    public AddressesDTO() {
-    }
-
-    public AddressesDTO(double addresses) {
-    }
+    private long idClient;
 }

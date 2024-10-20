@@ -1,5 +1,6 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,9 +10,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -23,11 +24,9 @@ public class Account {
     private LocalDate creationDate;
     private double balance;
     private boolean enable;
-    private String idClient;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idClient")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
@@ -36,31 +35,13 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, double balance, boolean enable) {
+    public Account(long id, String number, LocalDate creationDate, double balance, boolean enable, Client client, Set<Transaction> transactions) {
+        this.id = id;
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
         this.enable = enable;
-        this.idClient = client.getIdClient();
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void addAccount(Transaction transaction) {
-        transaction.setAccount(this);
-        transactions.add(transaction);
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "number='" + number + '\'' +
-                ", creationDate=" + creationDate +
-                ", balance=" + balance +
-                ", client=" + client.getId() +
-                ", transactions=" + transactions +
-                '}';
+        this.client = client;
+        this.transactions = transactions;
     }
 }

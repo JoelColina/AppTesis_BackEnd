@@ -1,14 +1,15 @@
 package com.mindhub.retailhome.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Table(name = "purchasing_details")
 public class PurchasingDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -23,26 +24,16 @@ public class PurchasingDetail {
     private Number amount;
     private Number worth;
     private Number tax;
-    private long idPurchasing;
 
-    public PurchasingDetail(String product, Number amount, Number worth, Number tax) {
+    public PurchasingDetail(long id, PurchasingHeader purchasingHeader, String product, Number amount, Number worth, Number tax) {
+        this.id = id;
+        this.purchasingHeader = purchasingHeader;
         this.product = product;
         this.amount = amount;
         this.worth = worth;
         this.tax = tax;
-        this.idPurchasing = purchasingHeader.getId();
     }
 
     public PurchasingDetail() {
-    }
-
-    @Override
-    public String toString() {
-        return "PurchasingDetail{" +
-                ", product='" + product + '\'' +
-                ", amount=" + amount +
-                ", worth=" + worth +
-                ", tax=" + tax +
-                '}';
     }
 }

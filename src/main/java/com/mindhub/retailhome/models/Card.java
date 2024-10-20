@@ -1,5 +1,8 @@
 package com.mindhub.retailhome.models;
 
+import com.mindhub.retailhome.utils.enums.CardColor;
+import com.mindhub.retailhome.utils.enums.CardType;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,17 +11,16 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Table(name = "cards")
 public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-//
-//    private long idClient;
+
     private CardType type;
     private String number;
     private int cvv;
@@ -30,14 +32,14 @@ public class Card {
     private Number quotaUsed;
     private Number balanceQuota;
     private boolean enabled;
-    private String idClient;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idClient")
+    @JoinColumn(name = "client_id")
     private Client client;
 
-    public Card(CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, boolean enabled) {
+    public Card(long id, CardType type, String number, int cvv, LocalDate validDate, Date thruDate, String cardHolder, CardColor color, Number totalLimit, Number quotaUsed, Number balanceQuota, boolean enabled) {
 
+        this.id = id;
         this.type = type;
         this.number = number;
         this.cvv = cvv;
@@ -49,7 +51,6 @@ public class Card {
         this.quotaUsed = quotaUsed;
         this.balanceQuota = balanceQuota;
         this.enabled = enabled;
-        this.idClient = client.getIdClient();
     }
 
     public Card() {

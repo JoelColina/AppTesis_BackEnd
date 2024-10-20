@@ -13,11 +13,15 @@ public interface PurchasingHeaderService {
 
     Set<PurchasingHeaderDTO> finAll();
     PurchasingHeaderDTO findById(Long id);
+
     List<PurchasingHeaderDTO> findPurchasingHeaderByClient(String idClient);
+
     // agregar
     ResponseEntity<?>  save (PurchasingHeaderDTO purchasingHeaderDTO);
+
     // eliminar
     boolean delete (PurchasingHeaderDTO purchasingHeaderDTO);
+
     // actualizar
     ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO);
 }

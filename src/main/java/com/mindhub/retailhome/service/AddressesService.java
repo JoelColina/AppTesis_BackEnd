@@ -12,7 +12,7 @@ public interface AddressesService {
 
     Set<AddressesDTO> finAll();
     AddressesDTO findById(Long id);
-    List<AddressesDTO> findAddressesByClient(String idClient);
+//    List<AddressesDTO> findAddressesByClient(String idClient);
     ResponseEntity<?> save (AddressesDTO addressesDTO);
     boolean delete (AddressesDTO addressesDTO);
     ResponseEntity<?> update(AddressesDTO addressesDTO);

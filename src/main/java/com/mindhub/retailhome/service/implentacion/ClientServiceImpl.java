@@ -19,42 +19,58 @@ public class ClientServiceImpl implements ClientService {
 
     private ClientMapper clientMapper;
     private ClientRepository clientRepository;
-    private UsernameRandom usernameRandom;
 
     private Map<String, Object> response;
-    private ClientDTO clientDtoOld;
-    private ClientDTO clientDtoNew;
-    private HttpStatus http;
     private Client clientNew;
-    private String userId;
+    private ClientDTO clientDtoNew;
+    private ClientDTO clientDtoOld;
+    private HttpStatus http;
+    private long userId;
 
-    public ClientServiceImpl(ClientRepository clientRepository, UsernameRandom usernameRandom) {
-        this.clientRepository = clientRepository;
-        this.usernameRandom = usernameRandom;
-    }
+    public ClientServiceImpl(ClientRepository clientRepository,
+                             UsernameRandom usernameRandom,
+                             ClientDTO clientDtoNew,
+                             ClientDTO clientDtoOld,
+                             ClientMapper clientMapper
+    ) {}
+
+ //   @Override
+//    public ClientDTO findByEmail(String email) {
+//        return this.clientRepository.findByEmail(email);
+//    }
+
+//    @Override
+//    public Set<ClientDTO> findAll() {
+//         return this.clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toSet());
+//    }
+
+//    @Override
+//    public ClientDTO finById(Long id)
+//    {
+//        return this.clientRepository.findById(id).map(ClientDTO::new).orElse(null);
+//    }
 
     @Override
     public ClientDTO findByEmail(String email) {
-        return this.clientRepository.findByEmail(email);
+        return null;
     }
 
     @Override
     public Set<ClientDTO> findAll() {
-         return this.clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toSet());
+        return Set.of();
     }
 
     @Override
-    public ClientDTO finById(Long id)
-    {
-        return this.clientRepository.findById(id).map(ClientDTO::new).orElse(null);
+    public ClientDTO finById(Long id) {
+        return null;
     }
 
     @Override
     public ResponseEntity<?> save(ClientDTO clientDTO) {
-        clientDtoNew = new ClientDTO();
+
         clientNew = new Client();
         this.response = new HashMap<>();
-        this.userId = null;
+        this.userId = 0;
 
         try {
 
@@ -64,11 +80,11 @@ public class ClientServiceImpl implements ClientService {
                 return new ResponseEntity<>(this.response, this.http);
             }
 
-            while (userId.isEmpty()) {
+            while (userId==0) {
                 userId = UsernameRandom.userNameRandom(Constants.USER_GENERATE);
-                clientDtoNew = this.clientRepository.findByIdClient(userId);
-                if (clientDtoNew != null) {
-                    userId = "";
+                clientNew = this.clientRepository.findById(userId);
+                if (clientNew != null) {
+                    userId = 0;
                 }
             }
 
@@ -91,7 +107,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ResponseEntity<?> update(ClientDTO clientDTO) {
         clientDtoNew = null;
-        clientDtoOld = null;
+        Client clientOld = null;
         clientNew = null;
 
         this.response = new HashMap<>();
@@ -102,18 +118,18 @@ public class ClientServiceImpl implements ClientService {
                 this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             } else {
-                clientDtoOld.setNames(clientDTO.getNames());
-                clientDtoOld.setLastName(clientDTO.getLastName());
-                clientDtoOld.setMotherLastName(clientDTO.getMotherLastName());
-                clientDtoOld.setRuth(clientDTO.getRuth());
-                clientDtoOld.setBirthDate(clientDTO.getBirthDate());
-                clientDtoOld.setTelephoneNumber(clientDTO.getTelephoneNumber());
-                clientDtoOld.setEmail(clientDTO.getEmail());
-                clientDtoOld.setTotalLimit(clientDTO.getTotalLimit());
-                clientDtoOld.setDebtAccount(clientDTO.getDebtAccount());
-                clientDtoOld.setAvailableSpace(clientDTO.getAvailableSpace());
-                clientDtoOld.setIdClient(clientDTO.getIdClient());
-                clientDtoOld.setEnabled(clientDTO.isEnabled());
+                clientOld.setNames(clientDTO.getNames());
+                clientOld.setLastName(clientDTO.getLastName());
+                clientOld.setMotherLastName(clientDTO.getMotherLastName());
+                clientOld.setRuth(clientDTO.getRuth());
+                clientOld.setBirthDate(clientDTO.getBirthDate());
+                clientOld.setTelephoneNumber(clientDTO.getTelephoneNumber());
+                clientOld.setEmail(clientDTO.getEmail());
+                clientOld.setTotalLimit(clientDTO.getTotalLimit());
+                clientOld.setDebtAccount(clientDTO.getDebtAccount());
+                clientOld.setAvailableSpace(clientDTO.getAvailableSpace());
+                clientOld.setIdClient(clientDTO.getIdClient());
+                clientOld.setEnabled(clientDTO.isEnabled());
 
                 clientNew = this.clientRepository.save(this.clientMapper.clientDtoToClient(clientDtoOld));
                 this.clientDtoNew = clientMapper.clientToClientDto(clientRepository.save(clientNew));

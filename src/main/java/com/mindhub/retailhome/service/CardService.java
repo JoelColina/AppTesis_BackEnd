@@ -12,7 +12,7 @@ import java.util.Set;
 public interface CardService {
     Set<CardDTO> finAll();
     CardDTO findById(Long id);
-    List<CardDTO> findCardByClient(String idClient);
+//    List<CardDTO> findCardByClient(String idClient);
     // agregar
     ResponseEntity<?>  save (CardDTO cardDTO);
     // eliminar

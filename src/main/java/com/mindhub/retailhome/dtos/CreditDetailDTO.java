@@ -1,28 +1,20 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.CreditDetail;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Component
 public class CreditDetailDTO {
 
+    private double amount;
     private Date dateExpiration;
     private String quotaStatus;
     private Date payDay;
     private long idCredit;
-
-    public CreditDetailDTO(CreditDetail creditdetail) {
-        this.dateExpiration = creditdetail.getDateExpiration();
-        this.quotaStatus = creditdetail.getQuotaStatus();
-        this.payDay = creditdetail.getPayDay();
-        this.idCredit = creditdetail.getId();
-    }
-
-    public CreditDetailDTO() {
-    }
-
 }

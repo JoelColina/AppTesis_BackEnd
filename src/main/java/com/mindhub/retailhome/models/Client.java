@@ -1,8 +1,6 @@
 package com.mindhub.retailhome.models;
 
-import lombok.Getter;
-import lombok.Setter;
-import net.minidev.json.annotate.JsonIgnore;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,9 +8,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
+@Data
 @Entity
+@Table(name = "clients")
 public class Client {
 
     @Id
@@ -30,32 +28,35 @@ public class Client {
     private Number totalLimit;
     private Number debtAccount;
     private Number availableSpace;
-    private String idClient;
+    private long idClient;
     private boolean enabled;
+    private String password;
+    private String username ;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    @JoinColumn(name="idClient" ,nullable = false)
-    Set<Addresses> addressess = new HashSet<>();
+    Set<Addresses> addresses = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    @JoinColumn(name="idClient" ,nullable = false)
     Set<CreditsHeader> creditsHeaders = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    @JoinColumn(name="idClient" ,nullable = false)
     Set<PurchasingHeader> purchasingHeaders = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    @JoinColumn(name="idClient" ,nullable = false)
     Set<ClientLoan> clientLoans = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-    @JoinColumn(name="idClient" ,nullable = false)
     Set<Card> cards = new HashSet<>();
 
-    private String password;
+    public Client(long id, String names, String lastName, String motherLastName,
+                  String ruth, Date birthDate, Number telephoneNumber, String email,
+                  Number totalLimit, Number debtAccount, Number availableSpace,
+                  long idClient, String password, String username,
+                  Set<Addresses> addresses, Set<CreditsHeader> creditsHeaders,
+                  Set<PurchasingHeader> purchasingHeaders, Set<ClientLoan> clientLoans,
+                  Set<Card> cards,boolean enabled) {
 
-    public Client(String names, String lastName, String motherLastName, String ruth, Date birthDate, Number telephoneNumber, String email, Number totalLimit, Number debtAccount, Number availableSpace, String password, boolean enabled) {
+        this.id = id;
         this.names = names;
         this.lastName = lastName;
         this.motherLastName = motherLastName;
@@ -66,56 +67,18 @@ public class Client {
         this.totalLimit = totalLimit;
         this.debtAccount = debtAccount;
         this.availableSpace = availableSpace;
+        this.idClient = idClient;
+        this.password = password;
+        this.username = username;
+        this.addresses = addresses;
+        this.creditsHeaders = creditsHeaders;
+        this.purchasingHeaders = purchasingHeaders;
+        this.clientLoans = clientLoans;
+        this.cards = cards;
         this.enabled = enabled;
     }
 
     public Client() {
-    }
-
-    @JsonIgnore
-    public Set<Addresses> getAddressess() {
-        return addressess;
-    }
-
-    public void addClient(Addresses addresses) {
-        addresses.setClient(this);
-        addressess.add(addresses);
-    }
-
-//    public Set<Addresses> getAddressess() {
-//        return addressess;
-//    }
-
-    @JsonIgnore
-    public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
-    }
-
-    public void addClientLoans(ClientLoan clientLoan){
-        clientLoan.setClient(this);
-        clientLoans.add(clientLoan);
-    }
-
-//    public List<Loan> getLoans(){
-//        return clientLoans.stream().map(ClientLoan::getLoan).collect(Collectors.toList());
-//    }
-
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "names='" + names + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", motherLastName='" + motherLastName + '\'' +
-                ", ruth='" + ruth + '\'' +
-                ", birthDate=" + birthDate +
-                ", telephoneNumber=" + telephoneNumber +
-                ", email='" + email + '\'' +
-                ", totalLimit=" + totalLimit +
-                ", debtAccount=" + debtAccount +
-                ", availableSpace=" + availableSpace +
-                ", password='" + password + '\'' +
-                '}';
     }
 }
 

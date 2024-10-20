@@ -12,7 +12,6 @@ import java.util.Set;
 public interface AccountService {
     Set<AccountDTO> findAll();
     AccountDTO findById(Long id);
-    List<AccountDTO> findAccountByClient(String idClient);
     ResponseEntity<?> update(AccountDTO accountDTO);
     boolean delete (AccountDTO accountDTO);
     ResponseEntity<?>  save (AccountDTO accountDTO);

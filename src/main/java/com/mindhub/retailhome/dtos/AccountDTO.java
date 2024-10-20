@@ -1,40 +1,20 @@
 package com.mindhub.retailhome.dtos;
 
-import com.mindhub.retailhome.models.Account;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class AccountDTO {
-
     private String number;
     private LocalDate creationDate;
     private double balance;
     private boolean enable;
     private String idClient;
-
-    @Getter
     private Set<TransactionDTO> transactions;
-
-    public AccountDTO(Account account){
-       this.number = account.getNumber();
-       this.creationDate = account.getCreationDate();
-       this.balance = account.getBalance();
-       this.enable = account.isEnable();
-       this.idClient = account.getIdClient();
-
-      this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toSet());
-
-    }
-
-    public AccountDTO() {
-    }
-
-    public AccountDTO(double account) {
-    }
 }

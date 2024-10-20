@@ -1,11 +1,13 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.models.CreditsHeader;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Component
 public class CreditsHeaderDTO {
 
     private Number requestedAmount;
@@ -13,16 +15,4 @@ public class CreditsHeaderDTO {
     private String idClient;
     private boolean enabled;
 
-    public CreditsHeaderDTO(CreditsHeader creditsheader) {
-        this.requestedAmount = creditsheader.getRequestedAmount();
-        this.quotaNumber = creditsheader.getQuotaNumber();
-        this.enabled = creditsheader.isEnabled();
-        this.idClient = creditsheader.getIdClient();
-    }
-
-    public CreditsHeaderDTO() {
-    }
-
-    public CreditsHeaderDTO(double creditsheader) {
-    }
 }

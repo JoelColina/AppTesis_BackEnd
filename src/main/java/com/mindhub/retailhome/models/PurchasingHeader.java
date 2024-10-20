@@ -1,7 +1,7 @@
 package com.mindhub.retailhome.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.mindhub.retailhome.utils.enums.AddressType;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,9 +9,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Entity
+@Table(name = "purchasing_Header")
 public class PurchasingHeader {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -19,7 +19,7 @@ public class PurchasingHeader {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idClient")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @OneToMany(mappedBy = "purchasingHeader", fetch = FetchType.EAGER)
@@ -42,7 +42,11 @@ public class PurchasingHeader {
     private boolean enabled;
     private String idClient;
 
-    public PurchasingHeader(String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
+    public PurchasingHeader(long id, Client client,Set<PurchasingDetail> purchasingDetails,  String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
+
+        this.id = id;
+        this.client = client;
+        this.purchasingDetails = purchasingDetails;
         this.trade = trade;
         this.product = product;
         this.numberBuy = numberBuy;
@@ -58,32 +62,8 @@ public class PurchasingHeader {
         this.deliveryAddress = deliveryAddress;
         this.retiredBy = retiredBy;
         this.enabled = enabled;
-        this.idClient = client.getIdClient();
     }
 
     public PurchasingHeader() {
-    }
-
-    @Override
-    public String toString() {
-        return "PurchasingHeader{" +
-                "client=" + client +
-                ", purchasingDetails=" + purchasingDetails +
-                ", trade='" + trade + '\'' +
-                ", product='" + product + '\'' +
-                ", numberBuy=" + numberBuy +
-                ", sku=" + sku +
-                ", purchaseDate=" + purchaseDate +
-                ", amount=" + amount +
-                ", worth=" + worth +
-                ", nroQuotes=" + nroQuotes +
-                ", totalValue=" + totalValue +
-                ", cardType='" + cardType + '\'' +
-                ", type=" + type +
-                ", deliverDate='" + deliverDate + '\'' +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                ", retiredBy='" + retiredBy + '\'' +
-                ", enabled=" + enabled +
-                '}';
     }
 }
