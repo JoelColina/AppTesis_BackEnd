@@ -1,13 +1,13 @@
 package com.mindhub.retailhome.models;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "purchasing_details")
 public class PurchasingDetail {
@@ -25,15 +25,4 @@ public class PurchasingDetail {
     private Number worth;
     private Number tax;
 
-    public PurchasingDetail(long id, PurchasingHeader purchasingHeader, String product, Number amount, Number worth, Number tax) {
-        this.id = id;
-        this.purchasingHeader = purchasingHeader;
-        this.product = product;
-        this.amount = amount;
-        this.worth = worth;
-        this.tax = tax;
-    }
-
-    public PurchasingDetail() {
-    }
 }

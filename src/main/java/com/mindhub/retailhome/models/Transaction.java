@@ -1,9 +1,9 @@
 package com.mindhub.retailhome.models;
 
+import com.mindhub.retailhome.utils.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "transactions")
 public class Transaction {

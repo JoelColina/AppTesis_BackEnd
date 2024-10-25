@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "credit_detail")
 public class CreditDetail {

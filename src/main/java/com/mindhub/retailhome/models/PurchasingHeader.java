@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "purchasing_Header")
 public class PurchasingHeader {
@@ -40,30 +43,5 @@ public class PurchasingHeader {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
-    private String idClient;
-
-    public PurchasingHeader(long id, Client client,Set<PurchasingDetail> purchasingDetails,  String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
-
-        this.id = id;
-        this.client = client;
-        this.purchasingDetails = purchasingDetails;
-        this.trade = trade;
-        this.product = product;
-        this.numberBuy = numberBuy;
-        this.sku = sku;
-        this.purchaseDate = purchaseDate;
-        this.amount = amount;
-        this.worth = worth;
-        this.nroQuotes = nroQuotes;
-        this.totalValue = totalValue;
-        this.cardType = cardType;
-        this.type = type;
-        this.deliverDate = deliverDate;
-        this.deliveryAddress = deliveryAddress;
-        this.retiredBy = retiredBy;
-        this.enabled = enabled;
-    }
-
-    public PurchasingHeader() {
-    }
+    private Long idClient;
 }

@@ -13,21 +13,34 @@ public class Constants {
         public  static final String USER = "User";
         public  static final String USERS = "Users";
     }
-    public static class ROLE{
-        public  static final String ROLE = "Role";
-        public  static final String ROLES = "Roles";
-        public  static final String AUTHORITY = "Authorities";
-        public  static final String AUTHORITIES  = "Authorities";
+    public static class ACCOUNT{
+        public  static final String ACCOUNT = "Account";
+        public  static final String ACCOUNTS = "Accounts";
     }
-    public static class CUSTOMER{
-        public  static final String CUSTOMER = "Customer";
-        public  static final String CUSTOMERS = "Customers";
+    public static class ADRESSES{
+        public  static final String ADRESSES = "Adresses";
+        public  static final String ADRESSESS = "Adressess";
     }
-    public static class GROUP{
-        public  static final String GROUP = "Group";
-        public  static final String GROUPS = "Groups";
+    public static class TRANSACTION{
+        public  static final String TRANSACTION = "Transaction";
+        public  static final String TRANSACTIONS = "Transactions";
     }
-
+    public static class PURCHASING_HEADER{
+        public  static final String PURCHASING_HEADER = "PurchasingHeader";
+        public  static final String PURCHASING_HEADERS = "PurchasingHeaders";
+    }
+    public static class PURCHASING_DETAIL{
+        public  static final String PURCHASING_DETAIL = "PurchasingDetail";
+        public  static final String PURCHASING_DETAILS = "PurchasingDetails";
+    }
+    public static class LOAN{
+        public  static final String LOAN = "Loan";
+        public  static final String LOANS = "Loans";
+    }
+    public static class CREDIT_HEADER{
+        public  static final String CREDIT_HEADER = "CreditHeader";
+        public  static final String CREDIT_HEADERS = "CreditHeaders";
+    }
     public static class GEMERAL{
         public  static final String MESSAGE = "Message";
         public  static final String ERROR = "Error";

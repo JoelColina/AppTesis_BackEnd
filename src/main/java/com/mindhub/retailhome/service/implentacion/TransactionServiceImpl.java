@@ -23,50 +23,53 @@ import java.util.Set;
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionRepository transactionRepository;
-    private TransactionDTO transactionDTO;
+    private TransactionDTO transactionDto;
     private ClientDTO clientDto;
     private Account accountOrig;
     private Account accountDestin;
     private TransactionMapper transactionMapper;
     private ClientRepository clientRepository;
     private ClientMapper clientMapper;
-
     private AccountRepository accountRepository;
 
     TransactionServiceImpl(TransactionRepository transactionRepository,
                            ClientRepository clientRepository,
                            AccountRepository accountRepository,
-                           TransactionDTO transactionDTO,
-                           TransactionMapper transactionMapper,
+                           TransactionDTO transactionDto,
                            Account accountDestin,
                            Account accountOrig
-    ) {}
+    ){
+
+        this.transactionRepository = transactionRepository;
+        this.clientRepository = clientRepository;
+        this.accountRepository = accountRepository;
+        this.transactionDto = transactionDto;
+        this.accountDestin = accountDestin;
+        this.accountOrig = accountOrig;
+    }
 
     @Override
     public Set<TransactionDTO> findAll() {
-       return Collections.singleton(this.transactionMapper.transactionToTransactionDto(Optional.of((Transaction) this.transactionRepository.findAll())));
-        // return this.transactionRepository.findAll().stream().map(TransactionDTO::new).collect(Collectors.toSet());
+        return Collections.singleton(this.transactionMapper.toTransactionDto(Optional.of((Transaction) this.transactionRepository.findAll())));
     }
 
     @Override
     public TransactionDTO findById(Long id) {
-        return this.transactionMapper.transactionToTransactionDto(this.transactionRepository.findById(id));
-    //return this.transactionRepository.findById(id).map(TransactionDTO::new).orElse(null);
+        return this.transactionMapper.toTransactionDto(this.transactionRepository.findById(id));
     }
 
     @Override
     public ResponseEntity<Object> newTransaction(Integer amount, String description, String fromAccount, String toAccount, Authentication authentication) {
-
-        this.accountDestin = new Account();
-        this.accountOrig = new Account();
+        this.accountDestin = new Account() ;
+        this.accountOrig = new Account() ;
         String accExit = "0";
 
-        clientDto = this.clientMapper.clientToClientDto(this.clientRepository.findByEmail(authentication.getName()));
+        clientDto = this.clientMapper.clientToClientDto( clientRepository.findByEmail(authentication.getName()));
 
         //valida variable fromAccount si viene vacio
-        Account accountOrig = accountRepository.findByNumber(fromAccount);
+        this.accountOrig = accountRepository.findByNumber(fromAccount);
 
-        if (accountOrig == null){
+        if (this.accountOrig == null){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
@@ -82,7 +85,7 @@ public class TransactionServiceImpl implements TransactionService {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-       //se valida que los numeros de ctas no sean iguales
+        //se valida que los numeros de ctas no sean iguales
         if (fromAccount.equals(toAccount)) {
             return new ResponseEntity<>("missing data", HttpStatus.FORBIDDEN);
         }
@@ -92,17 +95,16 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         //se valida que la cuenta destino exista
-        if (accountRepository.findByNumber(toAccount) == null){
+        if (this.accountRepository.findByNumber(toAccount) == null){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        //se valida que la cta origen tenga saldo suficiente
-        if (accountOrig.getBalance() < amount){
+        if (this.accountOrig.getBalance() < amount){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
-        this.accountOrig.setBalance(accountOrig.getBalance() - amount);
-        accountDestin.setBalance(accountDestin.getBalance() + amount);
+        this.accountOrig.setBalance(this.accountOrig.getBalance() - amount);
+        accountDestin1.setBalance(accountDestin1.getBalance() + amount);
 
         this.accountRepository.save(accountOrig);
         this.accountRepository.save(accountDestin);

@@ -2,9 +2,9 @@ package com.mindhub.retailhome.models;
 
 import com.mindhub.retailhome.utils.enums.CardColor;
 import com.mindhub.retailhome.utils.enums.CardType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "cards")
 public class Card {
@@ -52,9 +54,4 @@ public class Card {
         this.balanceQuota = balanceQuota;
         this.enabled = enabled;
     }
-
-    public Card() {
-    }
-
-
 }

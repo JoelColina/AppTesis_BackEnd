@@ -10,7 +10,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "credits_header")
 public class CreditsHeader {
@@ -29,6 +28,6 @@ public class CreditsHeader {
     private Number requestedAmount;
     private Number quotaNumber;
     private boolean enabled;
-    private String idClient;
+    private Long idClient;
 
 }

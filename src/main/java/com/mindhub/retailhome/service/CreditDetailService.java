@@ -4,12 +4,10 @@ import com.mindhub.retailhome.dtos.CreditDetailDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-
 @Service
 public interface CreditDetailService {
 
-    Set<CreditDetailDTO> finAll();
+    ResponseEntity<?>  finAll();
 
     CreditDetailDTO findById(Long id);
 

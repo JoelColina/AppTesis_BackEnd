@@ -1,6 +1,5 @@
 package com.mindhub.retailhome.dtos;
 
-import com.mindhub.retailhome.models.Card;
 import com.mindhub.retailhome.utils.enums.CardColor;
 import com.mindhub.retailhome.utils.enums.CardType;
 import lombok.*;

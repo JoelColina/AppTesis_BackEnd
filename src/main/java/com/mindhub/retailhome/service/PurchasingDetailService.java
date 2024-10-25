@@ -10,7 +10,7 @@ import java.util.Set;
 @Service
 public interface PurchasingDetailService {
 
-    Set<PurchasingDetailDTO> finAll();
+    ResponseEntity<?> finAll();
 
     PurchasingDetailDTO findById(Long id);
 

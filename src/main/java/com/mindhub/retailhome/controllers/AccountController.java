@@ -26,7 +26,8 @@ public class AccountController {
     @Autowired
     private ClientRepository clientRepository;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService)
+    {
         this.accountService = accountService;
     }
 
@@ -45,29 +46,9 @@ public class AccountController {
 
         int balance = 0;
         LocalDate createDate = LocalDate.now();
-
-        //Client client= clientRepository.findByEmail(authentication.getName());
-//        ClientDTO client = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
-
-
-//       if (client.getAccounts().size() == 3){
-//           return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
-//       }
-
         String newAccount;
         newAccount = NumberAccountRandom.getRandomNumber();
-
-//        accountRepository.save(new Account(newAccount, createDate, balance, client));
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-//   @RequestMapping(path = "/clients/current/accounts")
-//   public List<AccountDTO> getCurrentAccounts(Authentication authentication){
-//       //Client client = clientRepository.findByEmail(authentication.getName());
-//       ClientDTO client = clientRepository.findByEmail(authentication.getName()).map(ClientDTO::new).orElse(null);
-//
-//       return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
-//   }
 
 }

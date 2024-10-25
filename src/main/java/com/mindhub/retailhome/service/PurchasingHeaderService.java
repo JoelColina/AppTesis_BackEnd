@@ -11,10 +11,9 @@ import java.util.Set;
 @Service
 public interface PurchasingHeaderService {
 
-    Set<PurchasingHeaderDTO> finAll();
-    PurchasingHeaderDTO findById(Long id);
+    ResponseEntity<?> findAll();
 
-    List<PurchasingHeaderDTO> findPurchasingHeaderByClient(String idClient);
+    ResponseEntity<?> findById(Long id);
 
     // agregar
     ResponseEntity<?>  save (PurchasingHeaderDTO purchasingHeaderDTO);

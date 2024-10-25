@@ -3,9 +3,13 @@ package com.mindhub.retailhome.service.implentacion;
 import com.mindhub.retailhome.dtos.ClientDTO;
 import com.mindhub.retailhome.dtos.LoanApplicationDTO;
 import com.mindhub.retailhome.dtos.LoanDTO;
+import com.mindhub.retailhome.dtos.PurchasingDetailDTO;
+import com.mindhub.retailhome.mappers.LoanMapper;
+import com.mindhub.retailhome.mappers.PurchasingDetailMapper;
 import com.mindhub.retailhome.models.*;
 import com.mindhub.retailhome.repositories.*;
 import com.mindhub.retailhome.service.LoanService;
+import com.mindhub.retailhome.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,49 +17,70 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
 @Service
 public class LoanServiceImpl implements LoanService {
-
-    @Autowired
+    private Map<String, Object> response;
+    private HttpStatus http;
     private LoanRepository loanRepository;
-
-    @Autowired
     private ClientRepository clientRepository;
-
-    @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
     private ClientLoanRepository clientLoanRepository;
-
-    @Autowired
     private TransactionRepository transactionRepository;
+    private LoanMapper loanMapper;
 
-    @Override
-    public List<LoanDTO> findAll() {
-        return List.of();
+    LoanServiceImpl(LoanRepository loanRepository,
+                    ClientRepository clientRepository,
+                    AccountRepository accountRepository,
+                    ClientLoanRepository clientLoanRepository,
+                    TransactionRepository transactionRepository) {
+
+        this.loanRepository = loanRepository;
+        this.clientRepository = clientRepository;
+        this.accountRepository = accountRepository;
+        this.clientLoanRepository = clientLoanRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
-    public LoanDTO findById(long id) {
-        return null;
+    public ResponseEntity<?> finAll() {
+        response = new HashMap<>();
+        this.http = HttpStatus.NOT_FOUND;
+        List<LoanDTO> listDto = new ArrayList<>();
+
+        try {
+            this.loanRepository.findAll().forEach(Loan ->
+                    listDto.add(this.loanMapper.toLoanDto(Loan))
+            );
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.PURCHASING_DETAIL.PURCHASING_DETAILS, listDto);
+            this.http = HttpStatus.ACCEPTED;
+
+        }catch (Exception e){
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(listDto, this.http);
     }
 
-    //
-//    @Override
-//    public List<LoanDTO> findAll() {
-//        return this.loanRepository.findAll().stream().map(LoanDTO::new).collect(toList());
-//    }
-//
-//    @Override
-//    public LoanDTO findById(long id) {
-//        return this.loanRepository.findById(id).map(LoanDTO::new).orElse(null);
-//    }
-//    @Override
+    @Override
+    public LoanDTO findById(Long id) {
+        this.response = new HashMap<>();
+        this.http = HttpStatus.NOT_FOUND;
+        if (id == null) {
+            return this.loanRepository.findById(id).map(LoanDTO::new).orElse(null);
+        }
+        return new LoanDTO();
+    }
+
+    @Override
     public ResponseEntity<Object> newRegister(LoanApplicationDTO loanApplicationDTO,
                                               Authentication authentication){
         String accExit = "1";

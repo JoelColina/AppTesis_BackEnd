@@ -1,7 +1,6 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.utils.enums.AddressType;
-import com.mindhub.retailhome.models.PurchasingHeader;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -29,5 +28,6 @@ public class PurchasingHeaderDTO {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
+    private Long idClient;
 
 }

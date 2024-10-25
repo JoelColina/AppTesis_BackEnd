@@ -10,9 +10,13 @@ import java.util.Set;
 
 @Service
 public interface AccountService {
-    Set<AccountDTO> findAll();
-    AccountDTO findById(Long id);
+    ResponseEntity<?> findAll();
+
+    ResponseEntity<?> findById(Long id);
+
     ResponseEntity<?> update(AccountDTO accountDTO);
-    boolean delete (AccountDTO accountDTO);
-    ResponseEntity<?>  save (AccountDTO accountDTO);
+
+    boolean delete(AccountDTO accountDTO);
+
+    ResponseEntity<?> save(AccountDTO accountDTO);
 }

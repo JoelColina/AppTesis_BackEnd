@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "loans")
 public class Loan {

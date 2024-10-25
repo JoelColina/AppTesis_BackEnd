@@ -5,6 +5,7 @@ import com.mindhub.retailhome.dtos.CardDTO;
 import com.mindhub.retailhome.mappers.CardMapper;
 import com.mindhub.retailhome.models.Addresses;
 import com.mindhub.retailhome.models.Card;
+import com.mindhub.retailhome.models.CreditDetail;
 import com.mindhub.retailhome.repositories.CardRepository;
 import com.mindhub.retailhome.service.CardService;
 import com.mindhub.retailhome.utils.Constants;
@@ -13,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,18 +32,20 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Set<CardDTO> finAll() {
-        return this.cardRepository.findAll().stream().map(CardDTO::new).collect(Collectors.toSet());
+        //return this.cardRepository.findAll().stream().map(CardDTO::new).collect(Collectors.toSet());
+        return Collections.singleton(this.cardMapper.cardToCardDto(Optional.of((Card) this.cardRepository.findAll())));
     }
 
     @Override
     public CardDTO findById(Long id) {
-        return this.cardRepository.findById(id).map(CardDTO::new).orElse(null);
+        //return this.cardRepository.findById(id).map(CardDTO::new).orElse(null);
+        return this.cardMapper.cardToCardDto( this.cardRepository.findById(id));
     }
 
-    @Override
-    public List<CardDTO> findCardByClient(String idClient) {
-        return this.cardRepository.findCardByClient(idClient).stream().map(CardDTO::new).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<CardDTO> findCardByClient(String idClient) {
+//        return this.cardRepository.findCardByClient(idClient).stream().map(CardDTO::new).collect(Collectors.toList());
+//    }
 
     @Override
     public ResponseEntity<?> save(CardDTO cardDTO) {
@@ -56,7 +56,7 @@ public class CardServiceImpl implements CardService {
         try {
 
             this.cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDTO));
-            this.cardDtoNew = cardMapper.cardToCardDto(cardRepository.save(cardNew));
+            this.cardDtoNew = cardMapper.cardToCardDto(Optional.of(cardRepository.save(cardNew)));
 
             this.cardNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
@@ -75,23 +75,23 @@ public class CardServiceImpl implements CardService {
     public boolean delete(CardDTO cardDTO) {
         boolean operation = false;
 
-        List<CardDTO> listDtoNew = findCardByClient(cardDTO.getIdClient());
-
-        try {
-            if (listDtoNew.isEmpty()){
-                operation = false;
-            }else{
-
-                listDtoNew = listDtoNew.stream().filter(x -> x.equals(cardDTO)).toList();
-                CardDTO deleteDto = getCardDTO(cardDTO, (Card) listDtoNew);
-
-                deleteDto.setEnabled(false);
-                update(deleteDto);
-                operation = true;
-            }
-        }catch (Exception e){
-            operation = false;
-        }
+//        List<CardDTO> listDtoNew = findCardByClient(cardDTO.getIdClient());
+//
+//        try {
+//            if (listDtoNew.isEmpty()){
+//                operation = false;
+//            }else{
+//
+//                listDtoNew = listDtoNew.stream().filter(x -> x.equals(cardDTO)).toList();
+//                CardDTO deleteDto = getCardDTO(cardDTO, (Card) listDtoNew);
+//
+//                deleteDto.setEnabled(false);
+//                update(deleteDto);
+//                operation = true;
+//            }
+//        }catch (Exception e){
+//            operation = false;
+//        }
 
         return operation;
     }
@@ -103,50 +103,50 @@ public class CardServiceImpl implements CardService {
         this.cardDtoNew = null;
         this.cardNew = null;
 
-        try {
-            List<CardDTO> listDtoNew = findCardByClient(cardDTO.getIdClient());
-
-            if (listDtoNew.isEmpty()){
-                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
-                this.http = HttpStatus.CONFLICT;
-
-            }else {
-                listDtoNew = listDtoNew.stream().filter(x -> x.equals(cardDTO)).toList();
-
-                CardDTO cardDtoOld = getCardDTO(cardDTO, (Card) listDtoNew);
-
-                cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDtoOld));
-                this.cardDtoNew = cardMapper.cardToCardDto(cardRepository.save(cardNew));
-
-                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, cardDtoNew);
-                http = HttpStatus.ACCEPTED;
-            }
-
-        }catch (Exception e){
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
-            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
-            http = HttpStatus.BAD_REQUEST;
-        }
+//        try {
+//            List<CardDTO> listDtoNew = findCardByClient(cardDTO.getIdClient());
+//
+//            if (listDtoNew.isEmpty()){
+//                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+//                this.http = HttpStatus.CONFLICT;
+//
+//            }else {
+//                listDtoNew = listDtoNew.stream().filter(x -> x.equals(cardDTO)).toList();
+//
+//                CardDTO cardDtoOld = getCardDTO(cardDTO, (Card) listDtoNew);
+//
+//                cardNew = this.cardRepository.save(this.cardMapper.cardDtoToCard(cardDtoOld));
+//                this.cardDtoNew = cardMapper.cardToCardDto(cardRepository.save(cardNew));
+//
+//                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+//                this.response.put(Constants.USER.USER, cardDtoNew);
+//                http = HttpStatus.ACCEPTED;
+//            }
+//
+//        }catch (Exception e){
+//            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+//            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+//            http = HttpStatus.BAD_REQUEST;
+//        }
         return new ResponseEntity<>(this.response,this.http);
     }
 
-    private CardDTO getCardDTO(CardDTO cardDTO, Card listDtoNew) {
-
-        CardDTO cardDtoNew = new CardDTO(listDtoNew);
-
-        cardDtoNew.setType(cardDTO.getType());
-        cardDtoNew.setNumber(cardDTO.getNumber());
-        cardDtoNew.setCvv(cardDTO.getCvv());
-        cardDtoNew.setValidDate(cardDTO.getValidDate());
-        cardDtoNew.setThruDate(cardDTO.getThruDate());
-        cardDtoNew.setCardHolder(cardDTO.getCardHolder());
-        cardDtoNew.setColor(cardDTO.getColor());
-        cardDtoNew.setTotalLimit(cardDTO.getTotalLimit());
-        cardDtoNew.setQuotaUsed(cardDTO.getQuotaUsed());
-        cardDtoNew.setBalanceQuota(cardDTO.getBalanceQuota());
-
-        return cardDtoNew;
-    }
+//    private CardDTO getCardDTO(CardDTO cardDTO, Card listDtoNew) {
+//
+//        CardDTO cardDtoNew = new CardDTO(listDtoNew);
+//
+//        cardDtoNew.setType(cardDTO.getType());
+//        cardDtoNew.setNumber(cardDTO.getNumber());
+//        cardDtoNew.setCvv(cardDTO.getCvv());
+//        cardDtoNew.setValidDate(cardDTO.getValidDate());
+//        cardDtoNew.setThruDate(cardDTO.getThruDate());
+//        cardDtoNew.setCardHolder(cardDTO.getCardHolder());
+//        cardDtoNew.setColor(cardDTO.getColor());
+//        cardDtoNew.setTotalLimit(cardDTO.getTotalLimit());
+//        cardDtoNew.setQuotaUsed(cardDTO.getQuotaUsed());
+//        cardDtoNew.setBalanceQuota(cardDTO.getBalanceQuota());
+//
+//        return cardDtoNew;
+//    }
 
 }

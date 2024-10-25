@@ -1,6 +1,8 @@
 package com.mindhub.retailhome.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -78,7 +82,5 @@ public class Client {
         this.enabled = enabled;
     }
 
-    public Client() {
-    }
 }
 

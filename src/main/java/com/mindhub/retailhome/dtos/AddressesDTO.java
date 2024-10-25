@@ -1,7 +1,6 @@
 package com.mindhub.retailhome.dtos;
 
 import com.mindhub.retailhome.utils.enums.AddressType;
-import com.mindhub.retailhome.models.Addresses;
 import lombok.*;
 import org.springframework.stereotype.Component;
 

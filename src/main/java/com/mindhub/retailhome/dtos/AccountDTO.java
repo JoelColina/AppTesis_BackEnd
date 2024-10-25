@@ -1,5 +1,6 @@
 package com.mindhub.retailhome.dtos;
 
+import com.mindhub.retailhome.models.Account;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +10,13 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 public class AccountDTO {
     private String number;
     private LocalDate creationDate;
     private double balance;
     private boolean enable;
-    private String idClient;
+    private Long idClient;
     private Set<TransactionDTO> transactions;
 }

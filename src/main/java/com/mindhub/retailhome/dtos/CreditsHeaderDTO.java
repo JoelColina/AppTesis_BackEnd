@@ -12,7 +12,7 @@ public class CreditsHeaderDTO {
 
     private Number requestedAmount;
     private Number quotaNumber;
-    private String idClient;
+    private Long idClient;
     private boolean enabled;
 
 }

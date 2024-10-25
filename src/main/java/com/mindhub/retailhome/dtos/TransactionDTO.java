@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class TransactionDTO {
     private long id;
     private String type;

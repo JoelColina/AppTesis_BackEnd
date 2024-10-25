@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "client_loan")
 public class ClientLoan {

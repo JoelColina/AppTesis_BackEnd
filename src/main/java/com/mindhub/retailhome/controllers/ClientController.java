@@ -6,7 +6,7 @@ import com.mindhub.retailhome.repositories.ClientRepository;
 import com.mindhub.retailhome.service.AddressesService;
 import com.mindhub.retailhome.service.ClientService;
 import com.mindhub.retailhome.service.UtilService;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +37,13 @@ public class ClientController {
         this.utilService = utilService;
     }
 
-    @PostMapping()
-    public ResponseEntity<?> post(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
-        if (result .hasErrors()){
-            return new ResponseEntity<>( this.utilService.errorResult(result),HttpStatus.BAD_REQUEST );
-        }
-        return this.clientService.save(clientDTO);
-    }
+//    @PostMapping()
+//    public ResponseEntity<?> post(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
+//        if (result .hasErrors()){
+//            return new ResponseEntity<>( this.utilService.errorResult(result),HttpStatus.BAD_REQUEST );
+//        }
+//        return this.clientService.save(clientDTO);
+//    }
 
     @RequestMapping("/clients")
     public Set<ClientDTO> getClients(){

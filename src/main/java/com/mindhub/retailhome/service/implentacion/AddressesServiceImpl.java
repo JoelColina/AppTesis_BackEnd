@@ -26,24 +26,32 @@ public class AddressesServiceImpl implements AddressesService {
     private AddressesDTO addressesDTONew;
     private Addresses addressesNew;
     private AddressesMapper addressesMapper;
-
-
     @Autowired
     private AddressesRepository addressesRepository;
+//
+//    @Override
+//    public Set<AddressesDTO> finAll() {
+//        return this.addressesRepository.findAll().stream().map(AddressesDTO::new).collect(Collectors.toSet());
+//    }
+//
+//    @Override
+//    public AddressesDTO findById(Long id) {
+//        return this.addressesRepository.findById(id).map(AddressesDTO::new).orElse(null);
+//    }
+//
+//    @Override
+//    public List<AddressesDTO> findAddressesByClient(String idClient) {
+//        return this.addressesRepository.findAddressesByClient(idClient).stream().map(AddressesDTO::new).collect(Collectors.toList());
+//    }
 
     @Override
     public Set<AddressesDTO> finAll() {
-        return this.addressesRepository.findAll().stream().map(AddressesDTO::new).collect(Collectors.toSet());
+        return Set.of();
     }
 
     @Override
     public AddressesDTO findById(Long id) {
-        return this.addressesRepository.findById(id).map(AddressesDTO::new).orElse(null);
-    }
-
-    @Override
-    public List<AddressesDTO> findAddressesByClient(String idClient) {
-        return this.addressesRepository.findAddressesByClient(idClient).stream().map(AddressesDTO::new).collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -73,23 +81,23 @@ public class AddressesServiceImpl implements AddressesService {
     @Override
     public boolean delete(AddressesDTO addressesDTO) {
         boolean operation = false;
-        List<AddressesDTO> listDtoNew = findAddressesByClient(addressesDTO.getIdClient());
-
-        try {
-            if (listDtoNew.isEmpty()){
-                operation = false;
-            }else{
-
-                listDtoNew = listDtoNew.stream().filter(x -> x.equals(addressesDTO)).toList();
-                AddressesDTO deleteDto = getAddressesDTO(addressesDTO, (Addresses) listDtoNew);
-
-                deleteDto.setEnabled(false);
-                update(deleteDto);
-                operation = true;
-            }
-        }catch (Exception e){
-            operation = false;
-        }
+//        List<AddressesDTO> listDtoNew = findAddressesByClient(addressesDTO.getIdClient());
+//
+//        try {
+//            if (listDtoNew.isEmpty()){
+//                operation = false;
+//            }else{
+//
+//                listDtoNew = listDtoNew.stream().filter(x -> x.equals(addressesDTO)).toList();
+//                AddressesDTO deleteDto = getAddressesDTO(addressesDTO, (Addresses) listDtoNew);
+//
+//                deleteDto.setEnabled(false);
+//                update(deleteDto);
+//                operation = true;
+//            }
+//        }catch (Exception e){
+//            operation = false;
+//        }
 
         return operation;
     }
@@ -101,44 +109,44 @@ public class AddressesServiceImpl implements AddressesService {
         this.response = new HashMap<>();
         this.addressesDtoNew = null;
 
-        try {
-            List<AddressesDTO> listDtoNew = findAddressesByClient(addressesDTO.getIdClient());
-
-            if (listDtoNew.isEmpty()){
-                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
-                this.http = HttpStatus.CONFLICT;
-            }else {
-                listDtoNew = listDtoNew.stream().filter(x -> x.equals(addressesDTO)).toList();
-
-                AddressesDTO addressesDtoOld = getAddressesDTO(addressesDTO, (Addresses) listDtoNew);
-
-                addressesNew = this.addressesRepository.save(this.addressesMapper.addressesDtoToAddresses(addressesDtoOld));
-                this.addressesDTONew = addressesMapper.AddressesToaddressesDto(addressesRepository.save(addressesNew));
-
-                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, addressesDTONew);
-                http = HttpStatus.ACCEPTED;
-            }
-
-        }catch (Exception e){
-            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
-            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
-            http = HttpStatus.BAD_REQUEST;
-        }
+//        try {
+//            List<AddressesDTO> listDtoNew = findAddressesByClient(addressesDTO.getIdClient());
+//
+//            if (listDtoNew.isEmpty()){
+//                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+//                this.http = HttpStatus.CONFLICT;
+//            }else {
+//                listDtoNew = listDtoNew.stream().filter(x -> x.equals(addressesDTO)).toList();
+//
+//                AddressesDTO addressesDtoOld = getAddressesDTO(addressesDTO, (Addresses) listDtoNew);
+//
+//                addressesNew = this.addressesRepository.save(this.addressesMapper.addressesDtoToAddresses(addressesDtoOld));
+//                this.addressesDTONew = addressesMapper.AddressesToaddressesDto(addressesRepository.save(addressesNew));
+//
+//                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+//                this.response.put(Constants.USER.USER, addressesDTONew);
+//                http = HttpStatus.ACCEPTED;
+//            }
+//
+//        }catch (Exception e){
+//            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+//            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+//            http = HttpStatus.BAD_REQUEST;
+//        }
 
         return new ResponseEntity<>(this.response,this.http);
     }
 
-    private static AddressesDTO getAddressesDTO(AddressesDTO addressesDTO, Addresses listDtoNew) {
-
-        AddressesDTO addressesDtoNew = new AddressesDTO(listDtoNew);
-
-        addressesDtoNew.setAddress(addressesDTO.getAddress());
-        addressesDtoNew.setNumber(addressesDTO.getNumber());
-        addressesDtoNew.setCity(addressesDTO.getCity());
-        addressesDtoNew.setCommune(addressesDTO.getCommune());
-        addressesDtoNew.setPostalCode(addressesDTO.getPostalCode());
-        addressesDtoNew.setType(addressesDTO.getType());
-        return addressesDtoNew;
-    }
+//    private static AddressesDTO getAddressesDTO(AddressesDTO addressesDTO, Addresses listDtoNew) {
+//
+//        AddressesDTO addressesDtoNew = new AddressesDTO(listDtoNew);
+//
+//        addressesDtoNew.setAddress(addressesDTO.getAddress());
+//        addressesDtoNew.setNumber(addressesDTO.getNumber());
+//        addressesDtoNew.setCity(addressesDTO.getCity());
+//        addressesDtoNew.setCommune(addressesDTO.getCommune());
+//        addressesDtoNew.setPostalCode(addressesDTO.getPostalCode());
+//        addressesDtoNew.setType(addressesDTO.getType());
+//        return addressesDtoNew;
+//    }
 }
