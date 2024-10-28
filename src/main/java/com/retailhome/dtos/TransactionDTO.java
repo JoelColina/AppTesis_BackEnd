@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 
-@Component
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Data
+@Component
 public class TransactionDTO {
     private long id;
     private String type;

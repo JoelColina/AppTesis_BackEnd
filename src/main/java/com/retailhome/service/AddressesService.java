@@ -9,9 +9,9 @@ import java.util.Set;
 @Service
 public interface AddressesService {
 
-    Set<AddressesDTO> finAll();
+    ResponseEntity<?> finAll();
 
-    AddressesDTO findById(Long id);
+    ResponseEntity<?> findById(Long id);
     // agregar
     ResponseEntity<?> save (AddressesDTO addressesDTO);
     // eliminar

@@ -1,8 +1,7 @@
 package com.retailhome.models;
 
 import com.retailhome.utils.enums.AddressType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,8 +9,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "purchasing_header")
 public class PurchasingHeader {
@@ -42,31 +43,6 @@ public class PurchasingHeader {
     private String deliveryAddress;
     private String retiredBy;
     private boolean enabled;
-
-    public PurchasingHeader(long id, Client client, Set<PurchasingDetail> purchasingDetails, String trade, String product, Number numberBuy, Number sku, Date purchaseDate, Number amount, Number worth, Number nroQuotes, Number totalValue, String cardType, AddressType type, String deliverDate, String deliveryAddress, String retiredBy, boolean enabled) {
-        this.id = id;
-        this.client = client;
-        this.purchasingDetails = purchasingDetails;
-        this.trade = trade;
-        this.product = product;
-        this.numberBuy = numberBuy;
-        this.sku = sku;
-        this.purchaseDate = purchaseDate;
-        this.amount = amount;
-        this.worth = worth;
-        this.nroQuotes = nroQuotes;
-        this.totalValue = totalValue;
-        this.cardType = cardType;
-        this.type = type;
-        this.deliverDate = deliverDate;
-        this.deliveryAddress = deliveryAddress;
-        this.retiredBy = retiredBy;
-        this.enabled = enabled;
-    }
-
-    public PurchasingHeader() {
-    }
-
 
 
 }

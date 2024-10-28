@@ -34,5 +34,4 @@ public class Loan {
     Set<ClientLoan> clientLoans = new HashSet<>();
 
 
-
 }

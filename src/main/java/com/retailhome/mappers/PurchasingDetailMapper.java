@@ -1,8 +1,6 @@
 package com.retailhome.mappers;
 
-import com.retailhome.dtos.LoanDTO;
 import com.retailhome.dtos.PurchasingDetailDTO;
-import com.retailhome.models.Loan;
 import com.retailhome.models.PurchasingDetail;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;

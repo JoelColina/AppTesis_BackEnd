@@ -6,14 +6,12 @@ import com.retailhome.models.Addresses;
 import com.retailhome.repositories.AddressesRepository;
 import com.retailhome.service.AddressesService;
 import com.retailhome.utils.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AddressesServiceImpl implements AddressesService {
@@ -22,22 +20,57 @@ public class AddressesServiceImpl implements AddressesService {
     private HttpStatus http;
     private AddressesDTO addressesDtoNew;
     private Addresses addressesNew;
-    private AddressesMapper addressesMapper;
+    private final AddressesMapper mapper = Mappers.getMapper(AddressesMapper.class);
+    private  final AddressesRepository addressesRepository;
 
-
-    @Autowired
-    private AddressesRepository addressesRepository;
-
-    @Override
-    public Set<AddressesDTO> finAll() {
-        return this.addressesMapper.addressesToaddressesDto( this.addressesRepository.findAll());
-       // return this.addressesRepository.findAll().stream().map(AddressesDTO::new).collect(Collectors.toSet());
+    public AddressesServiceImpl(AddressesRepository addressesRepository  ) {
+        this.addressesRepository=addressesRepository;
     }
 
     @Override
-    public AddressesDTO findById(Long id) {
+    public ResponseEntity<?> finAll() {
 
-        return this.addressesMapper.addressesToaddressesDto(this.addressesRepository.findById(id).orElse(null));
+        this.response = new HashMap<>();
+        this.http = HttpStatus.NOT_FOUND;
+        List<AddressesDTO> listDto = new ArrayList<>();
+
+        try {
+            listDto = this.mapper.toDTOList( this.addressesRepository.findAll());
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+            this.response.put(Constants.USER.USER, listDto);
+            this.http = HttpStatus.ACCEPTED;
+
+        } catch (Exception e) {
+
+             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, this.http);
+    }
+
+    @Override
+    public ResponseEntity    findById(Long id) {
+        this.response = new HashMap<>();
+        this.http = HttpStatus.NOT_FOUND;
+        try {
+            if (id == null) {
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.BAD_REQUEST;
+            }else {
+                AddressesDTO addressesDTO = this.mapper.toAddressesDto(this.addressesRepository.findById(id).orElse(null));
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.mapper.toAddressesDto(this.addressesRepository.findById(id).orElse(null));
+                this.response.put(Constants.ADDRESS.ADDRES, addressesDTO);
+                http = HttpStatus.ACCEPTED;
+            }
+        } catch (Exception e) {
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            http = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(this.response, this.http);
     }
 
     @Override
@@ -47,20 +80,16 @@ public class AddressesServiceImpl implements AddressesService {
         addressesNew = null;
 
         try {
-
-            this.addressesNew = this.addressesRepository.save(this.addressesMapper.addressesDtoToAddresses(addressesDTO));
-
+            this.addressesNew = this.addressesRepository.save(this.mapper.toAddresses(addressesDTO));
             this.addressesNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.USER.USER, addressesNew);
             this.http = HttpStatus.CREATED;
-
         }catch (Exception e){
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
-
         return new ResponseEntity<>(this.response, this.http);
     }
 

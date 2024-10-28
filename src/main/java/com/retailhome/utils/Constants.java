@@ -13,25 +13,16 @@ public class Constants {
         public  static final String USER = "User";
         public  static final String USERS = "Users";
     }
-    public static class ROLE{
-        public  static final String ROLE = "Role";
-        public  static final String ROLES = "Roles";
-        public  static final String AUTHORITY = "Authorities";
-        public  static final String AUTHORITIES  = "Authorities";
-    }
+
     public static class ACCOUNT{
         public  static final String ACCOUNT = "Account";
         public  static final String ACCOUNTS = "Accounts";
     }
-    public static class CUSTOMER{
-        public  static final String CUSTOMER = "Customer";
-        public  static final String CUSTOMERS = "Customers";
+    public static class ADDRESS{
+        public  static final String ADDRES = "Address";
+        public  static final String ADDRESS = "Addresses";
     }
 
-    public static class GROUP{
-        public  static final String GROUP = "Group";
-        public  static final String GROUPS = "Groups";
-    }
 
     public static class GEMERAL{
         public  static final String MESSAGE = "Message";

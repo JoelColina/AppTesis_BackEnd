@@ -1,14 +1,14 @@
 package com.retailhome.models;
 
 import com.retailhome.utils.enums.AddressType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "addresses")
 public class Addresses {
@@ -28,21 +28,4 @@ public class Addresses {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-
-
-    public Addresses(String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
-
-        this.address = address;
-        this.number = number;
-        this.city = city;
-        this.commune = commune;
-        this.postalCode = postalCode;
-        this.type = type;
-        this.enabled = enabled;
-
-    }
-
-    public Addresses() {
-    }
-
 }

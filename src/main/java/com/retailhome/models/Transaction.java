@@ -1,15 +1,18 @@
 package com.retailhome.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.retailhome.utils.enums.TransactionType;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Getter
-@Setter
-
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+@Table(name = "addresses")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -25,24 +28,4 @@ public class Transaction {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public Transaction(TransactionType type, double amount, String description, LocalDate creationDate,Account account) {
-        this.type = type;
-        this.description = description;
-        this.date = creationDate;
-        this.amount = amount;
-//        this.account = account;
-    }
-
-    public Transaction() {
-    }
-
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "type=" + type +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                ", date=" + date +
-                '}';
-    }
 }

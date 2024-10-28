@@ -3,11 +3,10 @@ package com.retailhome.dtos;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
-@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
+@Data
 @Component
 public class CreditsHeaderDTO {
 

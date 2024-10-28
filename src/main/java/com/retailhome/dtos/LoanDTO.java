@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Getter
-@Setter
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Data
 @Component
 public class LoanDTO {
     private long id;

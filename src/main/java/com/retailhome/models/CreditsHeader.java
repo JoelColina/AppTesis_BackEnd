@@ -31,8 +31,4 @@ public class CreditsHeader {
     private boolean enabled;
     private long idClient;
 
-
-
-
-
 }

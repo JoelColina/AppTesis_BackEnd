@@ -1,4 +1,4 @@
-package com.retailhome.models;
+package com.retailhome.utils.enums;
 
 public enum TransactionType {
     CREDIT,

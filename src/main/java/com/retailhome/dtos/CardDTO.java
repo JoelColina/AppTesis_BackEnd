@@ -9,8 +9,10 @@ import java.time.LocalDate;
 import java.util.Date;
 
 
-@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
+@Data
 @Component
 public class CardDTO {
 
@@ -26,6 +28,5 @@ public class CardDTO {
     private Number balanceQuota;
     private boolean enabled;
     private Long idClient;
-
 
 }

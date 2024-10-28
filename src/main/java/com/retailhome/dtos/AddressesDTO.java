@@ -5,8 +5,10 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 
-@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
+@Data
 @Component
 public class AddressesDTO {
 

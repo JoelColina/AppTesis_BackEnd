@@ -9,15 +9,15 @@ import java.util.Set;
 @Service
 public interface CreditsHeaderService {
 
-    Set<CreditsHeaderDTO> finAll();
+    ResponseEntity<?> finAll();
 
-    CreditsHeaderDTO findById(Long id);
+    ResponseEntity<?>  findById(Long id);
 
     // agregar
     ResponseEntity<?> save (CreditsHeaderDTO creditsHeaderDTO);
 
     // eliminar
-    boolean delete (CreditsHeaderDTO creditsHeaderDTO);
+    ResponseEntity<?> delete (CreditsHeaderDTO creditsHeaderDTO);
 
     // actualizar
     ResponseEntity<?> update(CreditsHeaderDTO creditsHeaderDTO);

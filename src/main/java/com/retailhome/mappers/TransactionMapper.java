@@ -1,8 +1,6 @@
 package com.retailhome.mappers;
 
 import com.retailhome.dtos.TransactionDTO;
-import com.retailhome.dtos.TransactionDTO;
-import com.retailhome.models.Transaction;
 import com.retailhome.models.Transaction;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;
@@ -18,7 +16,7 @@ public interface TransactionMapper {
     Transaction toTransaction (TransactionDTO transactionDTO);
 
     TransactionDTO toTransactionDTO (Optional<Transaction> transaction);
-    
+
     default List<Transaction> toEntityList(List<TransactionDTO> transactionDTOList){
         if (transactionDTOList == null){
             return  new ArrayList<>();

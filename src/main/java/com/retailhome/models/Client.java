@@ -1,7 +1,6 @@
 package com.retailhome.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,8 +8,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
-@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -49,38 +50,6 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     Set<Card> cards = new HashSet<>();
 
-
-    public Client() {
-    }
-
-    public Client(long id, String names, String lastName, String motherLastName,
-                  String ruth, Date birthDate, Number telephoneNumber, String email,
-                  Number totalLimit, Number debtAccount, Number availableSpace,
-                  String idClient, String password, String username,
-                  Set<Addresses> addresses, Set<CreditsHeader> creditsHeaders,
-                  Set<PurchasingHeader> purchasingHeaders, Set<ClientLoan> clientLoans,
-                  Set<Card> cards) {
-
-        this.id = id;
-        this.names = names;
-        this.lastName = lastName;
-        this.motherLastName = motherLastName;
-        this.ruth = ruth;
-        this.birthDate = birthDate;
-        this.telephoneNumber = telephoneNumber;
-        this.email = email;
-        this.totalLimit = totalLimit;
-        this.debtAccount = debtAccount;
-        this.availableSpace = availableSpace;
-        this.idClient = idClient;
-        this.password = password;
-        this.username = username;
-        this.addresses = addresses;
-        this.creditsHeaders = creditsHeaders;
-        this.purchasingHeaders = purchasingHeaders;
-        this.clientLoans = clientLoans;
-        this.cards = cards;
-    }
 
 }
 

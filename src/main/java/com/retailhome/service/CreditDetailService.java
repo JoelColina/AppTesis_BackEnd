@@ -9,13 +9,18 @@ import java.util.Set;
 @Service
 public interface CreditDetailService {
 
-    Set<CreditDetailDTO> finAll();
+     Set<CreditDetailDTO> finAllDetails() ;
 
-    CreditDetailDTO findById(Long id);
+
+     CreditDetailDTO findByIdDetail(Long id);
 
     // agregar
-    ResponseEntity<?> save (CreditDetailDTO creditDetailDTO);
+    CreditDetailDTO saveDetail (CreditDetailDTO creditDetailDTO);
 
     // actualizar
-    ResponseEntity<?> update(CreditDetailDTO creditDetailDTO);
+    CreditDetailDTO updateD(CreditDetailDTO creditDetailDTO);
+
+    // eliminar
+    boolean deleteDetail(CreditDetailDTO creditDetailDTO);
+
 }

@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Data
 @Component
 public class ClientDTO {
 
@@ -26,8 +25,5 @@ public class ClientDTO {
     private String idClient;
     private String username;
     private String password;
-
-
-
 
 }
