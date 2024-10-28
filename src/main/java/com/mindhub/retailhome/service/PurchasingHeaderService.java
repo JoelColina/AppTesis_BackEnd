@@ -19,7 +19,7 @@ public interface PurchasingHeaderService {
     ResponseEntity<?>  save (PurchasingHeaderDTO purchasingHeaderDTO);
 
     // eliminar
-    boolean delete (PurchasingHeaderDTO purchasingHeaderDTO);
+    ResponseEntity<?>  delete (PurchasingHeaderDTO purchasingHeaderDTO);
 
     // actualizar
     ResponseEntity<?> update(PurchasingHeaderDTO purchasingHeaderDTO);

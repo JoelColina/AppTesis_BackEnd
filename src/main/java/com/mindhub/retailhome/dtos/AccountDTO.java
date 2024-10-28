@@ -10,7 +10,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Component
 public class AccountDTO {
     private String number;

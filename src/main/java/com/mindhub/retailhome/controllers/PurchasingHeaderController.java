@@ -3,11 +3,14 @@ package com.mindhub.retailhome.controllers;
 import com.mindhub.retailhome.dtos.PurchasingHeaderDTO;
 import com.mindhub.retailhome.repositories.PurchasingHeaderRepository;
 import com.mindhub.retailhome.service.PurchasingHeaderService;
+import com.mindhub.retailhome.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
 
 @RestController
@@ -15,21 +18,23 @@ import java.util.Set;
 public class PurchasingHeaderController {
 
     private final PurchasingHeaderService purchasingHeaderService;
+    private final UtilService utilService;
 
-    @Autowired
-    private PurchasingHeaderRepository shoppingRepository;
-
-    public PurchasingHeaderController(PurchasingHeaderService shoppingService) {
+    public PurchasingHeaderController(PurchasingHeaderService shoppingService, UtilService utilService) {
         this.purchasingHeaderService = shoppingService;
+        this.utilService = utilService;
     }
 
-    @RequestMapping("/purchasingheaders")
-    public Set<PurchasingHeaderDTO> getpurchasingheaders(){
-        return this.purchasingHeaderService.finAll();
+    @GetMapping(path = "/purchasingheaders")
+    public ResponseEntity<?> getpurchasingheader(){
+        return this.purchasingHeaderService.findAll();
     }
 
-    @RequestMapping("/purchasingheaders/{id}")
-    public PurchasingHeaderDTO getpurchasingheaders(@PathVariable long id){
+    @PostMapping(path = "/purchasingheaders/{id}")
+    public ResponseEntity<?> getpurchasingheaders(@Valid @PathVariable Long id, BindingResult result){
+        if(result.hasErrors()){
+            return new ResponseEntity<>(this.utilService.errorResult(result), HttpStatus.BAD_REQUEST);
+        }
         return this.purchasingHeaderService.findById(id);
     }
 }

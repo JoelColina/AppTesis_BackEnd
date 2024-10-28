@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,23 +38,23 @@ public class ClientController {
         this.utilService = utilService;
     }
 
-//    @PostMapping()
-//    public ResponseEntity<?> post(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
-//        if (result .hasErrors()){
-//            return new ResponseEntity<>( this.utilService.errorResult(result),HttpStatus.BAD_REQUEST );
-//        }
-//        return this.clientService.save(clientDTO);
-//    }
+    @PostMapping()
+    public ResponseEntity<?> post(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
+        if (result .hasErrors()){
+            return new ResponseEntity<>( this.utilService.errorResult(result),HttpStatus.BAD_REQUEST );
+        }
+        return this.clientService.save(clientDTO);
+    }
 
     @RequestMapping("/clients")
-    public Set<ClientDTO> getClients(){
+    public ResponseEntity<?> getClients(){
         return this.clientService.findAll();
    }
 
-    @RequestMapping("/clients/{id}")
-    public ClientDTO getClients(@PathVariable Long id){
-       return this.clientService.finById(id);
-   }
+//    @RequestMapping("/clients/{id}")
+//    public ClientDTO getClients(@PathVariable Long id){
+//       return this.clientService.finById(id);
+//   }
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -66,10 +67,6 @@ public class ClientController {
             @RequestParam Number cupoTotal,@RequestParam Number deudaCta,
             @RequestParam Number cupoDisponible,
             @RequestParam String email, @RequestParam String password) {
-
-//        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-//            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
-//        }
 
         if (clientRepository.findByEmail(email) != null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);

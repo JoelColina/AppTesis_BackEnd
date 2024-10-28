@@ -1,28 +1,23 @@
 package com.mindhub.retailhome.service.implentacion;
 
-import com.mindhub.retailhome.dtos.ClientDTO;
+import com.mindhub.retailhome.dtos.CreditsHeaderDTO;
 import com.mindhub.retailhome.dtos.LoanApplicationDTO;
 import com.mindhub.retailhome.dtos.LoanDTO;
-import com.mindhub.retailhome.dtos.PurchasingDetailDTO;
 import com.mindhub.retailhome.mappers.LoanMapper;
-import com.mindhub.retailhome.mappers.PurchasingDetailMapper;
 import com.mindhub.retailhome.models.*;
 import com.mindhub.retailhome.repositories.*;
 import com.mindhub.retailhome.service.LoanService;
 import com.mindhub.retailhome.utils.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class LoanServiceImpl implements LoanService {
@@ -33,7 +28,10 @@ public class LoanServiceImpl implements LoanService {
     private AccountRepository accountRepository;
     private ClientLoanRepository clientLoanRepository;
     private TransactionRepository transactionRepository;
+    private LoanDTO loanDtoNew;
+    private Loan loanNew;
     private LoanMapper loanMapper;
+    private final LoanMapper mapper = Mappers.getMapper(LoanMapper.class);
 
     LoanServiceImpl(LoanRepository loanRepository,
                     ClientRepository clientRepository,
@@ -49,7 +47,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public ResponseEntity<?> finAll() {
+    public ResponseEntity<?> findAll() {
         response = new HashMap<>();
         this.http = HttpStatus.NOT_FOUND;
         List<LoanDTO> listDto = new ArrayList<>();
@@ -59,7 +57,7 @@ public class LoanServiceImpl implements LoanService {
                     listDto.add(this.loanMapper.toLoanDto(Loan))
             );
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-            this.response.put(Constants.PURCHASING_DETAIL.PURCHASING_DETAILS, listDto);
+            this.response.put(Constants.LOAN.LOANS, listDto);
             this.http = HttpStatus.ACCEPTED;
 
         }catch (Exception e){
@@ -71,13 +69,27 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public LoanDTO findById(Long id) {
-        this.response = new HashMap<>();
+    public ResponseEntity<?> findById(Long id) {
+        response = new HashMap<>();
+        this.loanDtoNew = new LoanDTO();
         this.http = HttpStatus.NOT_FOUND;
-        if (id == null) {
-            return this.loanRepository.findById(id).map(LoanDTO::new).orElse(null);
+
+        try {
+            if (id != null) {
+                this.loanDtoNew = mapper.toLoanDto(loanRepository.findById(id).orElse(null));
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.LOAN.LOANS, this.loanDtoNew);
+                this.http = HttpStatus.ACCEPTED;
+            }else {
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.BAD_REQUEST;
+            }
+        } catch (Exception e) {
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
         }
-        return new LoanDTO();
+        return new ResponseEntity<>(response, this.http);
     }
 
     @Override

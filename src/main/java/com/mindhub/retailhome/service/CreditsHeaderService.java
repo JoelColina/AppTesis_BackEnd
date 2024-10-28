@@ -20,7 +20,7 @@ public interface CreditsHeaderService {
     ResponseEntity<?>  save (CreditsHeaderDTO creditsHeaderDTO);
 
     // eliminar
-    boolean delete (CreditsHeaderDTO creditsHeaderDTO);
+    ResponseEntity<?> delete (CreditsHeaderDTO creditsHeaderDTO);
 
     // actualizar
     ResponseEntity<?> update(CreditsHeaderDTO creditsHeaderDTO);

@@ -9,7 +9,7 @@ public interface CreditDetailService {
 
     ResponseEntity<?>  finAll();
 
-    CreditDetailDTO findById(Long id);
+    ResponseEntity<?>  findById(Long id);
 
     // agregar
     ResponseEntity<?> save (CreditDetailDTO creditDetailDTO);

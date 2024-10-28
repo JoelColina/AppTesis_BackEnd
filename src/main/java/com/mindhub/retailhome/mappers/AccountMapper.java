@@ -31,4 +31,5 @@ public interface AccountMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     Account updateAccountFromAccountDto(AccountDTO accountDto, @MappingTarget Account account);
+
 }

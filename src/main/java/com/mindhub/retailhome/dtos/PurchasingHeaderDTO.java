@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Component
 public class PurchasingHeaderDTO {
 
@@ -29,5 +28,4 @@ public class PurchasingHeaderDTO {
     private String retiredBy;
     private boolean enabled;
     private Long idClient;
-
 }

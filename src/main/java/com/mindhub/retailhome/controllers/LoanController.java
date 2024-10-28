@@ -3,11 +3,15 @@ package com.mindhub.retailhome.controllers;
 import com.mindhub.retailhome.dtos.LoanApplicationDTO;
 import com.mindhub.retailhome.dtos.LoanDTO;
 import com.mindhub.retailhome.service.LoanService;
+import com.mindhub.retailhome.service.UtilService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,18 +19,23 @@ import java.util.List;
 public class LoanController {
 
     private final LoanService loanService;
+    private final UtilService utilService;
 
-    public LoanController(LoanService loanService) {
+    public LoanController(LoanService loanService, UtilService utilService) {
         this.loanService = loanService;
+        this.utilService = utilService;
     }
 
-    @RequestMapping("/loans")
-    public List<LoanDTO> getLoans() {
+    @GetMapping(path = "/loans")
+    public ResponseEntity<?> getLoan() {
         return this.loanService.findAll();
     }
 
-    @RequestMapping("/loans/{id}")
-    public LoanDTO getLoans(@PathVariable Long id){
+    @PostMapping(path = "/loans/{id}")
+    public ResponseEntity<?> getLoans(@Valid @PathVariable Long id, BindingResult result){
+        if(result.hasErrors()){
+            return new ResponseEntity<>(this.utilService.errorResult(result), HttpStatus.BAD_REQUEST);
+        }
         return this.loanService.findById(id);
     }
 

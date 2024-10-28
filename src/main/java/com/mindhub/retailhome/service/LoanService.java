@@ -11,9 +11,9 @@ import java.util.List;
 
 @Service
 public interface LoanService {
-    ResponseEntity<?> finAll();
+    ResponseEntity<?> findAll();
 
-    LoanDTO findById(Long id);
+    ResponseEntity<?> findById(Long id);
 
     ResponseEntity<Object> newRegister(LoanApplicationDTO loanApplicationDTO,
                                        Authentication authentication);

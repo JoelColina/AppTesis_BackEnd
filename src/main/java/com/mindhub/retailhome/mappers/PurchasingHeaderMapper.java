@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public interface PurchasingHeaderMapper {
-    PurchasingHeader ToPurchasingHeader (PurchasingHeaderDTO purchasingHeaderDTO);
+    PurchasingHeader toPurchasingHeader (PurchasingHeaderDTO purchasingHeaderDTO);
 
     PurchasingHeaderDTO toPurchasingHeaderDto (PurchasingHeader purchasingHeader);
 
@@ -30,7 +30,7 @@ public interface PurchasingHeaderMapper {
         if (purchasingHeaderDTOList == null) {
             return new ArrayList<>();
         }
-        return purchasingHeaderDTOList.stream().map(this::ToPurchasingHeader).collect(Collectors.toList());
+        return purchasingHeaderDTOList.stream().map(this::toPurchasingHeader).collect(Collectors.toList());
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,

@@ -1,6 +1,7 @@
 package com.mindhub.retailhome.service;
 
 import com.mindhub.retailhome.dtos.ClientDTO;
+import com.mindhub.retailhome.models.Client;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,8 @@ import java.util.Set;
 public interface ClientService {
 
     ClientDTO findByEmail(String email);
-    Set<ClientDTO> findAll();
-    ClientDTO finById (Long id);
+    ResponseEntity<?> findAll();
+    ResponseEntity<?> findById(Long id);
     ResponseEntity<?> save(ClientDTO clientDTO);
     ResponseEntity<?> update(ClientDTO clientDTO);
     ResponseEntity<?> delete(ClientDTO clientDTO);

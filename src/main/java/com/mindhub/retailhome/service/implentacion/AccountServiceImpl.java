@@ -6,6 +6,7 @@ import com.mindhub.retailhome.models.Account;
 import com.mindhub.retailhome.repositories.AccountRepository;
 import com.mindhub.retailhome.service.AccountService;
 import com.mindhub.retailhome.utils.Constants;
+import org.apache.catalina.User;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,8 @@ public class AccountServiceImpl implements AccountService {
         List<AccountDTO> listDto = new ArrayList<>();
 
         try {
-            this.accountRepository.findAll().forEach(account -> listDto.add(this.accountMapper.toAccountDto(account)));
+            this.accountRepository.findAll().forEach(account ->
+                listDto.add(this.accountMapper.toAccountDto(account)));
 
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.ACCOUNT.ACCOUNTS, listDto);
@@ -52,59 +54,88 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseEntity<?> findById(Long id) {
         response = new HashMap<>();
+        this.accountDtoNew = new AccountDTO();
         this.http = HttpStatus.NOT_FOUND;
-
-        if(id== null){
-            return this.accountRepository.findById(id).map(AccountDTO::new).orElse(null);
-        }
-
-        return new ResponseEntity<Map<String, Object>>(response, this.http);
-    }
-
-
-    @Override
-    public ResponseEntity<?> update(AccountDTO accountDTO) {
-        this.response = new HashMap<>();
-        accountDtoNew = null;
-        accountNew = null;
-
         try {
-            accountDTO = findById(accountDTO.getIdClient());
-            if(accountDTO == null){
-                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
-                this.http = HttpStatus.CONFLICT;
-            }else {
-                accountDtoNew.setBalance(accountDTO.getBalance());
-                accountDtoNew.setNumber(accountDTO.getNumber());
-                accountDtoNew.setCreationDate(accountDTO.getCreationDate());
-
-                accountNew = this.accountRepository.save(this.accountMapper.ToAccount(accountDtoNew));
+            if (id != null) {
+                this.accountDtoNew = mapper.toAccountDto(accountRepository.findById(id).orElse(null));
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
-                this.response.put(Constants.USER.USER, accountDtoNew);
-                this.http = HttpStatus.CREATED;
+                this.response.put(Constants.ACCOUNT.ACCOUNT,  this.accountDtoNew);
+                this.http = HttpStatus.ACCEPTED;
+            } else {
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.BAD_REQUEST;
             }
         }catch (Exception e){
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
-
-       return new ResponseEntity<>(this.response, this.http);
+        return new ResponseEntity<>(response, this.http);
     }
 
     @Override
-    public boolean delete(AccountDTO accountDTO) {
-       boolean operation = false;
-       AccountDTO accountDtoNew = findById(accountDTO.getIdClient());
+    public ResponseEntity<?> update(AccountDTO accountDTO) {
+        this.response = new HashMap<>();
+        this.accountDtoNew = new AccountDTO();
+        this.accountNew = new Account();
+        this.http = HttpStatus.NOT_FOUND;
 
-       try {
-           accountDtoNew.setEnable(false);
+        try{
+            this.accountNew = this.accountRepository.findById(accountDTO.getIdClient()).orElse(null);
+            this.accountDtoNew = mapper.toAccountDto(this.accountNew);
+            if (this.accountNew == null){
+                this.response.put(Constants.GEMERAL.ERROR,Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else{
+                accountDtoNew.setBalance(accountDTO.getBalance());
+                accountDtoNew.setNumber(accountDTO.getNumber());
+                accountDtoNew.setCreationDate(accountDTO.getCreationDate());
+
+                accountNew = this.accountRepository.save(this.mapper.toAccount(accountDtoNew));
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.USER.USER, accountNew);
+                this.http = HttpStatus.ACCEPTED;
+            }
+
+        }catch (Exception e){
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(this.response, this.http);
+
+    }
+
+    @Override
+    public ResponseEntity<?> delete(AccountDTO accountDTO) {
+       this.response = new HashMap<>();
+       this.http = HttpStatus.NOT_FOUND;
+       this.accountDtoNew = new AccountDTO();
+       this.accountNew = new Account();
+
+       try{
+           this.accountNew = this.accountRepository.findByNumber(accountDTO.getNumber());
+
+           if(this.accountNew == null){
+              this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+              this.http = HttpStatus.CONFLICT;
+           }else{
+              this.accountNew.setActive(false);
+              this.accountRepository.save(this.accountNew);
+              this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+              this.http = HttpStatus.ACCEPTED;
+           }
+           this.accountNew.setActive(false);
            update(accountDtoNew);
-           operation = true;
+
        }catch (Exception e){
-           operation = false;
+           this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+           this.response.put(Constants.GEMERAL.ERROR,e.getMessage());
+           http = HttpStatus.BAD_REQUEST;
        }
-       return operation;
+        return new ResponseEntity<>(this.response,this.http);
     }
 
     @Override
@@ -114,8 +145,8 @@ public class AccountServiceImpl implements AccountService {
        accountNew = null;
 
        try {
-           this.accountNew = this.accountRepository.save(this.accountMapper.toAccount(accountDTO));
-           this.accountNew.setEnable(true);
+           this.accountNew = this.accountRepository.save(this.mapper.toAccount(accountDTO));
+           this.accountNew.setActive(true);
            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
            this.response.put(Constants.USER.USER, accountDtoNew);
            this.http = HttpStatus.CREATED;

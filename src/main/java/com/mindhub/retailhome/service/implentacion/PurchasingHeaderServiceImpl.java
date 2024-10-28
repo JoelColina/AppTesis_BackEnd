@@ -1,12 +1,10 @@
 package com.mindhub.retailhome.service.implentacion;
 
-import com.mindhub.retailhome.dtos.AccountDTO;
-import com.mindhub.retailhome.dtos.AddressesDTO;
-import com.mindhub.retailhome.dtos.PurchasingHeaderDTO;
-import com.mindhub.retailhome.dtos.TransactionDTO;
+import com.mindhub.retailhome.dtos.*;
 import com.mindhub.retailhome.mappers.AccountMapper;
 import com.mindhub.retailhome.mappers.PurchasingHeaderMapper;
 import com.mindhub.retailhome.models.Addresses;
+import com.mindhub.retailhome.models.CreditsHeader;
 import com.mindhub.retailhome.models.PurchasingHeader;
 import com.mindhub.retailhome.models.Transaction;
 import com.mindhub.retailhome.repositories.AccountRepository;
@@ -69,11 +67,24 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     @Override
     public ResponseEntity<?> findById(Long id) {
         response = new HashMap<>();
+        this.purchasingHeaderDtoNew = new PurchasingHeaderDTO();
         this.http = HttpStatus.NOT_FOUND;
-        if (id == null) {
-            return this.purchasingHeaderRepository.findById(id).map(PurchasingHeaderDTO::new).orElse(null);
+        try {
+            if (id != null) {
+                this.purchasingHeaderDtoNew = mapper.toPurchasingHeaderDto(purchasingHeaderRepository.findById(id).orElse(null));
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.PURCHASING_HEADER.PURCHASING_HEADERS,  this.purchasingHeaderDtoNew);
+                this.http = HttpStatus.ACCEPTED;
+            } else {
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.BAD_REQUEST;
+            }
+        }catch (Exception e){
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
         }
-        return new ResponseEntity<Map<String, Object>>(response, this.http);
+        return new ResponseEntity<>(response, this.http);
     }
 
     @Override
@@ -84,7 +95,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
         try {
 
-            this.purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.ToPurchasingHeader(purchasingHeaderDTO));
+            this.purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.toPurchasingHeader(purchasingHeaderDTO));
             this.purchasingHeaderNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.USER.USER, purchasingHeaderNew);
@@ -98,21 +109,33 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
     }
 
     @Override
-    public boolean delete(PurchasingHeaderDTO purchasingHeaderDTO) {
-        boolean operation = false;
-      //  PurchasingHeaderDTO purchasingHeaderDtoNew = findById(purchasingHeaderDTO.getIdClient());
-        ResponseEntity<?> responseEntity = findById(purchasingHeaderDTO.getIdClient());
-        PurchasingHeaderDTO purchasingHeaderDtoNew = (PurchasingHeaderDTO) responseEntity.getBody();
+    public ResponseEntity<?>  delete(PurchasingHeaderDTO purchasingHeaderDTO) {
+        this.response = new HashMap<>();
+        this.http = HttpStatus.NOT_FOUND;
+        this.purchasingHeaderDtoNew = new PurchasingHeaderDTO();
+        this.purchasingHeaderNew = new PurchasingHeader();
 
-        try {
-            purchasingHeaderDtoNew.setEnabled(false);
+        try{
+            this.purchasingHeaderNew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getIdClient()).orElse(null);
+
+            if(this.purchasingHeaderNew == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else{
+                this.purchasingHeaderNew.setEnabled(false);
+                this.purchasingHeaderRepository.save(this.purchasingHeaderNew);
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.http = HttpStatus.ACCEPTED;
+            }
+            this.purchasingHeaderNew.setEnabled(false);
             update(purchasingHeaderDtoNew);
-            operation = true;
 
         }catch (Exception e){
-            operation = false;
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR,e.getMessage());
+            http = HttpStatus.BAD_REQUEST;
         }
-        return operation;
+        return new ResponseEntity<>(this.response,this.http);
     }
 
     @Override
@@ -120,11 +143,14 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
         this.response = new HashMap<>();
         this.purchasingHeaderDtoNew = null;
         this.purchasingHeaderNew = null;
+        this.http = HttpStatus.NOT_FOUND;
 
         try {
-            purchasingHeaderDTO = findById(purchasingHeaderDTO.getIdClient());
 
-            if(purchasingHeaderDTO == null){
+            this.purchasingHeaderNew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getIdClient()).orElse(null);
+            this.purchasingHeaderDtoNew = mapper.toPurchasingHeaderDto(this.purchasingHeaderNew);
+
+            if(purchasingHeaderDtoNew == null){
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {
@@ -143,7 +169,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
                 purchasingHeaderDtoNew.setDeliveryAddress(purchasingHeaderDTO.getDeliveryAddress());
                 purchasingHeaderDtoNew.setRetiredBy(purchasingHeaderDTO.getRetiredBy());
 
-                purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.ToPurchasingHeader(purchasingHeaderDtoNew));
+                purchasingHeaderNew = this.purchasingHeaderRepository.save(this.purchasingHeaderMapper.toPurchasingHeader(purchasingHeaderDtoNew));
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.USER.USER, purchasingHeaderNew);
                 http = HttpStatus.ACCEPTED;

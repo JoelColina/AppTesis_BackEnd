@@ -30,11 +30,11 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
         auth.userDetailsService(inputName-> {
 
-            //ClientDTO client = clientRepository.findByEmail(inputName);
-            ClientDTO clientDto = this.clientMapper.clientToClientDto(this.clientRepository.findByEmail(inputName));
+            ClientDTO client = clientRepository.findByEmail(inputName);
+//    ClientDTO clientDto = this.clientMapper.toClient(this.clientRepository.findByEmail(inputName));
 
-            if (clientDto != null) {
-                return new User(clientDto.getEmail(), clientDto.getPassword(),
+            if (client != null) {
+                return new User(client.getEmail(), client.getPassword(),
                         AuthorityUtils.createAuthorityList("CLIENT"));
             } else {
                 throw new UsernameNotFoundException("Unknown user: " + inputName);

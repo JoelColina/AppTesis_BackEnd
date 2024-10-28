@@ -1,8 +1,6 @@
 package com.mindhub.retailhome.service.implentacion;
 
-import com.mindhub.retailhome.dtos.AddressesDTO;
-import com.mindhub.retailhome.dtos.CreditsHeaderDTO;
-import com.mindhub.retailhome.dtos.PurchasingHeaderDTO;
+import com.mindhub.retailhome.dtos.*;
 import com.mindhub.retailhome.mappers.CreditsHeaderMapper;
 import com.mindhub.retailhome.mappers.PurchasingHeaderMapper;
 import com.mindhub.retailhome.models.Account;
@@ -55,17 +53,32 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
             this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
             this.http = HttpStatus.BAD_REQUEST;
         }
-        return new ResponseEntity<>(listDto, this.http);}
+        return new ResponseEntity<>(listDto, this.http);
+    }
 
     @Override
     public ResponseEntity<?> findById(Long id) {
         response = new HashMap<>();
+        this.creditsHeaderDtoNew = new CreditsHeaderDTO();
         this.http = HttpStatus.NOT_FOUND;
-        if (id == null) {
-            return this.creditsHeaderRepository.findById(id).map(CreditsHeaderDTO::new).orElse(null);
-        }
-        return new ResponseEntity<Map<String, Object>>(response, this.http);}
 
+        try {
+            if (id != null) {
+                this.creditsHeaderDtoNew = mapper.toCreditsHeaderDto(creditsHeaderRepository.findById(id).orElse(null));
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.response.put(Constants.CREDIT_DETAIL.CREDIT_DETAILS,  this.creditsHeaderDtoNew);
+                this.http = HttpStatus.ACCEPTED;
+            }else {
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.BAD_REQUEST;
+            }
+        } catch (Exception e) {
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR, e.getMessage());
+            this.http = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(response, this.http);
+    }
 
     @Override
     public ResponseEntity<?> save(CreditsHeaderDTO creditsHeaderDTO) {
@@ -89,20 +102,33 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
     }
 
     @Override
-    public boolean delete(CreditsHeaderDTO creditsHeaderDTO) {
-        boolean operation = false;
+    public ResponseEntity<?> delete(CreditsHeaderDTO creditsHeaderDTO) {
+        this.response = new HashMap<>();
+        this.http = HttpStatus.NOT_FOUND;
+        this.creditsHeaderDtoNew = new CreditsHeaderDTO();
+        this.creditsHeaderNew = new CreditsHeader();
 
-        CreditsHeaderDTO creditsHeaderDtoNew = findById(creditsHeaderDTO.getIdClient());
+        try{
+            this.creditsHeaderNew = this.creditsHeaderRepository.findById(creditsHeaderDTO.getIdClient()).orElse(null);
 
-        try {
-            creditsHeaderDtoNew.setEnabled(false);
+            if(this.creditsHeaderNew == null){
+                this.response.put(Constants.GEMERAL.ERROR, Constants.OPERATIONS.OPERATION_NOT_OK);
+                this.http = HttpStatus.CONFLICT;
+            }else{
+                this.creditsHeaderNew.setEnabled(false);
+                this.creditsHeaderRepository.save(this.creditsHeaderNew);
+                this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
+                this.http = HttpStatus.ACCEPTED;
+            }
+            this.creditsHeaderNew.setEnabled(false);
             update(creditsHeaderDtoNew);
-            operation = true;
 
         }catch (Exception e){
-            operation = false;
+            this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
+            this.response.put(Constants.GEMERAL.ERROR,e.getMessage());
+            http = HttpStatus.BAD_REQUEST;
         }
-        return operation;
+        return new ResponseEntity<>(this.response,this.http);
     }
 
     @Override
@@ -110,11 +136,13 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
         this.response = new HashMap<>();
         this.creditsHeaderDtoNew = null;
         this.creditsHeaderNew = null;
+        this.http = HttpStatus.NOT_FOUND;
 
         try {
-            creditsHeaderDTO = findById(creditsHeaderDTO.getIdClient());
+            this.creditsHeaderNew = this.creditsHeaderRepository.findById(creditsHeaderDtoNew.getIdClient()).orElse(null);
+            this.creditsHeaderDtoNew = mapper.toCreditsHeaderDto(this.creditsHeaderNew);
 
-            if(creditsHeaderDTO == null){
+            if(creditsHeaderDtoNew == null){
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;
             }else {

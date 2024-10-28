@@ -64,7 +64,7 @@ public class TransactionServiceImpl implements TransactionService {
         this.accountOrig = new Account() ;
         String accExit = "0";
 
-        clientDto = this.clientMapper.clientToClientDto( clientRepository.findByEmail(authentication.getName()));
+       // clientDto = this.clientMapper.toClientDto( clientRepository.findByEmail(authentication.getName()));
 
         //valida variable fromAccount si viene vacio
         this.accountOrig = accountRepository.findByNumber(fromAccount);

@@ -41,12 +41,20 @@ public class Constants {
         public  static final String CREDIT_HEADER = "CreditHeader";
         public  static final String CREDIT_HEADERS = "CreditHeaders";
     }
+    public static class CREDIT_DETAIL{
+        public  static final String CREDIT_DETAIL = "CreditHeader";
+        public  static final String CREDIT_DETAILS = "CreditHeaders";
+    }
+    public static class CLIENT{
+        public  static final String CLIENT = "Client";
+        public  static final String CLIENTS = "Clients";
+    }
     public static class GEMERAL{
         public  static final String MESSAGE = "Message";
         public  static final String ERROR = "Error";
         public static final String FAIL = "Fail";
-
     }
+
     public static final String LOGGED_OK = "Hello you have successfully logged in ";
     public static final Long USER_GENERATE = 1L;
 

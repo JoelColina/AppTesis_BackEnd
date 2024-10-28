@@ -12,7 +12,7 @@ public interface PurchasingDetailService {
 
     ResponseEntity<?> finAll();
 
-    PurchasingDetailDTO findById(Long id);
+    ResponseEntity<?> findById(Long id);
 
     // agregar
     ResponseEntity<?> save (PurchasingDetailDTO purchasingDetailDTO);
