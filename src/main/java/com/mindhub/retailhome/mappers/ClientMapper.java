@@ -16,13 +16,13 @@ public interface ClientMapper {
 
     Client toClient(ClientDTO clientDto);
 
-    ClientDTO toClientDto(Client client);
+    ClientDTO toClientDTO(Client client);
 
     default List<ClientDTO> toDtoList(List<Client> ClientList){
         if (ClientList == null){
             return  new ArrayList<>();
         }
-        return ClientList.stream().map(this::toClientDto).collect(Collectors.toList());
+        return ClientList.stream().map(this::toClientDTO).collect(Collectors.toList());
     }
 
     default List<Client> toEntityList(List<ClientDTO> ClientDTOList){

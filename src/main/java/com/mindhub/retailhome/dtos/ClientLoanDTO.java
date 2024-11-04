@@ -4,9 +4,9 @@ import com.mindhub.retailhome.models.ClientLoan;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Component
 public class ClientLoanDTO {
     private double amount;

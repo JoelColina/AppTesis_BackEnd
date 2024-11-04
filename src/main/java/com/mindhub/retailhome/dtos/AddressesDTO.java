@@ -4,9 +4,9 @@ import com.mindhub.retailhome.utils.enums.AddressType;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Component
 public class AddressesDTO {
     private String address;
@@ -16,5 +16,5 @@ public class AddressesDTO {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-    private long idClient;
+    private Long idClient;
 }

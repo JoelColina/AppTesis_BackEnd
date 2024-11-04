@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Data
-@RequiredArgsConstructor
+@NoArgsConstructor
+
 @AllArgsConstructor
+@Data
 @Component
 public class PurchasingHeaderDTO {
 

@@ -3,9 +3,9 @@ package com.mindhub.retailhome.dtos;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Component
 public class LoanApplicationDTO {
     private long loanId;

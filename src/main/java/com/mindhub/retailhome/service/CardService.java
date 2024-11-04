@@ -10,13 +10,13 @@ import java.util.Set;
 
 @Service
 public interface CardService {
-    Set<CardDTO> finAll();
-    CardDTO findById(Long id);
-//    List<CardDTO> findCardByClient(String idClient);
+    ResponseEntity<?>  finAll();
+    ResponseEntity<?>  findById(Long id);
+
     // agregar
     ResponseEntity<?>  save (CardDTO cardDTO);
     // eliminar
-    boolean delete (CardDTO cardDTO);
+    ResponseEntity<?>  delete (CardDTO cardDTO);
     // actualizar
     ResponseEntity<?> update(CardDTO cardDTO);
 

@@ -50,7 +50,7 @@ public class ClientServiceImpl implements ClientService {
 
         try {
             this.clientRepository.findAll().forEach(client ->
-                    listDto.add(this.clientMapper.toClientDto(client)));
+                    listDto.add(this.clientMapper.toClientDTO(client)));
 
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.CLIENT.CLIENT, listDto);
@@ -70,7 +70,7 @@ public class ClientServiceImpl implements ClientService {
         this.http = HttpStatus.NOT_FOUND;
         try {
             if (id != null) {
-                this.clientDtoNew = mapper.toClientDto(clientRepository.findById(id).orElse(null));
+                this.clientDtoNew = mapper.toClientDTO(clientRepository.findById(id).orElse(null));
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.CLIENT.CLIENTS, this.clientDtoNew);
                 this.http = HttpStatus.ACCEPTED;
@@ -111,7 +111,7 @@ public class ClientServiceImpl implements ClientService {
 
             clientDTO.setIdClient(userId);
             this.clientNew = this.clientRepository.save(this.clientMapper.toClient(clientDTO));
-            this.clientDtoNew = clientMapper.toClientDto(clientRepository.save(clientNew));
+            this.clientDtoNew = clientMapper.toClientDTO(clientRepository.save(clientNew));
 
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.USER.USER, clientDtoNew);
@@ -154,7 +154,7 @@ public class ClientServiceImpl implements ClientService {
                 clientOld.setEnabled(clientDTO.isEnabled());
 
                 clientNew = this.clientRepository.save(this.clientMapper.toClient(clientDtoOld));
-                this.clientDtoNew = clientMapper.toClientDto(clientRepository.save(clientNew));
+                this.clientDtoNew = clientMapper.toClientDTO(clientRepository.save(clientNew));
 
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.USER.USER, clientDtoNew);

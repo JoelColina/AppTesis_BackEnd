@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Component
 public class CreditDetailDTO {
 

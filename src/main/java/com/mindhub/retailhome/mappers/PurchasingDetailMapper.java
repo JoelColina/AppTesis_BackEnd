@@ -17,24 +17,24 @@ import java.util.stream.Collectors;
 public interface PurchasingDetailMapper {
     PurchasingDetail toPurchasingDetail (PurchasingDetailDTO purchasingDetailDTO);
 
-    PurchasingDetailDTO toPurchasingDetailDto (PurchasingDetail purchasingDetail);
+    PurchasingDetailDTO toPurchasingDetailDTO (PurchasingDetail purchasingDetail);
 
-    default List<PurchasingDetailDTO> toDoList (List<PurchasingDetail> PurchasingDetailList){
-        if (PurchasingDetailList == null) {
-            return new ArrayList<>();
-        }
-        return PurchasingDetailList.stream().map(this::toPurchasingDetailDto).collect(Collectors.toList());
-    }
-
-    default List<PurchasingDetail> toEntityList (List<PurchasingDetailDTO> purchasingDetailDTOList){
-        if (purchasingDetailDTOList == null) {
-            return new ArrayList<>();
+    default List<PurchasingDetail> toEntityList(List<PurchasingDetailDTO> purchasingDetailDTOList){
+        if (purchasingDetailDTOList == null){
+            return  new ArrayList<>();
         }
         return purchasingDetailDTOList.stream().map(this::toPurchasingDetail).collect(Collectors.toList());
     }
 
+    default List<PurchasingDetailDTO> toDtoList(List<PurchasingDetail> purchasingDetailList){
+        if (purchasingDetailList == null){
+            return  new ArrayList<>();
+        }
+        return purchasingDetailList.stream().map(this::toPurchasingDetailDTO).collect(Collectors.toList());
+    }
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    PurchasingDetail updatePurchasingDetailFromPurchasingDetailDto(PurchasingDetailDTO purchasingDetailDTO, @MappingTarget PurchasingDetail purchasingDetail);
+    PurchasingDetail updatePurchasingDetailFromPurchasingDetailDTO(PurchasingDetailDTO purchasingDetailDTO, @MappingTarget PurchasingDetail purchasingDetail);
 
 }

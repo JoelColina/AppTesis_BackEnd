@@ -30,16 +30,4 @@ public class Addresses {
     private Number postalCode;
     private AddressType type;
     private boolean enabled;
-
-    public Addresses(long id, String address, Number number, String city, String commune, Number postalCode, AddressType type, boolean enabled) {
-
-        this.id = id;
-        this.address = address;
-        this.number = number;
-        this.city = city;
-        this.commune = commune;
-        this.postalCode = postalCode;
-        this.type = type;
-        this.enabled = enabled;
-    }
 }

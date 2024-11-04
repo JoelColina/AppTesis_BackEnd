@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Component
 public class CardDTO {
 
@@ -27,4 +28,5 @@ public class CardDTO {
     private Number balanceQuota;
     private boolean enabled;
     private long idClient;
+
 }

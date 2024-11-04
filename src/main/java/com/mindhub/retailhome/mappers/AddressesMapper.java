@@ -2,13 +2,34 @@ package com.mindhub.retailhome.mappers;
 
 import com.mindhub.retailhome.dtos.AddressesDTO;
 import com.mindhub.retailhome.models.Addresses;
-import org.mapstruct.Mapper;
+import org.mapstruct.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 public interface AddressesMapper {
 
-    Addresses addressesDtoToAddresses (AddressesDTO addressesDTO);
+    Addresses toAddresses (AddressesDTO addressesDTO);
 
-    AddressesDTO AddressesToaddressesDto (Addresses addresses);
+    AddressesDTO toAddressesDto (Addresses addresses);
 
+    default List<AddressesDTO> toDTOList(List<Addresses> addressList){
+        if (addressList == null){
+            return  new ArrayList<>();
+        }
+        return addressList.stream().map(this::toAddressesDto).collect(Collectors.toList());
+    }
+
+    default List<Addresses> toEntityList(List<AddressesDTO> addressDtoList){
+        if (addressDtoList == null){
+            return  new ArrayList<>();
+        }
+        return addressDtoList.stream().map(this:: toAddresses).collect(Collectors.toList());
+    }
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    Addresses updateAccountFromAccountDto(AddressesDTO accountDto, @MappingTarget Addresses account);
 }

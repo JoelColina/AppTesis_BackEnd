@@ -42,7 +42,7 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
 
         try {
             this.creditsHeaderRepository.findAll().forEach(creditsHeader ->
-                    listDto.add(this.creditsHeaderMapper.toCreditsHeaderDto(creditsHeader))
+                    listDto.add(this.creditsHeaderMapper.toCreditsHeaderDTO(creditsHeader))
             );
 
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
@@ -64,7 +64,7 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
 
         try {
             if (id != null) {
-                this.creditsHeaderDtoNew = mapper.toCreditsHeaderDto(creditsHeaderRepository.findById(id).orElse(null));
+                this.creditsHeaderDtoNew = mapper.toCreditsHeaderDTO(creditsHeaderRepository.findById(id).orElse(null));
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.CREDIT_DETAIL.CREDIT_DETAILS,  this.creditsHeaderDtoNew);
                 this.http = HttpStatus.ACCEPTED;
@@ -140,7 +140,7 @@ public class CreditsHeaderServiceImpl implements CreditsHeaderService {
 
         try {
             this.creditsHeaderNew = this.creditsHeaderRepository.findById(creditsHeaderDtoNew.getIdClient()).orElse(null);
-            this.creditsHeaderDtoNew = mapper.toCreditsHeaderDto(this.creditsHeaderNew);
+            this.creditsHeaderDtoNew = mapper.toCreditsHeaderDTO(this.creditsHeaderNew);
 
             if(creditsHeaderDtoNew == null){
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);

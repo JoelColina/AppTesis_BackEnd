@@ -17,23 +17,23 @@ import java.util.stream.Collectors;
 public interface PurchasingHeaderMapper {
     PurchasingHeader toPurchasingHeader (PurchasingHeaderDTO purchasingHeaderDTO);
 
-    PurchasingHeaderDTO toPurchasingHeaderDto (PurchasingHeader purchasingHeader);
+    PurchasingHeaderDTO toPurchasingHeaderDTO (PurchasingHeader purchasingHeader);
 
-    default List<PurchasingHeaderDTO> toDoList (List<PurchasingHeader> purchasingHeaderList){
-        if (purchasingHeaderList == null) {
-            return new ArrayList<>();
+    default List<PurchasingHeader> toEntityList(List<PurchasingHeaderDTO> purchasingHeaderlDTOList){
+        if (purchasingHeaderlDTOList == null){
+            return  new ArrayList<>();
         }
-        return purchasingHeaderList.stream().map(this::toPurchasingHeaderDto).collect(Collectors.toList());
+        return purchasingHeaderlDTOList.stream().map(this::toPurchasingHeader).collect(Collectors.toList());
     }
 
-    default List<PurchasingHeader> toEntityList (List<PurchasingHeaderDTO> purchasingHeaderDTOList){
-        if (purchasingHeaderDTOList == null) {
-            return new ArrayList<>();
+    default List<PurchasingHeaderDTO> toDtoList(List<PurchasingHeader> purchasingHeaderList){
+        if (purchasingHeaderList == null){
+            return  new ArrayList<>();
         }
-        return purchasingHeaderDTOList.stream().map(this::toPurchasingHeader).collect(Collectors.toList());
+        return purchasingHeaderList.stream().map(this::toPurchasingHeaderDTO).collect(Collectors.toList());
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    PurchasingHeader updatePurchasingHeaderFromPurchasingHeaderDto(PurchasingHeaderDTO purchasingHeaderDto, @MappingTarget PurchasingHeader purchasingHeader);
+    PurchasingHeader updatePurchasingHeaderFromPurchasingHeaderDTO(PurchasingHeaderDTO purchasingHeaderlDTO, @MappingTarget PurchasingHeader purchasingHeader);
 }

@@ -62,7 +62,7 @@ public class AddressesServiceImpl implements AddressesService {
 
         try {
 
-            this.addressesNew = this.addressesRepository.save(this.addressesMapper.addressesDtoToAddresses(addressesDTO));
+            this.addressesNew = this.addressesRepository.save(this.addressesMapper.toAddresses(addressesDTO));
 
             this.addressesNew.setEnabled(true);
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);

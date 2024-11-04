@@ -4,9 +4,9 @@ import com.mindhub.retailhome.models.CreditsHeader;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Component
 public class CreditsHeaderDTO {
 

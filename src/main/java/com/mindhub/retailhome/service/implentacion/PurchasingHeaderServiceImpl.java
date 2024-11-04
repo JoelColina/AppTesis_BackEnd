@@ -50,7 +50,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
 
         try {
             this.purchasingHeaderRepository.findAll().forEach(purchasingHeader ->
-                    listDto.add(this.purchasingHeaderMapper.toPurchasingHeaderDto(purchasingHeader))
+                    listDto.add(this.purchasingHeaderMapper.toPurchasingHeaderDTO(purchasingHeader))
             );
 
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
@@ -71,7 +71,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
         this.http = HttpStatus.NOT_FOUND;
         try {
             if (id != null) {
-                this.purchasingHeaderDtoNew = mapper.toPurchasingHeaderDto(purchasingHeaderRepository.findById(id).orElse(null));
+                this.purchasingHeaderDtoNew = mapper.toPurchasingHeaderDTO(purchasingHeaderRepository.findById(id).orElse(null));
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.PURCHASING_HEADER.PURCHASING_HEADERS,  this.purchasingHeaderDtoNew);
                 this.http = HttpStatus.ACCEPTED;
@@ -148,7 +148,7 @@ public class PurchasingHeaderServiceImpl implements PurchasingHeaderService {
         try {
 
             this.purchasingHeaderNew = this.purchasingHeaderRepository.findById(purchasingHeaderDTO.getIdClient()).orElse(null);
-            this.purchasingHeaderDtoNew = mapper.toPurchasingHeaderDto(this.purchasingHeaderNew);
+            this.purchasingHeaderDtoNew = mapper.toPurchasingHeaderDTO(this.purchasingHeaderNew);
 
             if(purchasingHeaderDtoNew == null){
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_NOT_OK);

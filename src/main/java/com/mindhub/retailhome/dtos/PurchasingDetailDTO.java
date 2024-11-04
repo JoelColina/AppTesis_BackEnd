@@ -4,9 +4,9 @@ import com.mindhub.retailhome.models.PurchasingDetail;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+@Data
 @Component
 public class PurchasingDetailDTO {
 

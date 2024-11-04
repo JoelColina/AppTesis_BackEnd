@@ -50,12 +50,12 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Set<TransactionDTO> findAll() {
-        return Collections.singleton(this.transactionMapper.toTransactionDto(Optional.of((Transaction) this.transactionRepository.findAll())));
+        return Collections.singleton(this.transactionMapper.toTransactionDTO(Optional.of((Transaction) this.transactionRepository.findAll())));
     }
 
     @Override
     public TransactionDTO findById(Long id) {
-        return this.transactionMapper.toTransactionDto(this.transactionRepository.findById(id));
+        return this.transactionMapper.toTransactionDTO(this.transactionRepository.findById(id));
     }
 
     @Override

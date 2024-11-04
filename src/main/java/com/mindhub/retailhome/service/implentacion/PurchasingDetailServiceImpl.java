@@ -39,7 +39,7 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
 
         try {
             this.purchasingDetailRepository.findAll().forEach(purchasingDetail ->
-                    listDto.add(this.purchasingDetailMapper.toPurchasingDetailDto(purchasingDetail))
+                    listDto.add(this.purchasingDetailMapper.toPurchasingDetailDTO(purchasingDetail))
             );
             this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
             this.response.put(Constants.PURCHASING_DETAIL.PURCHASING_DETAILS, listDto);
@@ -60,7 +60,7 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
         this.http = HttpStatus.NOT_FOUND;
         try {
             if (id != null) {
-                this.purchasingDetailDtoNew = mapper.toPurchasingDetailDto(purchasingDetailRepository.findById(id).orElse(null));
+                this.purchasingDetailDtoNew = mapper.toPurchasingDetailDTO(purchasingDetailRepository.findById(id).orElse(null));
                 this.response.put(Constants.GEMERAL.MESSAGE, Constants.OPERATIONS.OPERATION_OK);
                 this.response.put(Constants.PURCHASING_DETAIL.PURCHASING_DETAILS,  this.purchasingDetailDtoNew);
                 this.http = HttpStatus.ACCEPTED;
@@ -106,7 +106,7 @@ public class PurchasingDetailServiceImpl implements PurchasingDetailService {
 
         try {
             this.purchasingDetailNew = this.purchasingDetailRepository.findById(purchasingDetailDTO.getIdPurchasing()).orElse(null);
-            this.purchasingDetailDtoNew = mapper.toPurchasingDetailDto(this.purchasingDetailNew);
+            this.purchasingDetailDtoNew = mapper.toPurchasingDetailDTO(this.purchasingDetailNew);
             if(purchasingDetailDtoNew == null){
                 this.response.put(Constants.GEMERAL.ERROR,Constants.OPERATIONS.OPERATION_NOT_OK);
                 this.http = HttpStatus.CONFLICT;

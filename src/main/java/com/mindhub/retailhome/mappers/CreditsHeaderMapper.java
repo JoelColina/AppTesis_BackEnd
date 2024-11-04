@@ -16,25 +16,25 @@ import java.util.stream.Collectors;
 
 public interface CreditsHeaderMapper {
 
-    CreditsHeader toCreditsHeader (CreditsHeaderDTO creditsHeaderDto);
+    CreditsHeader toCreditsHeader (CreditsHeaderDTO creditsHeaderDTO);
 
-    CreditsHeaderDTO toCreditsHeaderDto (CreditsHeader creditsHeader);
+    CreditsHeaderDTO toCreditsHeaderDTO (CreditsHeader creditsHeader);
 
-    default List<CreditsHeaderDTO> toDoList (List<CreditsHeader> purchasingHeaderList){
-        if (purchasingHeaderList == null) {
-            return new ArrayList<>();
+    default List<CreditsHeader> toEntityList(List<CreditsHeaderDTO> creditsHeaderDTOList){
+        if (creditsHeaderDTOList == null){
+            return  new ArrayList<>();
         }
-        return purchasingHeaderList.stream().map(this::toCreditsHeaderDto).collect(Collectors.toList());
+        return creditsHeaderDTOList.stream().map(this::toCreditsHeader).collect(Collectors.toList());
     }
 
-    default List<CreditsHeader> toEntityList (List<CreditsHeaderDTO> creditsHeaderDtoList){
-        if (creditsHeaderDtoList == null) {
-            return new ArrayList<>();
+    default List<CreditsHeaderDTO> toDTOList(List<CreditsHeader> creditsHeaderList){
+        if (creditsHeaderList == null){
+            return  new ArrayList<>();
         }
-        return creditsHeaderDtoList.stream().map(this::toCreditsHeader).collect(Collectors.toList());
+        return creditsHeaderList.stream().map(this::toCreditsHeaderDTO).collect(Collectors.toList());
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    CreditsHeader updateCreditsHeaderFromCreditsHeaderDto(CreditsHeaderDTO creditsHeaderDto, @MappingTarget PurchasingHeader purchasingHeader);
+    CreditsHeader updateCreditsHeaderFromCreditsHeaderDTO(CreditsHeaderDTO creditsHeaderDTO, @MappingTarget CreditsHeader creditsHeader );
 }

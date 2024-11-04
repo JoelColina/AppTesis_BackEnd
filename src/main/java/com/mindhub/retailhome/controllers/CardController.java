@@ -6,14 +6,17 @@ import com.mindhub.retailhome.dtos.ClientDTO;
 import com.mindhub.retailhome.repositories.CardRepository;
 import com.mindhub.retailhome.repositories.ClientRepository;
 import com.mindhub.retailhome.service.CardService;
+import com.mindhub.retailhome.service.UtilService;
 import com.mindhub.retailhome.utils.Utils;
 import com.mindhub.retailhome.utils.NumberCardRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -27,9 +30,8 @@ import java.util.Set;
 public class CardController {
 
     private final CardService cardService;
-
+    private final UtilService utilService;
     public NumberCardRandom numberCardRandom;
-
     public Utils utils;
 
     @Autowired
@@ -38,19 +40,33 @@ public class CardController {
     @Autowired
     private CardRepository cardRepository;
 
-    public CardController(CardService cardService) {
+    public CardController(CardService cardService,
+                          UtilService utilService,
+                          ClientRepository clientRepository,
+                          CardRepository cardRepository) {
         this.cardService = cardService;
+        this.utilService = utilService;
+        this.cardRepository = cardRepository;
+        this.clientRepository = clientRepository;
     }
 
-    @RequestMapping("/cards")
-    public Set<CardDTO> getcard(){
-        return this.cardService.finAll();
+    @PostMapping()
+    public ResponseEntity<?> post(@Valid @RequestBody CardDTO cardDTO, BindingResult result) {
+        if (result .hasErrors()){
+            return new ResponseEntity<>( this.utilService.errorResult(result),HttpStatus.BAD_REQUEST );
+        }
+        return this.cardService.save(cardDTO);
     }
 
-    @RequestMapping("/cards/{id}")
-    public CardDTO getcard(@PathVariable long id){
-        return this.cardService.findById(id);
-    }
+//    @RequestMapping("/cards")
+//    public Set<CardDTO> getcards(){
+//        return this.cardService.finAll();
+//    }
+//
+//    @RequestMapping("/cards/{id}")
+//    public CardDTO getcard(@PathVariable long id){
+//        return this.cardService.findById(id);
+//    }
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> register(@RequestParam String cardType,

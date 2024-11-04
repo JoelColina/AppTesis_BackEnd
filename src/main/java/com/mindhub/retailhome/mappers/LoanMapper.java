@@ -18,23 +18,22 @@ public interface LoanMapper {
 
     LoanDTO toLoanDto (Loan loan);
 
-    default List<LoanDTO> toDoList (List<Loan> LoanList){
-        if (LoanList == null) {
-            return new ArrayList<>();
-        }
-        return LoanList.stream().map(this::toLoanDto).collect(Collectors.toList());
-    }
-
-    default List<Loan> toEntityList (List<LoanDTO> loanDTOList){
-        if (loanDTOList == null) {
-            return new ArrayList<>();
+    default List<Loan> toEntityList(List<LoanDTO> loanDTOList){
+        if (loanDTOList == null){
+            return  new ArrayList<>();
         }
         return loanDTOList.stream().map(this::toLoan).collect(Collectors.toList());
     }
 
+    default List<LoanDTO> toDtoList(List<Loan> loanList){
+        if (loanList == null){
+            return  new ArrayList<>();
+        }
+        return loanList.stream().map(this::toLoanDto).collect(Collectors.toList());
+    }
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    PurchasingDetail updateLoanFromLoanDto(LoanDTO loanDTO, @MappingTarget Loan loan);
-
+    Loan updateLoanFromLoanDto(LoanDTO loanDTO, @MappingTarget Loan loan);
 
 }

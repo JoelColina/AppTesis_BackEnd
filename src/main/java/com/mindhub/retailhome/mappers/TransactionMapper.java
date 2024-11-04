@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public interface TransactionMapper {
     Transaction toTransaction (TransactionDTO transactionDTO);
 
-    TransactionDTO toTransactionDto (Optional<Transaction> transaction);
+    TransactionDTO toTransactionDTO (Optional<Transaction> transaction);
 
     default List<Transaction> toEntityList(List<TransactionDTO> transactionDTOList){
         if (transactionDTOList == null){
@@ -27,11 +27,10 @@ public interface TransactionMapper {
         if (transactionList == null){
             return  new ArrayList<>();
         }
-        return transactionList.stream().map(this::toTransactionDto).collect(Collectors.toList());
+        return transactionList.stream().map(this::toTransactionDTO).collect(Collectors.toList());
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     Transaction updateTransactionFromTransactionDTO(TransactionDTO transactionlDTO, @MappingTarget Transaction transaction);
-
 }
