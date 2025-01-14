@@ -6,14 +6,12 @@ import com.mindhub.retailhome.models.Account;
 import com.mindhub.retailhome.repositories.AccountRepository;
 import com.mindhub.retailhome.service.AccountService;
 import com.mindhub.retailhome.utils.Constants;
-import org.apache.catalina.User;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
